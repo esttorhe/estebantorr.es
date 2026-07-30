@@ -1,0 +1,152 @@
+---
+// ABOUTME: Homepage reading teaser — what's in progress + the last few finished, link out to /reading/.
+// ABOUTME: Deliberately lighter-weight than LatestWriting: this is texture, not the reading-depth spine.
+
+import CurrentlyReadingCard from '../reading/CurrentlyReadingCard.astro';
+import StarRating from '../reading/StarRating.astro';
+import { reading } from '../../data/reading';
+
+const { currentlyReading, finished } = reading;
+
+const sortedFinished = [...finished].sort((a, b) => +new Date(b.finished) - +new Date(a.finished));
+const latestFinished = sortedFinished.slice(0, 3);
+const moreCount = Math.max(0, sortedFinished.length - latestFinished.length);
+
+const dateFormat = new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'short' });
+---
+
+<section class="reading-teaser reveal" aria-labelledby="reading-teaser-heading">
+  <header class="reading-teaser__header">
+    <h2 id="reading-teaser-heading" class="reading-teaser__title">Reading</h2>
+    <a class="reading-teaser__link" href="/library/">
+      <span>Full shelf</span>
+      <span aria-hidden="true">→</span>
+    </a>
+  </header>
+
+  <div class="reading-teaser__body">
+    {currentlyReading[0] && <CurrentlyReadingCard book={currentlyReading[0]} index={0} />}
+
+    <ul class="reading-teaser__latest">
+      {
+        latestFinished.map((book) => {
+          const date = new Date(book.finished);
+          return (
+            <li class="reading-teaser__row">
+              <span class="reading-teaser__row-title">{book.title}</span>
+              {book.rating != null && <StarRating rating={book.rating} />}
+              <time class="reading-teaser__row-date tabular" datetime={date.toISOString()}>
+                {dateFormat.format(date)}
+              </time>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+
+  {moreCount > 0 && <p class="reading-teaser__more tabular">+ {moreCount} more on the shelf</p>}
+</section>
+
+<style>
+  .reading-teaser {
+    margin-bottom: var(--space-section);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--rule);
+  }
+
+  .reading-teaser__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .reading-teaser__title {
+    font-size: var(--text-h3);
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .reading-teaser__link {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4ch;
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    color: var(--ink-muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition:
+      color var(--duration-fast) var(--ease-out-quart),
+      border-color var(--duration-fast) var(--ease-out-quart);
+  }
+
+  .reading-teaser__link:hover,
+  .reading-teaser__link:focus-visible {
+    color: var(--ink);
+    border-color: var(--accent);
+    outline: none;
+  }
+
+  .reading-teaser__body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-lg) var(--space-xl);
+  }
+
+  .reading-teaser__latest {
+    flex: 1 1 16rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    align-self: center;
+  }
+
+  .reading-teaser__row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    padding: 0.35rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .reading-teaser__row:last-child {
+    border-bottom: none;
+  }
+
+  .reading-teaser__row-title {
+    font-family: var(--font-display);
+    font-size: var(--text-small);
+    font-weight: 500;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+
+  .reading-teaser__row-date {
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    color: var(--ink-muted);
+    white-space: nowrap;
+  }
+
+  .reading-teaser__more {
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    color: var(--ink-muted);
+    margin: var(--space-md) 0 0;
+  }
+
+  @media (max-width: 640px) {
+    .reading-teaser__row {
+      flex-wrap: wrap;
+    }
+  }
+</style>

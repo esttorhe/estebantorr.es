@@ -10,7 +10,8 @@
     "astro": "astro",
     "format": "prettier --write \"**/*.{astro,mjs,ts,tsx,js,jsx,md,css,json}\"",
     "format:check": "prettier --check \"**/*.{astro,mjs,ts,tsx,js,jsx,md,css,json}\"",
-    "cv:pdf": "node scripts/build-cv-pdf.mjs"
+    "cv:pdf": "node scripts/build-cv-pdf.mjs",
+    "library:sync": "node scripts/sync-reading.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "@fontsource/vollkorn": "^5.2.10",
+    "js-yaml": "^5.2.2",
     "marked": "^18.0.5",
     "prettier": "^3.8.4",
     "prettier-plugin-astro": "^0.14.1",

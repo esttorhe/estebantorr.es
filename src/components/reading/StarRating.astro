@@ -1,0 +1,41 @@
+---
+// ABOUTME: Mono star-rating readout — filled stars clip-overlaid on an empty track so half/quarter
+// ABOUTME: ratings render smoothly without needing separate glyphs. Rating is out of 10 (source scale); displayed out of 5.
+
+interface Props {
+  /** Personal rating, out of 10 (the source vault's scale — even numbers, occasionally a .5). */
+  rating: number;
+}
+
+const { rating } = Astro.props;
+const outOfFive = rating / 2;
+const pct = Math.max(0, Math.min(100, (rating / 10) * 100));
+---
+
+<span class="star-rating" aria-label={`${outOfFive} out of 5 stars`}>
+  <span class="star-rating__track" aria-hidden="true">★★★★★</span>
+  <span class="star-rating__fill" aria-hidden="true" style={`width: ${pct}%`}>★★★★★</span>
+</span>
+
+<style>
+  .star-rating {
+    position: relative;
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    line-height: 1;
+    letter-spacing: 0.12em;
+  }
+
+  .star-rating__track {
+    color: var(--rule-strong);
+  }
+
+  .star-rating__fill {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    color: var(--accent-ink);
+  }
+</style>

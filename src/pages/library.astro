@@ -1,0 +1,235 @@
+---
+// ABOUTME: /library/ — the reading shelf: currently-reading + a per-year preview of finished books.
+// ABOUTME: Each year shows at most PREVIEW_COUNT books, newest first; "see all" links to /library/<year>/ for the rest.
+// ABOUTME: Named /library/ (not /reading/) because TV/movies are planned as sibling shelves later — see src/data/tvshows.json.
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BookCard from '../components/reading/BookCard.astro';
+import CurrentlyReadingCard from '../components/reading/CurrentlyReadingCard.astro';
+import { reading } from '../data/reading';
+
+const PREVIEW_COUNT = 8;
+
+const { currentlyReading, finished } = reading;
+
+const sortedFinished = [...finished].sort((a, b) => +new Date(b.finished) - +new Date(a.finished));
+
+const yearGroups: { year: number; books: typeof sortedFinished }[] = [];
+for (const book of sortedFinished) {
+  const year = new Date(book.finished).getFullYear();
+  const current = yearGroups.at(-1);
+  if (current && current.year === year) {
+    current.books.push(book);
+  } else {
+    yearGroups.push({ year, books: [book] });
+  }
+}
+---
+
+<BaseLayout
+  title="Library"
+  description="What I'm reading now, and what I've finished — the books shelf of a growing library."
+  current="library"
+>
+  <section class="reading-page" aria-labelledby="reading-heading">
+    <header class="reading-page__header reveal">
+      <h1 id="reading-heading" class="reading-page__title">Library</h1>
+      <p class="reading-page__intro">
+        What's on the nightstand right now, and what I've finished. Mostly sci-fi, mostly audiobooks
+        on the commute.
+      </p>
+      <p class="reading-page__meta tabular">
+        <span>{sortedFinished.length} finished</span>
+        <span class="reading-page__sep" aria-hidden="true">·</span>
+        <span>{currentlyReading.length} in progress</span>
+      </p>
+    </header>
+
+    {
+      currentlyReading.length > 0 && (
+        <section class="reading-page__current reveal-stagger" aria-labelledby="current-heading">
+          <h2 id="current-heading" class="sr-only">
+            Currently reading
+          </h2>
+          <ul class="reading-page__current-list">
+            {currentlyReading.map((book, i) => (
+              <li>
+                <CurrentlyReadingCard book={book} index={i} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <section class="reading-page__finished" aria-labelledby="finished-heading">
+      <h2 id="finished-heading" class="sr-only">
+        Finished
+      </h2>
+
+      {
+        yearGroups.map(({ year, books }) => (
+          <section class="reading-page__year-group">
+            <header class="reading-page__year-header">
+              <h3 class="reading-page__year tabular">{year}</h3>
+              <span class="reading-page__year-count tabular">
+                {books.length} {books.length === 1 ? 'book' : 'books'}
+              </span>
+            </header>
+            <div class="reading-page__grid reveal-stagger">
+              {books.slice(0, PREVIEW_COUNT).map((book, i) => (
+                <BookCard book={book} index={i} />
+              ))}
+            </div>
+            {books.length > PREVIEW_COUNT && (
+              <a class="reading-page__see-all" href={`/library/${year}/`}>
+                <span>See all {books.length} from {year}</span>
+                <span aria-hidden="true">→</span>
+              </a>
+            )}
+          </section>
+        ))
+      }
+    </section>
+  </section>
+</BaseLayout>
+
+<style>
+  .reading-page {
+    max-width: var(--max-content);
+    margin: 0 auto;
+    padding-top: var(--space-md);
+  }
+
+  .reading-page__header {
+    margin-bottom: var(--space-xl);
+    max-width: var(--measure-wide);
+  }
+
+  .reading-page__title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-h1);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 0 0 var(--space-xs);
+    text-wrap: balance;
+  }
+
+  .reading-page__intro {
+    font-family: var(--font-prose);
+    font-size: var(--text-body);
+    color: var(--ink-muted);
+    margin: 0 0 var(--space-sm);
+    max-width: var(--measure);
+  }
+
+  .reading-page__meta {
+    display: inline-flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.55ch;
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
+  .reading-page__sep {
+    opacity: 0.5;
+  }
+
+  .reading-page__current {
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .reading-page__current-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+    gap: var(--space-lg);
+  }
+
+  .reading-page__year-group {
+    margin: 0 0 var(--space-2xl);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--rule);
+  }
+
+  .reading-page__year-group:first-child {
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .reading-page__year-header {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+    margin: 0 0 var(--space-md);
+  }
+
+  .reading-page__year {
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: 0.04em;
+    margin: 0;
+  }
+
+  .reading-page__year-count {
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    color: var(--ink-muted);
+  }
+
+  .reading-page__grid {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+    gap: var(--space-lg) var(--space-md);
+  }
+
+  .reading-page__see-all {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4ch;
+    margin-top: var(--space-md);
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    color: var(--ink-muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition:
+      color var(--duration-fast) var(--ease-out-quart),
+      border-color var(--duration-fast) var(--ease-out-quart);
+  }
+
+  .reading-page__see-all:hover,
+  .reading-page__see-all:focus-visible {
+    color: var(--ink);
+    border-color: var(--accent);
+    outline: none;
+  }
+
+  @media (max-width: 720px) {
+    .reading-page__header {
+      margin-bottom: var(--space-lg);
+    }
+
+    .reading-page__current-list {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .reading-page__grid {
+      grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+    }
+  }
+</style>

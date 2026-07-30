@@ -1,0 +1,109 @@
+---
+// ABOUTME: /library/<year>/ — every finished book from a single year. The overflow page for /library/'s 8-per-year preview.
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BookCard from '../../components/reading/BookCard.astro';
+import { reading } from '../../data/reading';
+
+export function getStaticPaths() {
+  const years = [...new Set(reading.finished.map((book) => new Date(book.finished).getFullYear()))];
+
+  return years.map((year) => {
+    const books = reading.finished
+      .filter((book) => new Date(book.finished).getFullYear() === year)
+      .sort((a, b) => +new Date(b.finished) - +new Date(a.finished));
+    return { params: { year: String(year) }, props: { year, books } };
+  });
+}
+
+const { year, books } = Astro.props;
+---
+
+<BaseLayout
+  title={`${year} — Library`}
+  description={`Every book I finished in ${year}.`}
+  current="library"
+>
+  <section class="year-page" aria-labelledby="year-heading">
+    <header class="year-page__header reveal">
+      <a class="year-page__back" href="/library/">
+        <span aria-hidden="true">←</span>
+        <span>Library</span>
+      </a>
+      <h1 id="year-heading" class="year-page__title">{year}</h1>
+      <p class="year-page__meta tabular">
+        {books.length} {books.length === 1 ? 'book' : 'books'} finished
+      </p>
+    </header>
+
+    <div class="year-page__grid reveal-stagger">
+      {books.map((book, i) => <BookCard book={book} index={i} />)}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .year-page {
+    max-width: var(--max-content);
+    margin: 0 auto;
+    padding-top: var(--space-md);
+  }
+
+  .year-page__header {
+    margin-bottom: var(--space-xl);
+    max-width: var(--measure-wide);
+  }
+
+  .year-page__back {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4ch;
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    color: var(--ink-muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    margin-bottom: var(--space-md);
+    transition:
+      color var(--duration-fast) var(--ease-out-quart),
+      border-color var(--duration-fast) var(--ease-out-quart);
+  }
+
+  .year-page__back:hover,
+  .year-page__back:focus-visible {
+    color: var(--ink);
+    border-color: var(--accent);
+    outline: none;
+  }
+
+  .year-page__title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-h1);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 0 0 var(--space-xs);
+  }
+
+  .year-page__meta {
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
+  .year-page__grid {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+    gap: var(--space-lg) var(--space-md);
+  }
+
+  @media (max-width: 720px) {
+    .year-page__grid {
+      grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+    }
+  }
+</style>

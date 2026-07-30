@@ -1,0 +1,150 @@
+---
+// ABOUTME: An in-progress book on /reading/ and the homepage teaser — cover, title, author, start date.
+// ABOUTME: Deliberately lighter than BookCard: no rating exists yet for a book that isn't finished.
+
+import { getEntry } from 'astro:content';
+import type { CurrentlyReadingItem } from '../../data/reading';
+
+interface Props {
+  book: CurrentlyReadingItem;
+  index: number;
+}
+
+const { book, index } = Astro.props;
+
+const date = new Date(book.started);
+const dateFormat = new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
+
+const relatedPost = book.relatedPost ? await getEntry('blog', book.relatedPost) : undefined;
+const relatedHref = relatedPost
+  ? (() => {
+      const postDate = new Date(relatedPost.data.date);
+      const year = String(postDate.getFullYear());
+      const month = String(postDate.getMonth() + 1).padStart(2, '0');
+      const slug = relatedPost.id.replace(/^\d{4}-\d{2}-/, '').replace(/\.mdx?$/, '');
+      return `/${year}/${month}/${slug}/`;
+    })()
+  : undefined;
+---
+
+<article class="reading-card" style={`--i: ${index}`}>
+  <figure class="reading-card__cover">
+    <img src={book.cover} alt={`${book.title} cover`} loading="lazy" decoding="async" />
+  </figure>
+  <div class="reading-card__text">
+    <p class="reading-card__kicker tabular">Currently reading</p>
+    <h3 class="reading-card__title">{relatedHref ? <a href={relatedHref}>{book.title}</a> : book.title}</h3>
+    <p class="reading-card__author">{book.author}</p>
+    <p class="reading-card__meta tabular">
+      Started <time datetime={date.toISOString()}>{dateFormat.format(date)}</time>
+      {
+        book.series && (
+          <>
+            <span class="reading-card__dot" aria-hidden="true">
+              ·
+            </span>
+            <span>
+              {book.series}
+              {book.seriesNumber != null && ` #${book.seriesNumber}`}
+            </span>
+          </>
+        )
+      }
+    </p>
+  </div>
+</article>
+
+<style>
+  .reading-card {
+    display: flex;
+    gap: var(--space-md);
+  }
+
+  .reading-card__cover {
+    flex: 0 0 auto;
+    margin: 0;
+    width: 5rem;
+    aspect-ratio: 2 / 3;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  .reading-card__cover img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .reading-card__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    justify-content: center;
+  }
+
+  .reading-card__kicker {
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    font-weight: 500;
+    color: var(--accent-ink);
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
+    margin: 0;
+  }
+
+  .reading-card__title {
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .reading-card__title a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklab, var(--accent) 55%, transparent);
+    text-underline-offset: 0.15em;
+  }
+
+  .reading-card__author {
+    font-family: var(--font-prose);
+    font-size: var(--text-small);
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
+  .reading-card__meta {
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    color: var(--ink-muted);
+    margin: var(--space-2xs) 0 0;
+  }
+
+  .reading-card__dot {
+    opacity: 0.5;
+    margin: 0 0.2ch;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .reading-card {
+      opacity: 0;
+      transform: translateY(8px);
+      transition:
+        opacity var(--duration-slow) var(--ease-out-quart),
+        transform var(--duration-slow) var(--ease-out-quart);
+      transition-delay: calc(min(var(--i, 0), 10) * 40ms);
+    }
+
+    :global(.reveal-in) .reading-card,
+    :global(.no-js) .reading-card {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

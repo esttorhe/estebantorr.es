@@ -1,0 +1,227 @@
+---
+// ABOUTME: A finished book on /library/ — cover, title, author, star rating, finish date, series tag.
+// ABOUTME: Rating/review/favorite are all optional (not every vault entry has them); audiobook gets a small format badge.
+
+import { getEntry } from 'astro:content';
+import StarRating from './StarRating.astro';
+import type { FinishedItem } from '../../data/reading';
+
+interface Props {
+  book: FinishedItem;
+  /** Position in the list. Drives the stagger reveal. */
+  index: number;
+}
+
+const { book, index } = Astro.props;
+
+const date = new Date(book.finished);
+const dateFormat = new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'short' });
+
+const relatedPost = book.relatedPost ? await getEntry('blog', book.relatedPost) : undefined;
+const relatedHref = relatedPost
+  ? (() => {
+      const postDate = new Date(relatedPost.data.date);
+      const year = String(postDate.getFullYear());
+      const month = String(postDate.getMonth() + 1).padStart(2, '0');
+      const slug = relatedPost.id.replace(/^\d{4}-\d{2}-/, '').replace(/\.mdx?$/, '');
+      return `/${year}/${month}/${slug}/`;
+    })()
+  : undefined;
+---
+
+<article class="book-card" style={`--i: ${index}`}>
+  <figure class="book-card__cover">
+    <img src={book.cover} alt={`${book.title} cover`} loading="lazy" decoding="async" />
+  </figure>
+  <div class="book-card__text">
+    <h3 class="book-card__title">
+      {relatedHref ? <a href={relatedHref}>{book.title}</a> : book.title}
+      {
+        book.favorite && (
+          <span class="book-card__favorite" aria-label="Favorite" title="Favorite">
+            ✦
+          </span>
+        )
+      }
+    </h3>
+    <p class="book-card__author">{book.author}</p>
+    <p class="book-card__meta tabular">
+      {book.rating != null && <StarRating rating={book.rating} />}
+      {book.rating != null && (
+        <span class="book-card__dot" aria-hidden="true">
+          ·
+        </span>
+      )}
+      <time datetime={date.toISOString()}>{dateFormat.format(date)}</time>
+      {
+        book.format === 'audiobook' && (
+          <>
+            <span class="book-card__dot" aria-hidden="true">
+              ·
+            </span>
+            <span class="book-card__format">audiobook</span>
+          </>
+        )
+      }
+      {
+        book.series && (
+          <>
+            <span class="book-card__dot" aria-hidden="true">
+              ·
+            </span>
+            <span class="book-card__series">
+              {book.series}
+              {book.seriesNumber != null && ` #${book.seriesNumber}`}
+            </span>
+          </>
+        )
+      }
+    </p>
+    {
+      book.review && (
+        <details class="book-card__review">
+          <summary>Review</summary>
+          <p>{book.review}</p>
+        </details>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .book-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .book-card__cover {
+    margin: 0;
+    aspect-ratio: 2 / 3;
+    width: 100%;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--surface);
+  }
+
+  .book-card__cover img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .book-card__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+  }
+
+  .book-card__title {
+    font-family: var(--font-display);
+    font-size: var(--text-body);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .book-card__title a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklab, var(--accent) 55%, transparent);
+    text-underline-offset: 0.15em;
+  }
+
+  .book-card__favorite {
+    color: var(--accent-ink);
+    margin-left: 0.3ch;
+    font-size: 0.8em;
+  }
+
+  .book-card__author {
+    font-family: var(--font-prose);
+    font-size: var(--text-small);
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
+  .book-card__meta {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.4ch;
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    color: var(--ink-muted);
+    margin: var(--space-2xs) 0 0;
+  }
+
+  .book-card__dot {
+    opacity: 0.5;
+  }
+
+  .book-card__format,
+  .book-card__series {
+    color: var(--ink-muted);
+  }
+
+  .book-card__review {
+    margin: var(--space-2xs) 0 0;
+  }
+
+  .book-card__review summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3ch;
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    color: var(--accent-ink);
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+
+  .book-card__review summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .book-card__review summary::before {
+    content: '+';
+    display: inline-block;
+    width: 1ch;
+  }
+
+  .book-card__review[open] summary::before {
+    content: '−';
+  }
+
+  .book-card__review p {
+    font-family: var(--font-prose);
+    font-size: var(--text-small);
+    font-style: italic;
+    color: var(--ink-muted);
+    line-height: 1.45;
+    margin: var(--space-2xs) 0 0;
+    text-wrap: pretty;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .book-card {
+      opacity: 0;
+      transform: translateY(8px);
+      transition:
+        opacity var(--duration-slow) var(--ease-out-quart),
+        transform var(--duration-slow) var(--ease-out-quart);
+      transition-delay: calc(min(var(--i, 0), 10) * 40ms);
+    }
+
+    :global(.reveal-in) .book-card,
+    :global(.no-js) .book-card {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

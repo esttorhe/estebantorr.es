@@ -1,11 +1,12 @@
 ---
-// ABOUTME: Homepage. Stack: Hero → CuratedPicks ("What I'd point you at right now") → LatestWriting.
+// ABOUTME: Homepage. Stack: Hero → CuratedPicks ("What I'd point you at right now") → LatestWriting → CurrentlyReading.
 // ABOUTME: Reading depth is the north star; the page exists to surface the post the reader clicks first AND the one they click second.
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/home/Hero.astro';
 import CuratedPicks from '../components/home/CuratedPicks.astro';
 import LatestWriting from '../components/home/LatestWriting.astro';
+import CurrentlyReading from '../components/home/CurrentlyReading.astro';
 import { getCollection } from 'astro:content';
 
 const allPosts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
@@ -41,4 +42,5 @@ const updated = 'July 2026';
   <Hero />
   <CuratedPicks now={now} updated={updated} picks={picks} />
   <LatestWriting posts={latest} totalCount={allPosts.length} />
+  <CurrentlyReading />
 </BaseLayout>
