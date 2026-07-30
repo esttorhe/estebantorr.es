@@ -20,6 +20,10 @@ node = "22.22.2"
 description = "Scaffold a new MDX blog post (prompts for title, category, hero image, etc.)"
 run = "node scripts/new-post.mjs"
 
+[tasks.new-til]
+description = "Scaffold a new TIL entry (prompts for title, description, tags)"
+run = "node scripts/new-til.mjs"
+
 [tasks.dev]
 description = "Runs the website locally"
 run = "bun run dev"

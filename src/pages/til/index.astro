@@ -1,0 +1,150 @@
+---
+// ABOUTME: /til/ — chronological index of short technical notes, grouped by year.
+// ABOUTME: No hero, no pagination: TIL entries are short and few; add pagination if the archive grows.
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TilListRow from '../../components/til/TilListRow.astro';
+import { getCollection } from 'astro:content';
+
+const entries = (await getCollection('til', ({ data }) => !data.draft)).sort(
+  (a, b) => +b.data.date - +a.data.date,
+);
+
+const decorated = entries.map((entry, i) => {
+  const year = new Date(entry.data.date).getFullYear();
+  const prevYear = i === 0 ? null : new Date(entries[i - 1].data.date).getFullYear();
+  return {
+    entry,
+    index: i,
+    year,
+    startsYear: prevYear === null || year !== prevYear,
+  };
+});
+
+const totalCount = entries.length;
+---
+
+<BaseLayout
+  title="TIL"
+  description="Short technical (and sometimes not) notes, things I've figured out in ten minutes, maybe, who's counting?"
+  current="til"
+>
+  <section class="til-page" aria-labelledby="til-heading">
+    <header class="til-page__header reveal">
+      <h1 id="til-heading" class="til-page__title">TIL</h1>
+      <p class="til-page__intro">Short technical (and sometimes not) notes. Things I figured out in ten minutes, maybe… who's counting?</p>
+      <p class="til-page__meta tabular">
+        <span>{totalCount} {totalCount === 1 ? 'note' : 'notes'}</span>
+        <span class="til-page__sep" aria-hidden="true">·</span>
+        <span>newest first</span>
+      </p>
+    </header>
+
+    <ol class="til-page__list reveal-stagger">
+      {
+        decorated.map(({ entry, index, year, startsYear }) => (
+          <li class="til-page__entry">
+            {startsYear && (
+              <h2 class="til-page__year tabular" aria-label={`Notes from ${year}`}>
+                {year}
+              </h2>
+            )}
+            <TilListRow entry={entry} index={index} />
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+</BaseLayout>
+
+<style>
+  .til-page {
+    max-width: 52rem;
+    margin: 0 auto;
+    padding-top: var(--space-md);
+  }
+
+  .til-page__header {
+    margin-bottom: var(--space-xl);
+    max-width: var(--measure-wide);
+  }
+
+  .til-page__title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-h1);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 0 0 var(--space-xs);
+    text-wrap: balance;
+  }
+
+  .til-page__intro {
+    font-family: var(--font-prose);
+    font-size: var(--text-body);
+    color: var(--ink-muted);
+    margin: 0 0 var(--space-sm);
+    max-width: var(--measure);
+  }
+
+  .til-page__meta {
+    display: inline-flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.55ch;
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    color: var(--ink-muted);
+    margin: 0;
+  }
+
+  .til-page__sep {
+    opacity: 0.5;
+  }
+
+  .til-page__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .til-page__entry {
+    margin: 0;
+  }
+
+  .til-page__year {
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    font-weight: 400;
+    color: var(--ink-muted);
+    letter-spacing: 0.04em;
+    margin: var(--space-lg) 0 var(--space-sm);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--rule);
+  }
+
+  .til-page__list > .til-page__entry:first-child .til-page__year {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+
+  @media (max-width: 720px) {
+    .til-page__header {
+      margin-bottom: var(--space-lg);
+    }
+
+    .til-page__list {
+      gap: var(--space-sm);
+    }
+
+    .til-page__year {
+      margin: var(--space-md) 0 var(--space-xs);
+      padding-top: var(--space-sm);
+    }
+  }
+</style>

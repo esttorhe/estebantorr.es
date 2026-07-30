@@ -17,11 +17,10 @@ const xmlEscape = (s: string) =>
 
 export async function GET(context: APIContext) {
   const site = context.site ?? new URL('https://estebantorr.es');
-  const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
-    (a, b) => +b.data.date - +a.data.date,
-  );
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  const tils = await getCollection('til', ({ data }) => !data.draft);
 
-  const items = await Promise.all(
+  const postItems = await Promise.all(
     posts.map(async (post) => {
       const date = new Date(post.data.date);
       const year = String(date.getFullYear());
@@ -67,6 +66,19 @@ export async function GET(context: APIContext) {
       };
     }),
   );
+
+  const tilItems = tils.map((til) => {
+    const slug = til.id.replace(/^\d{4}-\d{2}-/, '').replace(/\.mdx?$/, '');
+    return {
+      title: til.data.title,
+      description: til.data.description,
+      pubDate: new Date(til.data.date),
+      link: `/til/${slug}/`,
+      categories: ['TIL', ...til.data.tags],
+    };
+  });
+
+  const items = [...postItems, ...tilItems].sort((a, b) => +b.pubDate - +a.pubDate);
 
   return rss({
     title: 'The mind of Esteban',

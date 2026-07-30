@@ -35,10 +35,16 @@ const dateFormat = new Intl.DateTimeFormat('en-GB', {
 <section class="latest reveal" aria-labelledby="latest-heading">
   <header class="latest__header">
     <h2 id="latest-heading" class="latest__title">Recent writing</h2>
-    <a class="latest__archive" href="/blog/">
-      <span>All {totalCount} posts</span>
-      <span aria-hidden="true">→</span>
-    </a>
+    <div class="latest__links">
+      <a class="latest__archive" href="/til/">
+        <span>TIL</span>
+        <span aria-hidden="true">→</span>
+      </a>
+      <a class="latest__archive" href="/blog/">
+        <span>All {totalCount} posts</span>
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
   </header>
 
   <ol class="latest__list reveal-stagger">
@@ -89,6 +95,12 @@ const dateFormat = new Intl.DateTimeFormat('en-GB', {
     font-weight: 600;
     color: var(--ink);
     margin: 0;
+  }
+
+  .latest__links {
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-md);
   }
 
   .latest__archive {

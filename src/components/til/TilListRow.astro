@@ -1,0 +1,108 @@
+---
+// ABOUTME: A row on /til/ — title, one-line takeaway, date. Text-only, no hero.
+// ABOUTME: Deliberately lighter-weight than PostListRow: TIL entries are short notes, not essays.
+
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'til'>;
+  /** Position in the list. Drives the stagger reveal. */
+  index: number;
+}
+
+const { entry, index } = Astro.props;
+
+const date = new Date(entry.data.date);
+const slug = entry.id.replace(/^\d{4}-\d{2}-/, '').replace(/\.mdx?$/, '');
+const href = `/til/${slug}/`;
+
+const dateFormat = new Intl.DateTimeFormat('en-GB', {
+  year: 'numeric',
+  month: 'short',
+  day: '2-digit',
+});
+---
+
+<article class="til-row" style={`--i: ${index}`}>
+  <a class="til-row__link" href={href}>
+    <h2 class="til-row__title">{entry.data.title}</h2>
+    <p class="til-row__lede">{entry.data.description}</p>
+    <p class="til-row__meta tabular">
+      <time datetime={date.toISOString()}>{dateFormat.format(date)}</time>
+    </p>
+  </a>
+</article>
+
+<style>
+  .til-row {
+    position: relative;
+  }
+
+  .til-row__link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    padding: var(--space-sm) 0;
+    color: var(--ink);
+    text-decoration: none;
+    outline: none;
+    border-radius: var(--radius-md);
+  }
+
+  .til-row__link:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 0.5rem;
+  }
+
+  .til-row__title {
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0;
+    text-wrap: balance;
+    transition: color var(--duration-fast) var(--ease-out-quart);
+  }
+
+  .til-row__lede {
+    font-family: var(--font-prose);
+    font-size: var(--text-body);
+    line-height: 1.5;
+    color: var(--ink-muted);
+    margin: 0;
+    text-wrap: pretty;
+    max-width: 56ch;
+  }
+
+  .til-row__meta {
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    color: var(--ink-muted);
+    margin: 0;
+    margin-top: var(--space-2xs);
+  }
+
+  .til-row__link:hover .til-row__title,
+  .til-row__link:focus-visible .til-row__title {
+    color: var(--accent-ink);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .til-row {
+      opacity: 0;
+      transform: translateY(8px);
+      transition:
+        opacity var(--duration-slow) var(--ease-out-quart),
+        transform var(--duration-slow) var(--ease-out-quart);
+      transition-delay: calc(min(var(--i, 0), 10) * 40ms);
+    }
+
+    :global(.reveal-in) .til-row,
+    :global(.no-js) .til-row {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

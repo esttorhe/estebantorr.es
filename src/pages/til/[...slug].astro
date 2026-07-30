@@ -1,0 +1,128 @@
+---
+// ABOUTME: Individual TIL entry — /til/<slug>/. Hashtag-style tags, date, reading time, back-to-index link.
+// ABOUTME: No hero, no comments, no prev/next: these are short notes, not essays — chrome stays minimal.
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+
+type Til = CollectionEntry<'til'>;
+
+export const getStaticPaths = (async () => {
+  const entries = await getCollection('til', ({ data }) => !data.draft);
+
+  return entries.map((entry) => {
+    const slug = entry.id.replace(/^\d{4}-\d{2}-/, '').replace(/\.mdx?$/, '');
+    return { params: { slug }, props: { entry } };
+  });
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props as { entry: Til };
+const { Content } = await render(entry);
+
+const date = new Date(entry.data.date);
+const readingMinutes = Math.max(
+  1,
+  Math.ceil((entry.body ?? '').split(/\s+/).filter(Boolean).length / 220),
+);
+
+const dateFormat = new Intl.DateTimeFormat('en-GB', {
+  year: 'numeric',
+  month: 'long',
+  day: '2-digit',
+});
+
+const tagString = entry.data.tags.map((t) => `#${t}`).join('');
+---
+
+<BaseLayout
+  title={`${entry.data.title} — TIL`}
+  description={entry.data.description}
+  current="til"
+  ogType="article"
+>
+  <article class="til-article">
+    <a class="til-article__back" href="/til/">← TIL</a>
+
+    <header class="til-article__header reveal">
+      <p class="til-article__meta">
+        {tagString && <span class="til-article__tags tabular">{tagString}</span>}
+        <time datetime={date.toISOString()} class="til-article__date tabular">
+          {dateFormat.format(date)}
+        </time>
+        <span aria-hidden="true" class="til-article__sep">·</span>
+        <span class="til-article__reading tabular">{readingMinutes} min read</span>
+      </p>
+      <h1 class="til-article__title">{entry.data.title}</h1>
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .til-article {
+    max-width: var(--max-content);
+    margin: 0 auto;
+    padding-top: var(--space-md);
+  }
+
+  .til-article__back {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    color: var(--ink-muted);
+    text-decoration: none;
+    margin-bottom: var(--space-lg);
+    transition: color var(--duration-fast) var(--ease-out-quart);
+  }
+
+  .til-article__back:hover,
+  .til-article__back:focus-visible {
+    color: var(--accent-ink);
+    outline: none;
+  }
+
+  .til-article__header {
+    max-width: var(--measure);
+    margin-bottom: var(--space-xl);
+  }
+
+  .til-article__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5ch;
+    margin: 0 0 var(--space-md);
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    color: var(--ink-muted);
+  }
+
+  .til-article__sep {
+    opacity: 0.55;
+  }
+
+  .til-article__tags,
+  .til-article__date,
+  .til-article__reading {
+    color: var(--ink-muted);
+  }
+
+  .til-article__tags {
+    color: var(--accent-ink);
+  }
+
+  .til-article__title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-h1);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 0;
+    text-wrap: balance;
+  }
+</style>

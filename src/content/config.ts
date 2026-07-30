@@ -24,6 +24,20 @@ const blog = defineCollection({
   }),
 });
 
+const til = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/til' }),
+  schema: z.object({
+    title: z.string(),
+    date: z.coerce.date(),
+    // Required (unlike blog's optional description) — it's the one-sentence
+    // takeaway the /til index shows in place of a body preview.
+    description: z.string(),
+    tags: z.array(z.string()).default([]),
+    draft: z.boolean().default(false),
+  }),
+});
+
 export const collections = {
   blog,
+  til,
 };

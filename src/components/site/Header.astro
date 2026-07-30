@@ -7,13 +7,14 @@ import Sigil from '../marks/Sigil.astro';
 
 interface Props {
   /** When set, that nav item gets aria-current="page". */
-  current?: 'home' | 'writing' | 'talks' | 'portfolio' | 'cv' | 'about';
+  current?: 'home' | 'writing' | 'til' | 'talks' | 'portfolio' | 'cv' | 'about';
 }
 
 const { current } = Astro.props;
 
 const nav = [
   { id: 'writing', label: 'Writing', href: '/blog/' },
+  { id: 'til', label: 'TIL', href: '/til/' },
   { id: 'talks', label: 'Talks', href: '/talks/' },
   { id: 'portfolio', label: 'Portfolio', href: '/portfolio/' },
   { id: 'cv', label: 'CV', href: '/cv/' },
