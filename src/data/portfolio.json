@@ -70,6 +70,22 @@
       "image": "/assets/images/portfolio/spicypills.svg"
     },
     {
+      "title": "Movie & TV Visualizer",
+      "description": "Obsidian plugin that turns movie and TV show notes into a visual media dashboard — carousels, top lists, tier lists, and season/episode progress tracking, all from note frontmatter.",
+      "tags": ["Obsidian", "Plugin", "TypeScript"],
+      "url": null,
+      "github": "https://github.com/esttorhe/obsidian-movie-tv-visualizer",
+      "image": "/assets/images/portfolio/obsidian-movie-tv-visualizer.jpg"
+    },
+    {
+      "title": "Book Visualizer",
+      "description": "Obsidian plugin that turns book notes into a reading dashboard — top lists, author stats, series completion tracking, and reading progress, all from note frontmatter.",
+      "tags": ["Obsidian", "Plugin", "TypeScript"],
+      "url": null,
+      "github": "https://github.com/esttorhe/obsidian-book-visualizer",
+      "image": "/assets/images/portfolio/obsidian-book-visualizer.jpg"
+    },
+    {
       "title": "blogwatcher-ui",
       "description": "A modern, self-contained web application for tracking blog articles and managing read/unread status. Works independently without external CLI.",
       "tags": ["Web", "RSS", "Go"],
