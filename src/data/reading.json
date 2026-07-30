@@ -1,0 +1,2853 @@
+{
+  "currentlyReading": [
+    {
+      "title": "The Second Legend of Uh",
+      "author": "Aaron N. Hall",
+      "cover": "/assets/images/reading/202607282107-the-second-legend-of-uh.jpg",
+      "format": "book",
+      "series": "The Legend of Uh",
+      "seriesNumber": 2,
+      "started": "2026-07-28"
+    }
+  ],
+  "finished": [
+    {
+      "title": "The Legend of Uh",
+      "author": "Aaron N. Hall",
+      "cover": "/assets/images/reading/202607282118-the-legend-of-uh.jpg",
+      "format": "book",
+      "series": "The Legend of Uh",
+      "seriesNumber": 1,
+      "finished": "2026-07-28",
+      "rating": 7.5,
+      "review": "I got into this book thanks to a TikTok that was recommending books for the people that enjoyed reading `Dungeon Crawler Carl`, I wasn't expecting much but it was quite entertaining. It had a couple of things that was quite \"expected\", but funnily enough one of those things didn't pan out as I thought they would; which was a great surprise. Overall the book has some similarities with what I barely read and know of Discworld, silly but good. I detected references to Harry Potter, Skyrim and The Lord of the Rings. Great book to take your mind of things and just relax."
+    },
+    {
+      "title": "The Design of Everyday Things",
+      "author": "Donald A. Norman",
+      "cover": "/assets/images/reading/202607220000-the-design-of-everyday-things.jpg",
+      "format": "audiobook",
+      "finished": "2026-07-22",
+      "rating": 8
+    },
+    {
+      "title": "Nobody Wants to Read Your Sht And Other Tough-Love Truths to Make You a Better Writer",
+      "author": "Shawn Coyne (Editor) Steven Pressfield (Author)",
+      "cover": "/assets/images/reading/202607060000-nobody-wants-to-read-your-sht-and-other-tough-love-truths-to-make-you-a-better-writer.jpg",
+      "format": "audiobook",
+      "finished": "2026-07-06",
+      "rating": 2
+    },
+    {
+      "title": "Daughter of the Otherworld",
+      "author": "Shauna Lawless",
+      "cover": "/assets/images/reading/202607030000-daughter-of-the-otherworld.jpg",
+      "format": "audiobook",
+      "series": "Gael Song: Era II",
+      "seriesNumber": 1,
+      "finished": "2026-07-03",
+      "rating": 8
+    },
+    {
+      "title": "The Land of the Living and the Dead",
+      "author": "Shauna Lawless",
+      "cover": "/assets/images/reading/202606220000-the-land-of-the-living-and-the-dead.jpg",
+      "format": "audiobook",
+      "series": "Gael Song",
+      "seriesNumber": 3,
+      "finished": "2026-06-22",
+      "rating": 6
+    },
+    {
+      "title": "Dreams of Sorrow",
+      "author": "Shauna Lawless",
+      "cover": "/assets/images/reading/202606120000-dreams-of-sorrow.jpg",
+      "format": "audiobook",
+      "series": "Gael Song",
+      "seriesNumber": 2.5,
+      "finished": "2026-06-12",
+      "rating": 6
+    },
+    {
+      "title": "The Words of Kings and Prophets",
+      "author": "Shauna Lawless",
+      "cover": "/assets/images/reading/202606110000-the-words-of-kings-and-prophets.jpg",
+      "format": "audiobook",
+      "series": "Gael Song",
+      "seriesNumber": 2,
+      "finished": "2026-06-11",
+      "rating": 6
+    },
+    {
+      "title": "Platform Decay",
+      "author": "Martha Wells",
+      "cover": "/assets/images/reading/202606020000-platform-decay.jpg",
+      "format": "audiobook",
+      "series": "The Murderbot Diaries",
+      "seriesNumber": 8,
+      "finished": "2026-06-02",
+      "rating": 4
+    },
+    {
+      "title": "A Parade of Horribles",
+      "author": "Matt Dinniman",
+      "cover": "/assets/images/reading/202605280000-a-parade-of-horribles.jpg",
+      "format": "audiobook",
+      "series": "Dungeon Crawler Carl",
+      "seriesNumber": 8,
+      "finished": "2026-05-28",
+      "rating": 6,
+      "review": "I don't know if it's because I finished the first 7 one after the other and had to wait \"a lot\" for this one and then nothing to continue afterwards, but this didn't feel like the usual \"magic\" of the rest of the series, or the beginning for that matter. I was never too hot for the car style and was happy when Pony borked that level; but coming to it now definitely cements my feeling that it didn't click properly. Let's hope Matt can warap up this nicely."
+    },
+    {
+      "title": "The Children of Gods and Fighting Men",
+      "author": "Shauna Lawless",
+      "cover": "/assets/images/reading/202605130000-the-children-of-gods-and-fighting-men.jpg",
+      "format": "audiobook",
+      "series": "Gael Song",
+      "seriesNumber": 1,
+      "finished": "2026-05-13",
+      "rating": 8
+    },
+    {
+      "title": "A Short Stay in Hell",
+      "author": "Steven L. Peck",
+      "cover": "/assets/images/reading/202604220000-a-short-stay-in-hell.jpg",
+      "format": "audiobook",
+      "finished": "2026-04-22",
+      "rating": 4
+    },
+    {
+      "title": "Baby X",
+      "author": "Kira Peikoff",
+      "cover": "/assets/images/reading/202604210000-baby-x.jpg",
+      "format": "audiobook",
+      "finished": "2026-04-21",
+      "rating": 4
+    },
+    {
+      "title": "The Forest of Stolen Girls",
+      "author": "June Hur",
+      "cover": "/assets/images/reading/202604060000-the-forest-of-stolen-girls.jpg",
+      "format": "audiobook",
+      "finished": "2026-04-06",
+      "rating": 6
+    },
+    {
+      "title": "Blue Ocean Strategy How to Create Uncontested Market Space and Make the Competition Irrelevant",
+      "author": "W. Chan Kim, Renée Mauborgne",
+      "cover": "/assets/images/reading/202603250000-blue-ocean-strategy-how-to-create-uncontested-market-space-and-make-the-competition-irrelevant.jpg",
+      "format": "book",
+      "finished": "2026-03-25",
+      "rating": 6
+    },
+    {
+      "title": "Obviously Awesome How to Nail Product Positioning so Customers Get It Buy It Love It",
+      "author": "April Dunford",
+      "cover": "/assets/images/reading/202603170000-obviously-awesome-how-to-nail-product-positioning-so-customers-get-it-buy-it-love-it.jpg",
+      "format": "audiobook",
+      "finished": "2026-03-17",
+      "rating": 8
+    },
+    {
+      "title": "Continuous Discovery Habits Discover Products that Create Customer Value and Business Value",
+      "author": "Teresa  Torres",
+      "cover": "/assets/images/reading/202603120000-continuous-discovery-habits-discover-products-that-create-customer-value-and-business-value.jpg",
+      "format": "audiobook",
+      "finished": "2026-03-12",
+      "rating": 8
+    },
+    {
+      "title": "The SaaS Playbook Build a Multimillion-Dollar Startup Without Venture Capital",
+      "author": "Rob Walling, Jason Cohen",
+      "cover": "/assets/images/reading/202603090000-the-saas-playbook-build-a-multimillion-dollar-startup-without-venture-capital.jpg",
+      "format": "audiobook",
+      "finished": "2026-03-09",
+      "rating": 8
+    },
+    {
+      "title": "The Mom Test How to talk to customers  learn if your business is a good idea when everyone is lying to you",
+      "author": "Rob  Fitzpatrick",
+      "cover": "/assets/images/reading/202602160000-the-mom-test-how-to-talk-to-customers-learn-if-your-business-is-a-good-idea-when-everyone-is-lying-to-you.jpg",
+      "format": "audiobook",
+      "finished": "2026-02-16",
+      "rating": 8
+    },
+    {
+      "title": "System Collapse",
+      "author": "Martha Wells",
+      "cover": "/assets/images/reading/202602090001-system-collapse.jpg",
+      "format": "audiobook",
+      "series": "The Murderbot Diaries",
+      "seriesNumber": 7,
+      "finished": "2026-02-09",
+      "rating": 6
+    },
+    {
+      "title": "Fugitive Telemetry",
+      "author": "Martha Wells",
+      "cover": "/assets/images/reading/202601290000-fugitive-telemetry.jpg",
+      "format": "audiobook",
+      "series": "The Murderbot Diaries",
+      "seriesNumber": 6,
+      "finished": "2026-01-29",
+      "rating": 6
+    },
+    {
+      "title": "Network Effect",
+      "author": "Martha Wells",
+      "cover": "/assets/images/reading/202601230000-network-effect.jpg",
+      "format": "audiobook",
+      "series": "The Murderbot Diaries",
+      "seriesNumber": 5,
+      "finished": "2026-01-23",
+      "rating": 8
+    },
+    {
+      "title": "Exit Strategy",
+      "author": "Martha Wells",
+      "cover": "/assets/images/reading/202601170000-exit-strategy.jpg",
+      "format": "audiobook",
+      "series": "The Murderbot Diaries",
+      "seriesNumber": 4,
+      "finished": "2026-01-17",
+      "rating": 6
+    },
+    {
+      "title": "Rogue Protocol",
+      "author": "Martha Wells",
+      "cover": "/assets/images/reading/202601130000-rogue-protocol.jpg",
+      "format": "audiobook",
+      "series": "The Murderbot Diaries",
+      "seriesNumber": 3,
+      "finished": "2026-01-13",
+      "rating": 6
+    },
+    {
+      "title": "Artificial Condition",
+      "author": "Martha Wells",
+      "cover": "/assets/images/reading/202601070000-artificial-condition.jpg",
+      "format": "audiobook",
+      "series": "The Murderbot Diaries",
+      "seriesNumber": 2,
+      "finished": "2026-01-07",
+      "rating": 6
+    },
+    {
+      "title": "All Systems Red",
+      "author": "Martha Wells",
+      "cover": "/assets/images/reading/202601040000-all-systems-red.jpg",
+      "format": "audiobook",
+      "series": "The Murderbot Diaries",
+      "seriesNumber": 1,
+      "finished": "2026-01-04",
+      "rating": 6
+    },
+    {
+      "title": "3 Days 9 Months 27 Years (The Time Travelers Passport)",
+      "author": "John Scalzi",
+      "cover": "/assets/images/reading/202601020000-3-days-9-months-27-years-the-time-travelers-passport.jpg",
+      "format": "audiobook",
+      "finished": "2026-01-02",
+      "rating": 6
+    },
+    {
+      "title": "The Family Experiment",
+      "author": "John Marrs",
+      "cover": "/assets/images/reading/202512310000-the-family-experiment.jpg",
+      "format": "audiobook",
+      "series": "Dark Future",
+      "seriesNumber": 5,
+      "finished": "2025-12-31",
+      "rating": 10
+    },
+    {
+      "title": "This Inevitable Ruin",
+      "author": "Matt Dinniman",
+      "cover": "/assets/images/reading/202512230000-this-inevitable-ruin.jpg",
+      "format": "audiobook",
+      "series": "Dungeon Crawler Carl",
+      "seriesNumber": 7,
+      "finished": "2025-12-23",
+      "rating": 8
+    },
+    {
+      "title": "The Eye of the Bedlam Bride",
+      "author": "Matt Dinniman",
+      "cover": "/assets/images/reading/202512120000-the-eye-of-the-bedlam-bride.jpg",
+      "format": "audiobook",
+      "series": "Dungeon Crawler Carl",
+      "seriesNumber": 6,
+      "finished": "2025-12-12",
+      "rating": 10
+    },
+    {
+      "title": "The Butchers Masquerade",
+      "author": "Matt Dinniman",
+      "cover": "/assets/images/reading/202511290000-the-butchers-masquerade.jpg",
+      "format": "audiobook",
+      "series": "Dungeon Crawler Carl",
+      "seriesNumber": 5,
+      "finished": "2025-11-29",
+      "rating": 10
+    },
+    {
+      "title": "The Gate of the Feral Gods",
+      "author": "Matt Dinniman",
+      "cover": "/assets/images/reading/202511180000-the-gate-of-the-feral-gods.jpg",
+      "format": "audiobook",
+      "series": "Dungeon Crawler Carl",
+      "seriesNumber": 4,
+      "finished": "2025-11-18",
+      "rating": 10
+    },
+    {
+      "title": "The Dungeon Anarchists Cookbook",
+      "author": "Matt Dinniman",
+      "cover": "/assets/images/reading/202511110000-the-dungeon-anarchists-cookbook.jpg",
+      "format": "audiobook",
+      "series": "Dungeon Crawler Carl",
+      "seriesNumber": 3,
+      "finished": "2025-11-11",
+      "rating": 8
+    },
+    {
+      "title": "Carls Doomsday Scenario",
+      "author": "Matt Dinniman",
+      "cover": "/assets/images/reading/202511040000-carls-doomsday-scenario.jpg",
+      "format": "audiobook",
+      "series": "Dungeon Crawler Carl",
+      "seriesNumber": 2,
+      "finished": "2025-11-04",
+      "rating": 8
+    },
+    {
+      "title": "Dungeon Crawler Carl",
+      "author": "Matt Dinniman",
+      "cover": "/assets/images/reading/202510290000-dungeon-crawler-carl.jpg",
+      "format": "audiobook",
+      "series": "Dungeon Crawler Carl",
+      "seriesNumber": 1,
+      "finished": "2025-10-29",
+      "rating": 8
+    },
+    {
+      "title": "The Ragpicker King",
+      "author": "Cassandra Clare",
+      "cover": "/assets/images/reading/202510210000-the-ragpicker-king.jpg",
+      "format": "audiobook",
+      "series": "The Chronicles of Castellane",
+      "seriesNumber": 2,
+      "finished": "2025-10-21",
+      "rating": 6
+    },
+    {
+      "title": "We Love You Bunny",
+      "author": "Mona Awad",
+      "cover": "/assets/images/reading/202510100000-we-love-you-bunny.jpg",
+      "format": "audiobook",
+      "series": "Bunny",
+      "seriesNumber": 2,
+      "finished": "2025-10-10",
+      "rating": 6,
+      "review": "This is a tough one to rate. The beginning is meh. The middle is brilliant, I loved the meta aspect of the book within the book but the end The end is terrible. Gave it a 3 because of how much I enjoyed the middle section. Without it it's easily a 1"
+    },
+    {
+      "title": "The Shutouts",
+      "author": "Gabrielle Korn",
+      "cover": "/assets/images/reading/202509290000-the-shutouts.jpg",
+      "format": "audiobook",
+      "finished": "2025-09-29",
+      "rating": 6
+    },
+    {
+      "title": "A Galaxy of Whales",
+      "author": "Heather Fawcett",
+      "cover": "/assets/images/reading/202509230000-a-galaxy-of-whales.jpg",
+      "format": "audiobook",
+      "finished": "2025-09-23",
+      "rating": 6
+    },
+    {
+      "title": "A Crane Among Wolves",
+      "author": "June Hur",
+      "cover": "/assets/images/reading/202509220001-a-crane-among-wolves.jpg",
+      "format": "audiobook",
+      "finished": "2025-09-22",
+      "rating": 2
+    },
+    {
+      "title": "The Naturals",
+      "author": "Jennifer Lynn Barnes",
+      "cover": "/assets/images/reading/202509160000-the-naturals.jpg",
+      "format": "audiobook",
+      "series": "The Naturals",
+      "seriesNumber": 1,
+      "finished": "2025-09-16",
+      "rating": 6
+    },
+    {
+      "title": "Constituent Service (Third District Story)",
+      "author": "John Scalzi, Amber   Benson",
+      "cover": "/assets/images/reading/202509140000-constituent-service-third-district-story.jpg",
+      "format": "audiobook",
+      "finished": "2025-09-14",
+      "rating": 6
+    },
+    {
+      "title": "The Devils",
+      "author": "Joe Abercrombie",
+      "cover": "/assets/images/reading/202509110000-the-devils.jpg",
+      "format": "audiobook",
+      "series": "The Devils",
+      "seriesNumber": 1,
+      "finished": "2025-09-11",
+      "rating": 8,
+      "favorite": true
+    },
+    {
+      "title": "The Ministry of Time",
+      "author": "Kaliane Bradley",
+      "cover": "/assets/images/reading/202507220000-the-ministry-of-time.jpg",
+      "format": "audiobook",
+      "finished": "2025-07-22",
+      "rating": 4,
+      "review": "I can see how this could be a story that people enjoy. It has this over positioning of times, past and present. But the story is so banal for the longest part of the book, then that characters are a caricature of a Young Adult novel and when things get interesting; sadly they turn into the most stereotypical flat character in a book. The book has undertones of a great story. Unfortunately for me and my taste, they developed the boring parts of it"
+    },
+    {
+      "title": "The Last Town",
+      "author": "Blake Crouch",
+      "cover": "/assets/images/reading/202507100000-the-last-town.jpg",
+      "format": "audiobook",
+      "series": "Wayward Pines",
+      "seriesNumber": 3,
+      "finished": "2025-07-10",
+      "rating": 4
+    },
+    {
+      "title": "Wayward",
+      "author": "Blake Crouch",
+      "cover": "/assets/images/reading/202507020000-wayward.jpg",
+      "format": "audiobook",
+      "series": "Wayward Pines",
+      "seriesNumber": 2,
+      "finished": "2025-07-02",
+      "rating": 6
+    },
+    {
+      "title": "Pines",
+      "author": "Blake Crouch",
+      "cover": "/assets/images/reading/202506260000-pines.jpg",
+      "format": "audiobook",
+      "series": "Wayward Pines",
+      "seriesNumber": 1,
+      "finished": "2025-06-26",
+      "rating": 6
+    },
+    {
+      "title": "Yours for the Taking",
+      "author": "Gabrielle Korn",
+      "cover": "/assets/images/reading/202506200000-yours-for-the-taking.jpg",
+      "format": "audiobook",
+      "finished": "2025-06-20"
+    },
+    {
+      "title": "Blackout A Techno-Thriller",
+      "author": "Marc Elsberg",
+      "cover": "/assets/images/reading/202506170000-blackout-a-techno-thriller.jpg",
+      "format": "audiobook",
+      "finished": "2025-06-17",
+      "rating": 8
+    },
+    {
+      "title": "Bunny",
+      "author": "Mona Awad",
+      "cover": "/assets/images/reading/202506100000-bunny.jpg",
+      "format": "audiobook",
+      "series": "Bunny",
+      "seriesNumber": 1,
+      "finished": "2025-06-10",
+      "rating": 6
+    },
+    {
+      "title": "Million Dollar Weekend The Surprisingly Simple Way to Launch a 7-Figure Business in 48 Hours",
+      "author": "Noah Kagan",
+      "cover": "/assets/images/reading/202506020000-million-dollar-weekend-the-surprisingly-simple-way-to-launch-a-7-figure-business-in-48-hours.jpg",
+      "format": "audiobook",
+      "finished": "2025-06-02",
+      "rating": 6
+    },
+    {
+      "title": "Where the Library Hides",
+      "author": "Isabel Ibañez",
+      "cover": "/assets/images/reading/202505170000-where-the-library-hides.jpg",
+      "format": "audiobook",
+      "series": "Secrets of the Nile",
+      "seriesNumber": 2,
+      "finished": "2025-05-17",
+      "rating": 2
+    },
+    {
+      "title": "What the River Knows",
+      "author": "Isabel Ibañez",
+      "cover": "/assets/images/reading/202505050000-what-the-river-knows.jpg",
+      "format": "audiobook",
+      "series": "Secrets of the Nile",
+      "seriesNumber": 1,
+      "finished": "2025-05-05",
+      "rating": 4
+    },
+    {
+      "title": "The Reappearance of Rachel Price",
+      "author": "Holly  Jackson",
+      "cover": "/assets/images/reading/202504230000-the-reappearance-of-rachel-price.jpg",
+      "format": "audiobook",
+      "finished": "2025-04-23",
+      "rating": 10
+    },
+    {
+      "title": "Tales from the Loop",
+      "author": "Simon Stålenhag",
+      "cover": "/assets/images/reading/202504090000-tales-from-the-loop.jpg",
+      "format": "audiobook",
+      "series": "Tales from the Loop",
+      "seriesNumber": 1,
+      "finished": "2025-04-09",
+      "rating": 2
+    },
+    {
+      "title": "Emily Wildes Compendium of Lost Tales",
+      "author": "Heather Fawcett",
+      "cover": "/assets/images/reading/202504090001-emily-wildes-compendium-of-lost-tales.jpg",
+      "format": "audiobook",
+      "series": "Emily Wilde",
+      "seriesNumber": 3,
+      "finished": "2025-04-09",
+      "rating": 8
+    },
+    {
+      "title": "Your Blood My Bones",
+      "author": "Kelly Andrew",
+      "cover": "/assets/images/reading/202503290000-your-blood-my-bones.jpg",
+      "format": "audiobook",
+      "finished": "2025-03-29",
+      "rating": 2
+    },
+    {
+      "title": "This Ends in Embers",
+      "author": "Kamilah Cole",
+      "cover": "/assets/images/reading/202503170000-this-ends-in-embers.jpg",
+      "format": "audiobook",
+      "series": "Divine Traitors",
+      "seriesNumber": 2,
+      "finished": "2025-03-17",
+      "rating": 4
+    },
+    {
+      "title": "So Let Them Burn",
+      "author": "Kamilah Cole",
+      "cover": "/assets/images/reading/202503090000-so-let-them-burn.jpg",
+      "format": "audiobook",
+      "series": "Divine Traitors",
+      "seriesNumber": 1,
+      "finished": "2025-03-09",
+      "rating": 6
+    },
+    {
+      "title": "Serpent Sea",
+      "author": "Maiya Ibrahim",
+      "cover": "/assets/images/reading/202502280000-serpent-sea.jpg",
+      "format": "audiobook",
+      "series": "The Spice Road Trilogy",
+      "seriesNumber": 2,
+      "finished": "2025-02-28",
+      "rating": 6
+    },
+    {
+      "title": "Spice Road",
+      "author": "Maiya Ibrahim",
+      "cover": "/assets/images/reading/202502100001-spice-road.jpg",
+      "format": "audiobook",
+      "series": "The Spice Road Trilogy",
+      "seriesNumber": 1,
+      "finished": "2025-02-10",
+      "rating": 8
+    },
+    {
+      "title": "Im Starting to Worry About This Black Box of Doom",
+      "author": "Jason Pargin",
+      "cover": "/assets/images/reading/202502030000-im-starting-to-worry-about-this-black-box-of-doom.jpg",
+      "format": "audiobook",
+      "finished": "2025-02-03",
+      "rating": 6
+    },
+    {
+      "title": "Bridge",
+      "author": "Lauren Beukes",
+      "cover": "/assets/images/reading/202501240000-bridge.jpg",
+      "format": "audiobook",
+      "finished": "2025-01-24",
+      "rating": 6
+    },
+    {
+      "title": "For She Is Wrath",
+      "author": "Emily  Varga",
+      "cover": "/assets/images/reading/202501190000-for-she-is-wrath.jpg",
+      "format": "audiobook",
+      "finished": "2025-01-19",
+      "rating": 6
+    },
+    {
+      "title": "The Golden Enclaves",
+      "author": "Naomi Novik",
+      "cover": "/assets/images/reading/202501120000-the-golden-enclaves.jpg",
+      "format": "audiobook",
+      "series": "The Scholomance",
+      "seriesNumber": 3,
+      "finished": "2025-01-12",
+      "rating": 8
+    },
+    {
+      "title": "The Last Graduate",
+      "author": "Naomi Novik",
+      "cover": "/assets/images/reading/202501070000-the-last-graduate.jpg",
+      "format": "audiobook",
+      "series": "The Scholomance",
+      "seriesNumber": 2,
+      "finished": "2025-01-07",
+      "rating": 6
+    },
+    {
+      "title": "A Deadly Education",
+      "author": "Naomi Novik",
+      "cover": "/assets/images/reading/202412280000-a-deadly-education.jpg",
+      "format": "audiobook",
+      "series": "The Scholomance",
+      "seriesNumber": 1,
+      "finished": "2024-12-28",
+      "rating": 6
+    },
+    {
+      "title": "Heist Royale",
+      "author": "Kayvion Lewis",
+      "cover": "/assets/images/reading/202412200000-heist-royale.jpg",
+      "format": "audiobook",
+      "series": "Thieves' Gambit",
+      "seriesNumber": 2,
+      "finished": "2024-12-20",
+      "rating": 6
+    },
+    {
+      "title": "Of Jade and Dragons",
+      "author": "Amber Chen",
+      "cover": "/assets/images/reading/202412150000-of-jade-and-dragons.jpg",
+      "format": "audiobook",
+      "series": "Fall of the Dragon",
+      "seriesNumber": 1,
+      "finished": "2024-12-15",
+      "rating": 4
+    },
+    {
+      "title": "The Stardust Grail",
+      "author": "Yume Kitasei",
+      "cover": "/assets/images/reading/202412040000-the-stardust-grail.jpg",
+      "format": "audiobook",
+      "finished": "2024-12-04",
+      "rating": 8
+    },
+    {
+      "title": "The Deep Sky",
+      "author": "Yume Kitasei",
+      "cover": "/assets/images/reading/202411210000-the-deep-sky.jpg",
+      "format": "audiobook",
+      "finished": "2024-11-21",
+      "rating": 10
+    },
+    {
+      "title": "An Academy for Liars",
+      "author": "Alexis  Henderson",
+      "cover": "/assets/images/reading/202411140000-an-academy-for-liars.jpg",
+      "format": "audiobook",
+      "finished": "2024-11-14",
+      "rating": 4,
+      "review": "Good story, but the \"love part\" was layered too thick and felt forced (despite being expected due to this being a YA novel)"
+    },
+    {
+      "title": "Team Topologies Organizing Business and Technology Teams for Fast Flow",
+      "author": "Matthew    Skelton, Manuel Pais",
+      "cover": "/assets/images/reading/202411050000-team-topologies-organizing-business-and-technology-teams-for-fast-flow.jpg",
+      "format": "audiobook",
+      "finished": "2024-11-05",
+      "rating": 4,
+      "review": "Finally finished the book. That was a tough one to finish. It wasn't bad per se. Wasn't great either. Just not very palatable"
+    },
+    {
+      "title": "Laozis Dao De Jing A New Interpretation for a Transformative Time",
+      "author": "Ken Liu, Lao Tzu",
+      "cover": "/assets/images/reading/202410090000-laozis-dao-de-jing-a-new-interpretation-for-a-transformative-time.jpg",
+      "format": "audiobook",
+      "finished": "2024-10-09",
+      "rating": 4
+    },
+    {
+      "title": "Your Money or Your Life",
+      "author": "Joe Domínguez, Vicki Robin",
+      "cover": "/assets/images/reading/202409130000-your-money-or-your-life.jpg",
+      "format": "audiobook",
+      "finished": "2024-09-13",
+      "rating": 6
+    },
+    {
+      "title": "The Staff Engineers Path A Guide for Individual Contributors Navigating Growth and Change",
+      "author": "Tanya Reilly",
+      "cover": "/assets/images/reading/202408160000-the-staff-engineers-path-a-guide-for-individual-contributors-navigating-growth-and-change.jpg",
+      "format": "audiobook",
+      "finished": "2024-08-16"
+    },
+    {
+      "title": "The 4 Disciplines of Execution Achieving Your Wildly Important Goals",
+      "author": "Chris McChesney, Sean Covey, Jim Huling",
+      "cover": "/assets/images/reading/202407240000-the-4-disciplines-of-execution-achieving-your-wildly-important-goals.jpg",
+      "format": "audiobook",
+      "finished": "2024-07-24",
+      "rating": 8
+    },
+    {
+      "title": "Profit First Transform Your Business from a Cash-Eating Monster to a Money-Making Machine",
+      "author": "Mike Michalowicz",
+      "cover": "/assets/images/reading/202407160000-profit-first-transform-your-business-from-a-cash-eating-monster-to-a-money-making-machine.jpg",
+      "format": "audiobook",
+      "finished": "2024-07-16",
+      "rating": 6
+    },
+    {
+      "title": "Hyperfocus How to Be More Productive in a World of Distraction",
+      "author": "Chris   Bailey",
+      "cover": "/assets/images/reading/202406270001-hyperfocus-how-to-be-more-productive-in-a-world-of-distraction.jpg",
+      "format": "audiobook",
+      "finished": "2024-06-27",
+      "rating": 8
+    },
+    {
+      "title": "Floating Hotel",
+      "author": "Grace  Curtis",
+      "cover": "/assets/images/reading/202406220000-floating-hotel.jpg",
+      "format": "audiobook",
+      "finished": "2024-06-22",
+      "rating": 6
+    },
+    {
+      "title": "The Shining Girls",
+      "author": "Lauren Beukes",
+      "cover": "/assets/images/reading/202406170000-the-shining-girls.jpg",
+      "format": "audiobook",
+      "finished": "2024-06-17",
+      "rating": 6
+    },
+    {
+      "title": "The Light Pirate",
+      "author": "Lily Brooks-Dalton",
+      "cover": "/assets/images/reading/202406050000-the-light-pirate.jpg",
+      "format": "audiobook",
+      "finished": "2024-06-05",
+      "rating": 6
+    },
+    {
+      "title": "Little Eyes",
+      "author": "Samanta Schweblin, Megan McDowell",
+      "cover": "/assets/images/reading/202405290000-little-eyes.jpg",
+      "format": "audiobook",
+      "finished": "2024-05-29",
+      "rating": 8
+    },
+    {
+      "title": "The Adventures of Amina al-Sirafi",
+      "author": "Shannon Chakraborty, S.A. Chakraborty",
+      "cover": "/assets/images/reading/202405240000-the-adventures-of-amina-al-sirafi.jpg",
+      "format": "audiobook",
+      "series": "Amina al-Sirafi",
+      "seriesNumber": 1,
+      "finished": "2024-05-24",
+      "rating": 6
+    },
+    {
+      "title": "Threads That Bind",
+      "author": "Kika Hatzopoulou",
+      "cover": "/assets/images/reading/202405160000-threads-that-bind.jpg",
+      "format": "audiobook",
+      "series": "Threads That Bind",
+      "seriesNumber": 1,
+      "finished": "2024-05-16",
+      "rating": 4
+    },
+    {
+      "title": "Ink Blood Sister Scribe",
+      "author": "Emma Törzs",
+      "cover": "/assets/images/reading/202405130000-ink-blood-sister-scribe.jpg",
+      "format": "audiobook",
+      "finished": "2024-05-13",
+      "rating": 8
+    },
+    {
+      "title": "Thieves Gambit",
+      "author": "Kayvion Lewis",
+      "cover": "/assets/images/reading/202405030001-thieves-gambit.jpg",
+      "format": "audiobook",
+      "series": "Thieves' Gambit",
+      "seriesNumber": 1,
+      "finished": "2024-05-03",
+      "rating": 6
+    },
+    {
+      "title": "Meditations",
+      "author": "Marcus Aurelius, Martin Hammond",
+      "cover": "/assets/images/reading/202404280000-meditations.jpg",
+      "format": "audiobook",
+      "finished": "2024-04-28",
+      "rating": 6
+    },
+    {
+      "title": "The Left Hand of Darkness",
+      "author": "Ursula K. Le Guin",
+      "cover": "/assets/images/reading/202404230000-the-left-hand-of-darkness.jpg",
+      "format": "audiobook",
+      "finished": "2024-04-23",
+      "rating": 6
+    },
+    {
+      "title": "Translation State",
+      "author": "Ann Leckie",
+      "cover": "/assets/images/reading/202404170000-translation-state.jpg",
+      "format": "audiobook",
+      "finished": "2024-04-17",
+      "rating": 6,
+      "review": "2.8 stars for me. I feel like the lore and complexity of the characters would have fit better a saga. Compressed into a single file book made it not work great"
+    },
+    {
+      "title": "No Hard Feelings The Secret Power of Embracing Emotions at Work",
+      "author": "Liz Fosslien, Mollie West Duffy",
+      "cover": "/assets/images/reading/202404110000-no-hard-feelings-the-secret-power-of-embracing-emotions-at-work.jpg",
+      "format": "audiobook",
+      "finished": "2024-04-11",
+      "rating": 6
+    },
+    {
+      "title": "The Future",
+      "author": "Naomi Alderman",
+      "cover": "/assets/images/reading/202404090000-the-future.jpg",
+      "format": "audiobook",
+      "finished": "2024-04-09",
+      "rating": 6,
+      "review": "Slow start, VERY slow. Middle of the book picks up the pace and becomes quite engaging The very end is a wee bit predictive Overall a nice message. An ok book"
+    },
+    {
+      "title": "Those Beyond the Wall",
+      "author": "Micaiah Johnson",
+      "cover": "/assets/images/reading/202403290000-those-beyond-the-wall.jpg",
+      "format": "audiobook",
+      "series": "The Space Between Worlds",
+      "seriesNumber": 2,
+      "finished": "2024-03-29",
+      "rating": 8
+    },
+    {
+      "title": "Starter Villain",
+      "author": "John Scalzi",
+      "cover": "/assets/images/reading/202403140000-starter-villain.jpg",
+      "format": "audiobook",
+      "finished": "2024-03-14",
+      "rating": 10
+    },
+    {
+      "title": "Rouge Street Three Novellas",
+      "author": "Shuang Xuetao, Jeremy Tiang",
+      "cover": "/assets/images/reading/202403070000-rouge-street-three-novellas.jpg",
+      "format": "audiobook",
+      "finished": "2024-03-07",
+      "rating": 4
+    },
+    {
+      "title": "Stone Blind",
+      "author": "Natalie Haynes",
+      "cover": "/assets/images/reading/202403030000-stone-blind.jpg",
+      "format": "audiobook",
+      "finished": "2024-03-03",
+      "rating": 2
+    },
+    {
+      "title": "Emily Wilde’s Map of the Otherlands",
+      "author": "Heather Fawcett",
+      "cover": "/assets/images/reading/202402270000-emily-wilde-s-map-of-the-otherlands.jpg",
+      "format": "audiobook",
+      "series": "Emily Wilde",
+      "seriesNumber": 2,
+      "finished": "2024-02-27",
+      "rating": 10
+    },
+    {
+      "title": "Emily Wildes Encyclopaedia of Faeries",
+      "author": "Heather Fawcett",
+      "cover": "/assets/images/reading/202402140000-emily-wildes-encyclopaedia-of-faeries.jpg",
+      "format": "audiobook",
+      "series": "Emily Wilde",
+      "seriesNumber": 1,
+      "finished": "2024-02-14",
+      "rating": 8
+    },
+    {
+      "title": "The Phoenix Project A Novel About IT DevOps and Helping Your Business Win",
+      "author": "Gene Kim, Kevin Behr, George Spafford",
+      "cover": "/assets/images/reading/202402010000-the-phoenix-project-a-novel-about-it-devops-and-helping-your-business-win.jpg",
+      "format": "audiobook",
+      "finished": "2024-02-01",
+      "rating": 4,
+      "review": "I genuinely like the writing style. Writing int as a story is definitely infinitely better than any other \"recipe\" book. That being said, as of 2024 this book reads full of cliches; and the MC being the macho American ex navy just destroys a bunch of different great points Has interesting points but not mind blowing (obviously this is 11 years after initial writing)"
+    },
+    {
+      "title": "Atalanta",
+      "author": "Jennifer Saint",
+      "cover": "/assets/images/reading/202401290000-atalanta.jpg",
+      "format": "audiobook",
+      "finished": "2024-01-29",
+      "rating": 6
+    },
+    {
+      "title": "Lore",
+      "author": "Alexandra Bracken",
+      "cover": "/assets/images/reading/202401230000-lore.jpg",
+      "format": "audiobook",
+      "finished": "2024-01-23",
+      "rating": 8
+    },
+    {
+      "title": "I Keep My Exoskeletons to Myself",
+      "author": "Marisa Crane",
+      "cover": "/assets/images/reading/202401140000-i-keep-my-exoskeletons-to-myself.jpg",
+      "format": "audiobook",
+      "finished": "2024-01-14",
+      "rating": 8
+    },
+    {
+      "title": "Storyworthy Engage Teach Persuade and Change Your Life through the Power of Storytelling",
+      "author": "Matthew Dicks, Dan Kennedy",
+      "cover": "/assets/images/reading/202401090000-storyworthy-engage-teach-persuade-and-change-your-life-through-the-power-of-storytelling.jpg",
+      "format": "audiobook",
+      "finished": "2024-01-09",
+      "rating": 8
+    },
+    {
+      "title": "The Night Circus",
+      "author": "Erin Morgenstern",
+      "cover": "/assets/images/reading/202312210000-the-night-circus.jpg",
+      "format": "audiobook",
+      "finished": "2023-12-21",
+      "rating": 8
+    },
+    {
+      "title": "The Girl Who Fell Beneath the Sea",
+      "author": "Axie Oh",
+      "cover": "/assets/images/reading/202311290000-the-girl-who-fell-beneath-the-sea.jpg",
+      "format": "audiobook",
+      "finished": "2023-11-29",
+      "rating": 8,
+      "review": "To me this reads like something from the same place where Studio Ghibli draws inspiration from. The ambience of the story, the flow and the characters. I grabbed this book randomly and I'm so very happy I did"
+    },
+    {
+      "title": "Managing Humans Biting and Humorous Tales of a Software Engineering Manager",
+      "author": "Michael Lopp",
+      "cover": "/assets/images/reading/202311220000-managing-humans-biting-and-humorous-tales-of-a-software-engineering-manager.jpg",
+      "format": "audiobook",
+      "finished": "2023-11-22",
+      "rating": 4
+    },
+    {
+      "title": "Sword Catcher",
+      "author": "Cassandra Clare",
+      "cover": "/assets/images/reading/202311160000-sword-catcher.jpg",
+      "format": "audiobook",
+      "series": "The Chronicles of Castellane",
+      "seriesNumber": 1,
+      "finished": "2023-11-16",
+      "rating": 6
+    },
+    {
+      "title": "How to Be Perfect The Correct Answer to Every Moral Question",
+      "author": "Michael Schur",
+      "cover": "/assets/images/reading/202310220000-how-to-be-perfect-the-correct-answer-to-every-moral-question.jpg",
+      "format": "audiobook",
+      "finished": "2023-10-22",
+      "rating": 8
+    },
+    {
+      "title": "The Space Between Worlds",
+      "author": "Micaiah Johnson",
+      "cover": "/assets/images/reading/202310180000-the-space-between-worlds.jpg",
+      "format": "audiobook",
+      "series": "The Space Between Worlds",
+      "seriesNumber": 1,
+      "finished": "2023-10-18",
+      "rating": 8
+    },
+    {
+      "title": "The Fragile Threads of Power",
+      "author": "V.E. Schwab, Victoria Schwab",
+      "cover": "/assets/images/reading/202310110000-the-fragile-threads-of-power.jpg",
+      "format": "audiobook",
+      "series": "Threads of Power",
+      "seriesNumber": 1,
+      "finished": "2023-10-11",
+      "rating": 8
+    },
+    {
+      "title": "Summary of Competing Against Luck The Story of Innovation and Customer Choice",
+      "author": "PCC",
+      "cover": "/assets/images/reading/202309260000-summary-of-competing-against-luck-the-story-of-innovation-and-customer-choice.jpg",
+      "format": "audiobook",
+      "finished": "2023-09-26",
+      "rating": 8
+    },
+    {
+      "title": "They Never Learn",
+      "author": "Layne Fargo",
+      "cover": "/assets/images/reading/202309210000-they-never-learn.jpg",
+      "format": "audiobook",
+      "finished": "2023-09-21",
+      "rating": 6
+    },
+    {
+      "title": "Hell Bent",
+      "author": "Leigh Bardugo",
+      "cover": "/assets/images/reading/202309150000-hell-bent.jpg",
+      "format": "audiobook",
+      "series": "Ninth House Trilogy",
+      "seriesNumber": 2,
+      "finished": "2023-09-15",
+      "rating": 6
+    },
+    {
+      "title": "Ninth House",
+      "author": "Leigh Bardugo",
+      "cover": "/assets/images/reading/202309050000-ninth-house.jpg",
+      "format": "audiobook",
+      "series": "Ninth House Trilogy",
+      "seriesNumber": 1,
+      "finished": "2023-09-05",
+      "rating": 6
+    },
+    {
+      "title": "Multipliers How the Best Leaders Make Everyone Smarter",
+      "author": "Liz Wiseman, Greg McKeown",
+      "cover": "/assets/images/reading/202308260000-multipliers-how-the-best-leaders-make-everyone-smarter.jpg",
+      "format": "audiobook",
+      "finished": "2023-08-26",
+      "rating": 6
+    },
+    {
+      "title": "Light Bringer",
+      "author": "Pierce Brown",
+      "cover": "/assets/images/reading/202308220000-light-bringer.jpg",
+      "format": "audiobook",
+      "series": "Red Rising Saga",
+      "seriesNumber": 6,
+      "finished": "2023-08-22",
+      "rating": 10
+    },
+    {
+      "title": "Nevermoor The Trials of Morrigan Crow",
+      "author": "Jessica Townsend, Jim Madsen",
+      "cover": "/assets/images/reading/202307270000-nevermoor-the-trials-of-morrigan-crow.jpg",
+      "format": "audiobook",
+      "series": "Nevermoor",
+      "seriesNumber": 1,
+      "finished": "2023-07-27",
+      "rating": 6
+    },
+    {
+      "title": "Broken Light",
+      "author": "Joanne Harris",
+      "cover": "/assets/images/reading/202307240000-broken-light.jpg",
+      "format": "audiobook",
+      "finished": "2023-07-24",
+      "rating": 8
+    },
+    {
+      "title": "A Conjuring of Light",
+      "author": "V.E. Schwab, Victoria Schwab",
+      "cover": "/assets/images/reading/202307160000-a-conjuring-of-light.jpg",
+      "format": "audiobook",
+      "series": "Shades of Magic",
+      "seriesNumber": 3,
+      "finished": "2023-07-16",
+      "rating": 8
+    },
+    {
+      "title": "A Gathering of Shadows",
+      "author": "V.E. Schwab, Victoria Schwab",
+      "cover": "/assets/images/reading/202307050001-a-gathering-of-shadows.jpg",
+      "format": "audiobook",
+      "series": "Shades of Magic",
+      "seriesNumber": 2,
+      "finished": "2023-07-05",
+      "rating": 8
+    },
+    {
+      "title": "A Darker Shade of Magic",
+      "author": "V.E. Schwab, Victoria Schwab",
+      "cover": "/assets/images/reading/202306290000-a-darker-shade-of-magic.jpg",
+      "format": "audiobook",
+      "series": "Shades of Magic",
+      "seriesNumber": 1,
+      "finished": "2023-06-29",
+      "rating": 6
+    },
+    {
+      "title": "The Midnight Library",
+      "author": "Matt Haig",
+      "cover": "/assets/images/reading/202306220000-the-midnight-library.jpg",
+      "format": "audiobook",
+      "series": "The Midnight World",
+      "seriesNumber": 1,
+      "finished": "2023-06-22",
+      "rating": 8
+    },
+    {
+      "title": "The Book Eaters",
+      "author": "Sunyi Dean",
+      "cover": "/assets/images/reading/202306200000-the-book-eaters.jpg",
+      "format": "audiobook",
+      "finished": "2023-06-20",
+      "rating": 6
+    },
+    {
+      "title": "The Book of Longings",
+      "author": "Sue Monk Kidd",
+      "cover": "/assets/images/reading/202306140000-the-book-of-longings.jpg",
+      "format": "audiobook",
+      "finished": "2023-06-14",
+      "rating": 6
+    },
+    {
+      "title": "Deep as the Sky Red as the Sea",
+      "author": "Rita Chang-Eppig",
+      "cover": "/assets/images/reading/202306070000-deep-as-the-sky-red-as-the-sea.jpg",
+      "format": "audiobook",
+      "finished": "2023-06-07",
+      "rating": 6
+    },
+    {
+      "title": "Project Hail Mary",
+      "author": "Andy Weir",
+      "cover": "/assets/images/reading/202306050000-project-hail-mary.jpg",
+      "format": "audiobook",
+      "finished": "2023-06-05",
+      "rating": 8
+    },
+    {
+      "title": "Lyras Oxford",
+      "author": "Philip Pullman, John Lawrence",
+      "cover": "/assets/images/reading/202305300000-lyras-oxford.jpg",
+      "format": "audiobook",
+      "series": "His Dark Materials",
+      "seriesNumber": 3.5,
+      "finished": "2023-05-30",
+      "rating": 6
+    },
+    {
+      "title": "The Amber Spyglass",
+      "author": "Philip Pullman",
+      "cover": "/assets/images/reading/202305290000-the-amber-spyglass.jpg",
+      "format": "audiobook",
+      "series": "His Dark Materials",
+      "seriesNumber": 3,
+      "finished": "2023-05-29",
+      "rating": 8
+    },
+    {
+      "title": "The Subtle Knife",
+      "author": "Philip Pullman",
+      "cover": "/assets/images/reading/202305240000-the-subtle-knife.jpg",
+      "format": "audiobook",
+      "series": "His Dark Materials",
+      "seriesNumber": 2,
+      "finished": "2023-05-24",
+      "rating": 8
+    },
+    {
+      "title": "The Golden Compass",
+      "author": "Philip Pullman",
+      "cover": "/assets/images/reading/202305210000-the-golden-compass.jpg",
+      "format": "audiobook",
+      "series": "His Dark Materials",
+      "seriesNumber": 1,
+      "finished": "2023-05-21",
+      "rating": 6
+    },
+    {
+      "title": "Once Upon a Time in the North",
+      "author": "Philip Pullman, John Lawrence",
+      "cover": "/assets/images/reading/202305160000-once-upon-a-time-in-the-north.jpg",
+      "format": "audiobook",
+      "series": "His Dark Materials",
+      "seriesNumber": 0.5,
+      "finished": "2023-05-16",
+      "rating": 4
+    },
+    {
+      "title": "The Book of Gothel",
+      "author": "Mary McMyne",
+      "cover": "/assets/images/reading/202305160001-the-book-of-gothel.jpg",
+      "format": "audiobook",
+      "finished": "2023-05-16",
+      "rating": 6
+    },
+    {
+      "title": "Gallant",
+      "author": "V.E. Schwab, Victoria Schwab, Manuel Sumberac",
+      "cover": "/assets/images/reading/202305110000-gallant.jpg",
+      "format": "audiobook",
+      "finished": "2023-05-11",
+      "rating": 6
+    },
+    {
+      "title": "The Empty Grave",
+      "author": "Jonathan Stroud",
+      "cover": "/assets/images/reading/202305080000-the-empty-grave.jpg",
+      "format": "audiobook",
+      "series": "Lockwood & Co.",
+      "seriesNumber": 5,
+      "finished": "2023-05-08",
+      "rating": 6
+    },
+    {
+      "title": "The Creeping Shadow",
+      "author": "Jonathan Stroud",
+      "cover": "/assets/images/reading/202305040000-the-creeping-shadow.jpg",
+      "format": "audiobook",
+      "series": "Lockwood & Co.",
+      "seriesNumber": 4,
+      "finished": "2023-05-04",
+      "rating": 6
+    },
+    {
+      "title": "The Hollow Boy",
+      "author": "Jonathan Stroud",
+      "cover": "/assets/images/reading/202305010000-the-hollow-boy.png",
+      "format": "audiobook",
+      "series": "Lockwood & Co.",
+      "seriesNumber": 3,
+      "finished": "2023-05-01",
+      "rating": 6
+    },
+    {
+      "title": "The Whispering Skull",
+      "author": "Jonathan Stroud",
+      "cover": "/assets/images/reading/202304260000-the-whispering-skull.jpg",
+      "format": "audiobook",
+      "series": "Lockwood & Co.",
+      "seriesNumber": 2,
+      "finished": "2023-04-26",
+      "rating": 6
+    },
+    {
+      "title": "The Screaming Staircase",
+      "author": "Jonathan Stroud",
+      "cover": "/assets/images/reading/202304210000-the-screaming-staircase.jpg",
+      "format": "audiobook",
+      "series": "Lockwood & Co.",
+      "seriesNumber": 1,
+      "finished": "2023-04-21",
+      "rating": 8
+    },
+    {
+      "title": "For the Love of Men A New Vision for Mindful Masculinity",
+      "author": "Liz Plank",
+      "cover": "/assets/images/reading/202304150000-for-the-love-of-men-a-new-vision-for-mindful-masculinity.jpg",
+      "format": "audiobook",
+      "finished": "2023-04-15",
+      "rating": 10
+    },
+    {
+      "title": "Crucial Conversations Tools for Talking When Stakes are High",
+      "author": "Kerry Patterson, Stephen R. Covey, Joseph Grenny, Ron McMillan, Al Switzler",
+      "cover": "/assets/images/reading/202304020000-crucial-conversations-tools-for-talking-when-stakes-are-high.jpg",
+      "format": "audiobook",
+      "finished": "2023-04-02",
+      "rating": 8
+    },
+    {
+      "title": "The Last Wish",
+      "author": "Andrzej Sapkowski, Danusia Stok",
+      "cover": "/assets/images/reading/202303210000-the-last-wish.jpg",
+      "format": "audiobook",
+      "series": "The Witcher",
+      "seriesNumber": 1,
+      "finished": "2023-03-21",
+      "rating": 6,
+      "review": "I feel like this series is over hyped. The idea behind and the fantasy is cool, but the narrative is the same as many and the style sometimes boring"
+    },
+    {
+      "title": "The Great CEO Within The Tactical Guide to Company Building",
+      "author": "Matt Mochary",
+      "cover": "/assets/images/reading/202303100000-the-great-ceo-within-the-tactical-guide-to-company-building.jpg",
+      "format": "audiobook",
+      "finished": "2023-03-10",
+      "rating": 8
+    },
+    {
+      "title": "Good Strategy Bad Strategy The Difference and Why It Matters",
+      "author": "Richard P. Rumelt",
+      "cover": "/assets/images/reading/202302280001-good-strategy-bad-strategy-the-difference-and-why-it-matters.jpg",
+      "format": "audiobook",
+      "finished": "2023-02-28",
+      "rating": 6
+    },
+    {
+      "title": "Digital Fortress",
+      "author": "Dan    Brown",
+      "cover": "/assets/images/reading/202302190000-digital-fortress.jpg",
+      "format": "audiobook",
+      "finished": "2023-02-19",
+      "rating": 2,
+      "review": "This book is terrible. Flat characters and a very boring story :/ Honestly don't understand the hype for Dan Brown. Perhaps he has better works but at least this one was plain and painful"
+    },
+    {
+      "title": "The Invisible Life of Addie LaRue",
+      "author": "V.E. Schwab, Victoria Schwab",
+      "cover": "/assets/images/reading/202302080000-the-invisible-life-of-addie-larue.jpg",
+      "format": "audiobook",
+      "finished": "2023-02-08",
+      "rating": 8
+    },
+    {
+      "title": "Sandworms of Dune",
+      "author": "Brian Herbert, Kevin J. Anderson",
+      "cover": "/assets/images/reading/202301220000-sandworms-of-dune.jpg",
+      "format": "audiobook",
+      "series": "Dune",
+      "seriesNumber": 8,
+      "finished": "2023-01-22",
+      "rating": 8
+    },
+    {
+      "title": "Hunters of Dune",
+      "author": "Brian Herbert, Kevin J. Anderson",
+      "cover": "/assets/images/reading/202301080000-hunters-of-dune.jpg",
+      "format": "audiobook",
+      "series": "Dune",
+      "seriesNumber": 7,
+      "finished": "2023-01-08",
+      "rating": 8
+    },
+    {
+      "title": "Chapterhouse Dune",
+      "author": "Frank Herbert",
+      "cover": "/assets/images/reading/202212240000-chapterhouse-dune.jpg",
+      "format": "audiobook",
+      "series": "Dune",
+      "seriesNumber": 6,
+      "finished": "2022-12-24",
+      "rating": 6
+    },
+    {
+      "title": "Heretics of Dune",
+      "author": "Frank Herbert",
+      "cover": "/assets/images/reading/202211280000-heretics-of-dune.jpg",
+      "format": "audiobook",
+      "series": "Dune",
+      "seriesNumber": 5,
+      "finished": "2022-11-28",
+      "rating": 6
+    },
+    {
+      "title": "God Emperor of Dune",
+      "author": "Frank Herbert",
+      "cover": "/assets/images/reading/202211160000-god-emperor-of-dune.jpg",
+      "format": "audiobook",
+      "series": "Dune",
+      "seriesNumber": 4,
+      "finished": "2022-11-16",
+      "rating": 8
+    },
+    {
+      "title": "Children of Dune",
+      "author": "Frank Herbert",
+      "cover": "/assets/images/reading/202211070000-children-of-dune.jpg",
+      "format": "audiobook",
+      "series": "Dune",
+      "seriesNumber": 3,
+      "finished": "2022-11-07",
+      "rating": 10,
+      "review": "Paul's comeback was pretty much expected. But definitely the \"evolution\" of Leto or the suggestion of incest was definitely a very interesting unpredictable twist"
+    },
+    {
+      "title": "Dune Messiah",
+      "author": "Frank Herbert, Brian Herbert",
+      "cover": "/assets/images/reading/202210260000-dune-messiah.jpg",
+      "format": "audiobook",
+      "series": "Dune",
+      "seriesNumber": 2,
+      "finished": "2022-10-26",
+      "rating": 10
+    },
+    {
+      "title": "Dune",
+      "author": "Frank Herbert",
+      "cover": "/assets/images/reading/202210200000-dune.jpg",
+      "format": "audiobook",
+      "series": "Dune",
+      "seriesNumber": 1,
+      "finished": "2022-10-20",
+      "rating": 10
+    },
+    {
+      "title": "The Bazaar of Bad Dreams",
+      "author": "Stephen  King",
+      "cover": "/assets/images/reading/202209260000-the-bazaar-of-bad-dreams.jpg",
+      "format": "audiobook",
+      "finished": "2022-09-26",
+      "rating": 6
+    },
+    {
+      "title": "Sleeping Beauties",
+      "author": "Stephen  King, Owen King",
+      "cover": "/assets/images/reading/202209100000-sleeping-beauties.jpg",
+      "format": "audiobook",
+      "finished": "2022-09-10",
+      "rating": 8
+    },
+    {
+      "title": "The Wives",
+      "author": "Tarryn Fisher",
+      "cover": "/assets/images/reading/202209040000-the-wives.jpg",
+      "format": "audiobook",
+      "finished": "2022-09-04",
+      "rating": 6
+    },
+    {
+      "title": "The Tower at the End of Time",
+      "author": "Amy Sparkes, Ben Mantle",
+      "cover": "/assets/images/reading/202208310000-the-tower-at-the-end-of-time.jpg",
+      "format": "audiobook",
+      "series": "The House at the Edge of Magic",
+      "seriesNumber": 2,
+      "finished": "2022-08-31",
+      "rating": 6
+    },
+    {
+      "title": "The House at the Edge of Magic",
+      "author": "Amy Sparkes",
+      "cover": "/assets/images/reading/202208260000-the-house-at-the-edge-of-magic.jpg",
+      "format": "audiobook",
+      "series": "The House at the Edge of Magic",
+      "seriesNumber": 1,
+      "finished": "2022-08-26",
+      "rating": 6
+    },
+    {
+      "title": "Speaking Bones",
+      "author": "Ken Liu",
+      "cover": "/assets/images/reading/202208250000-speaking-bones.jpg",
+      "format": "audiobook",
+      "series": "The Dandelion Dynasty",
+      "seriesNumber": 4,
+      "finished": "2022-08-25",
+      "rating": 10
+    },
+    {
+      "title": "Dark Age",
+      "author": "Pierce Brown",
+      "cover": "/assets/images/reading/202207180000-dark-age.jpg",
+      "format": "audiobook",
+      "series": "Red Rising Saga",
+      "seriesNumber": 5,
+      "finished": "2022-07-18",
+      "rating": 8
+    },
+    {
+      "title": "Iron Gold",
+      "author": "Pierce Brown",
+      "cover": "/assets/images/reading/202207070000-iron-gold.jpg",
+      "format": "audiobook",
+      "series": "Red Rising Saga",
+      "seriesNumber": 4,
+      "finished": "2022-07-07",
+      "rating": 6
+    },
+    {
+      "title": "Morning Star",
+      "author": "Pierce Brown",
+      "cover": "/assets/images/reading/202206240000-morning-star.jpg",
+      "format": "audiobook",
+      "series": "Red Rising Saga",
+      "seriesNumber": 3,
+      "finished": "2022-06-24",
+      "rating": 10
+    },
+    {
+      "title": "Golden Son",
+      "author": "Pierce Brown",
+      "cover": "/assets/images/reading/202206180000-golden-son.jpg",
+      "format": "audiobook",
+      "series": "Red Rising Saga",
+      "seriesNumber": 2,
+      "finished": "2022-06-18",
+      "rating": 8
+    },
+    {
+      "title": "Red Rising",
+      "author": "Pierce Brown",
+      "cover": "/assets/images/reading/202206090000-red-rising.jpg",
+      "format": "audiobook",
+      "series": "Red Rising Saga",
+      "seriesNumber": 1,
+      "finished": "2022-06-09",
+      "rating": 8
+    },
+    {
+      "title": "The Road",
+      "author": "Cormac McCarthy",
+      "cover": "/assets/images/reading/202205300000-the-road.jpg",
+      "format": "audiobook",
+      "finished": "2022-05-30",
+      "rating": 6
+    },
+    {
+      "title": "Wolf Hall",
+      "author": "Hilary Mantel",
+      "cover": "/assets/images/reading/202205250000-wolf-hall.jpg",
+      "format": "book",
+      "series": "Thomas Cromwell",
+      "seriesNumber": 1,
+      "finished": "2022-05-25",
+      "rating": 2
+    },
+    {
+      "title": "The Subtle Art of Not Giving a Fck A Counterintuitive Approach to Living a Good Life",
+      "author": "Mark Manson",
+      "cover": "/assets/images/reading/202205030000-the-subtle-art-of-not-giving-a-fck-a-counterintuitive-approach-to-living-a-good-life.jpg",
+      "format": "audiobook",
+      "finished": "2022-05-03",
+      "rating": 6
+    },
+    {
+      "title": "Anxious People",
+      "author": "Fredrik Backman, Neil   Smith",
+      "cover": "/assets/images/reading/202205020000-anxious-people.jpg",
+      "format": "audiobook",
+      "finished": "2022-05-02",
+      "rating": 8
+    },
+    {
+      "title": "MirrorMask",
+      "author": "Neil Gaiman, Dave McKean",
+      "cover": "/assets/images/reading/202204250000-mirrormask.jpg",
+      "format": "audiobook",
+      "finished": "2022-04-25",
+      "rating": 8
+    },
+    {
+      "title": "Fragile Things Short Fictions and Wonders",
+      "author": "Neil Gaiman",
+      "cover": "/assets/images/reading/202204250001-fragile-things-short-fictions-and-wonders.jpg",
+      "format": "audiobook",
+      "finished": "2022-04-25",
+      "rating": 8
+    },
+    {
+      "title": "Neverwhere",
+      "author": "Neil Gaiman",
+      "cover": "/assets/images/reading/202204180000-neverwhere.jpg",
+      "format": "audiobook",
+      "series": "London Below",
+      "seriesNumber": 1,
+      "finished": "2022-04-18",
+      "rating": 10
+    },
+    {
+      "title": "Authority",
+      "author": "Jeff Vandermeer",
+      "cover": "/assets/images/reading/202204090000-authority.jpg",
+      "format": "audiobook",
+      "series": "Southern Reach",
+      "seriesNumber": 2,
+      "finished": "2022-04-09",
+      "rating": 6
+    },
+    {
+      "title": "Acceptance",
+      "author": "Jeff Vandermeer",
+      "cover": "/assets/images/reading/202204060000-acceptance.jpg",
+      "format": "audiobook",
+      "series": "Southern Reach",
+      "seriesNumber": 3,
+      "finished": "2022-04-06",
+      "rating": 6,
+      "review": "Can't really tell if this is a genius piece of work, utterly complex and confusing, I am too dense or a combination of all the above. I like how it jumps from perspective to perspective and \"time to time\"; but there are so many names, nicknames and places going on that I had a hard time remembering who was who and who did what and when. It ends kind of abruptly and although I got some answers I feel more lost than after reading the first book I'll read the last instalment out of curiosity, but it is a weird book"
+    },
+    {
+      "title": "Annihilation",
+      "author": "Jeff Vandermeer",
+      "cover": "/assets/images/reading/202204020000-annihilation.jpg",
+      "format": "audiobook",
+      "series": "Southern Reach",
+      "seriesNumber": 1,
+      "finished": "2022-04-02",
+      "rating": 6,
+      "review": "Interesting sci-fi book. Reminds me of 80s sci-fi stories. Reads like Ken Liu writing some version of \"The Nightflyers\" by George R.R. Martin story in King's \"The Dark Tower\" universe. IMHO I think people have over hyped the book. Is not bad, has an interesting narration and the story guides you nice. But still not amazing in itself."
+    },
+    {
+      "title": "The Chosen and the Beautiful",
+      "author": "Nghi Vo",
+      "cover": "/assets/images/reading/202203300000-the-chosen-and-the-beautiful.jpg",
+      "format": "audiobook",
+      "finished": "2022-03-30",
+      "rating": 6,
+      "review": "It's an interesting rendition of Gatsby. The \"mystical\" elements make it \"fresh\" and the story moves at an ok pace. But overall the storytelling feels disconnected, I felt like I was being tumble from place to place and time to time without a purpose. It wasn't a dreadful read. But I wouldn't go over it again."
+    },
+    {
+      "title": "Klara and the Sun",
+      "author": "Kazuo Ishiguro",
+      "cover": "/assets/images/reading/202203280001-klara-and-the-sun.jpg",
+      "format": "audiobook",
+      "finished": "2022-03-28",
+      "rating": 6
+    },
+    {
+      "title": "A Master of Djinn",
+      "author": "P. Djèlí Clark",
+      "cover": "/assets/images/reading/202203230000-a-master-of-djinn.jpg",
+      "format": "audiobook",
+      "series": "Dead Djinn Universe",
+      "seriesNumber": 1,
+      "finished": "2022-03-23",
+      "rating": 6
+    },
+    {
+      "title": "A Court of Thorns and Roses",
+      "author": "Sarah J. Maas",
+      "cover": "/assets/images/reading/202203190000-a-court-of-thorns-and-roses.jpg",
+      "format": "audiobook",
+      "series": "A Court of Thorns and Roses",
+      "seriesNumber": 1,
+      "finished": "2022-03-19",
+      "rating": 1,
+      "review": "Honestly very flat book with even flatter characters. Not even the \"big surprise\" characters shown anything surprising. The book doesn't add anything to the genre and is just a remix of Twilight and City of Bones with a sprinkle of Omar other YA books. But the worst parts of each. The book reads surprisingly slow most of the times and parts and the parts that should have taken longer (e.g. character growth, bond between characters and even the book ending) happen stupidly fast. Honestly I was surprised when the cook ended. There was not an interesting twist at all. It was like reading Scooby-Doo Then the very last paragraph is supposed to give some sort of unexpected surprise to get us hooked, but it reads very simple and in the nose. Can't be bothered to even read a summary of the rest of saga"
+    },
+    {
+      "title": "Under the Whispering Door",
+      "author": "T.J. Klune",
+      "cover": "/assets/images/reading/202203120000-under-the-whispering-door.jpg",
+      "format": "audiobook",
+      "finished": "2022-03-12",
+      "rating": 8
+    },
+    {
+      "title": "Theory of Constraints",
+      "author": "Eliyahu M. Goldratt",
+      "cover": "/assets/images/reading/202203040000-theory-of-constraints.jpg",
+      "format": "audiobook",
+      "finished": "2022-03-04",
+      "rating": 6
+    },
+    {
+      "title": "Rabbits",
+      "author": "Terry Miles",
+      "cover": "/assets/images/reading/202203020000-rabbits.jpg",
+      "format": "audiobook",
+      "series": "Rabbits",
+      "seriesNumber": 1,
+      "finished": "2022-03-02",
+      "rating": 4,
+      "review": "Interesting concept but the end feels rushed and more like an afterthought"
+    },
+    {
+      "title": "The Song of Achilles",
+      "author": "Madeline Miller",
+      "cover": "/assets/images/reading/202202040000-the-song-of-achilles.jpg",
+      "format": "audiobook",
+      "finished": "2022-02-04",
+      "rating": 8
+    },
+    {
+      "title": "The Veiled Throne",
+      "author": "Ken Liu",
+      "cover": "/assets/images/reading/202201210000-the-veiled-throne.jpg",
+      "format": "audiobook",
+      "series": "The Dandelion Dynasty",
+      "seriesNumber": 3,
+      "finished": "2022-01-21",
+      "rating": 8,
+      "favorite": true
+    },
+    {
+      "title": "Supernova Era",
+      "author": "Liu Cixin, Joel Martinsen",
+      "cover": "/assets/images/reading/202112080000-supernova-era.jpg",
+      "format": "audiobook",
+      "finished": "2021-12-08",
+      "rating": 8
+    },
+    {
+      "title": "Nothing to See Here",
+      "author": "Kevin    Wilson",
+      "cover": "/assets/images/reading/202111180000-nothing-to-see-here.jpg",
+      "format": "audiobook",
+      "finished": "2021-11-18",
+      "rating": 7
+    },
+    {
+      "title": "The Graveyard Book",
+      "author": "Neil Gaiman, Dave McKean",
+      "cover": "/assets/images/reading/202111170000-the-graveyard-book.jpg",
+      "format": "audiobook",
+      "finished": "2021-11-17",
+      "rating": 6
+    },
+    {
+      "title": "El lobo estepario",
+      "author": "Hermann Hesse",
+      "cover": "/assets/images/reading/202111080000-el-lobo-estepario.jpg",
+      "format": "audiobook",
+      "finished": "2021-11-08",
+      "rating": 6
+    },
+    {
+      "title": "The Plot",
+      "author": "Jean Hanff Korelitz",
+      "cover": "/assets/images/reading/202111070000-the-plot.jpg",
+      "format": "audiobook",
+      "series": "The Book Series",
+      "seriesNumber": 1,
+      "finished": "2021-11-07",
+      "rating": 8
+    },
+    {
+      "title": "The Wandering Earth",
+      "author": "Liu Cixin, Holger Nahm",
+      "cover": "/assets/images/reading/202110180000-the-wandering-earth.jpg",
+      "format": "audiobook",
+      "finished": "2021-10-18",
+      "rating": 6,
+      "favorite": true
+    },
+    {
+      "title": "Exciting Times",
+      "author": "Naoise Dolan",
+      "cover": "/assets/images/reading/202109100000-exciting-times.jpg",
+      "format": "audiobook",
+      "finished": "2021-09-10",
+      "rating": 2,
+      "review": "Don't really know got this ended in my \"to read\" list... but it was horrible I cannot think of anything worthy of your time in this book. The story is weak, narration is bland and the characters are either flat, disgusting and forgettable"
+    },
+    {
+      "title": "Thinking In Systems A Primer",
+      "author": "Donella H. Meadows, Diana Wright",
+      "cover": "/assets/images/reading/202109030000-thinking-in-systems-a-primer.jpg",
+      "format": "audiobook",
+      "finished": "2021-09-03",
+      "rating": 9
+    },
+    {
+      "title": "Endurance",
+      "author": "Yoshiki Tanaka, Daniel Huddleston",
+      "cover": "/assets/images/reading/202108310000-endurance.jpg",
+      "format": "audiobook",
+      "series": "Legend of the Galactic Heroes",
+      "seriesNumber": 3,
+      "finished": "2021-08-31",
+      "rating": 8
+    },
+    {
+      "title": "Ambition",
+      "author": "Yoshiki Tanaka, Daniel Huddleston",
+      "cover": "/assets/images/reading/202108180000-ambition.jpg",
+      "format": "audiobook",
+      "series": "Legend of the Galactic Heroes",
+      "seriesNumber": 2,
+      "finished": "2021-08-18",
+      "rating": 8
+    },
+    {
+      "title": "Dawn",
+      "author": "Yoshiki Tanaka, Daniel Huddleston",
+      "cover": "/assets/images/reading/202108020000-dawn.jpg",
+      "format": "audiobook",
+      "series": "Legend of the Galactic Heroes",
+      "seriesNumber": 1,
+      "finished": "2021-08-02",
+      "rating": 6
+    },
+    {
+      "title": "The Wall of Storms",
+      "author": "Ken Liu",
+      "cover": "/assets/images/reading/202107180000-the-wall-of-storms.jpg",
+      "format": "audiobook",
+      "series": "The Dandelion Dynasty",
+      "seriesNumber": 2,
+      "finished": "2021-07-18",
+      "rating": 8,
+      "favorite": true
+    },
+    {
+      "title": "The Grace of Kings",
+      "author": "Ken Liu",
+      "cover": "/assets/images/reading/202106130000-the-grace-of-kings.jpg",
+      "format": "audiobook",
+      "series": "The Dandelion Dynasty",
+      "seriesNumber": 1,
+      "finished": "2021-06-13",
+      "rating": 8,
+      "favorite": true
+    },
+    {
+      "title": "The Paper Menagerie and Other Stories",
+      "author": "Ken Liu",
+      "cover": "/assets/images/reading/202105240000-the-paper-menagerie-and-other-stories.jpg",
+      "format": "audiobook",
+      "finished": "2021-05-24",
+      "rating": 10
+    },
+    {
+      "title": "Barking Up the Wrong Tree The Surprising Science Behind Why Everything You Know About Success Is (Mostly) Wrong",
+      "author": "Eric Barker",
+      "cover": "/assets/images/reading/202105210000-barking-up-the-wrong-tree-the-surprising-science-behind-why-everything-you-know-about-success-is-mostly-wrong.jpg",
+      "format": "audiobook",
+      "finished": "2021-05-21",
+      "rating": 8
+    },
+    {
+      "title": "Dark Mother Earth",
+      "author": "Kristian Novak, Ellen Elias-Bursać",
+      "cover": "/assets/images/reading/202105120000-dark-mother-earth.jpg",
+      "format": "audiobook",
+      "finished": "2021-05-12",
+      "rating": 8
+    },
+    {
+      "title": "Hard-Boiled Wonderland and the End of the World",
+      "author": "Haruki Murakami, Alfred Birnbaum",
+      "cover": "/assets/images/reading/202104300000-hard-boiled-wonderland-and-the-end-of-the-world.jpg",
+      "format": "audiobook",
+      "finished": "2021-04-30",
+      "rating": 8
+    },
+    {
+      "title": "The Making of a Manager What to Do When Everyone Looks to You",
+      "author": "Julie Zhuo",
+      "cover": "/assets/images/reading/202104130000-the-making-of-a-manager-what-to-do-when-everyone-looks-to-you.jpg",
+      "format": "book",
+      "finished": "2021-04-13",
+      "rating": 6
+    },
+    {
+      "title": "The Coaching Habit Say Less Ask More  Change the Way You Lead Forever",
+      "author": "Michael Bungay Stanier",
+      "cover": "/assets/images/reading/202104130001-the-coaching-habit-say-less-ask-more-change-the-way-you-lead-forever.jpg",
+      "format": "audiobook",
+      "finished": "2021-04-13",
+      "rating": 4
+    },
+    {
+      "title": "To Hold Up the Sky",
+      "author": "Liu Cixin",
+      "cover": "/assets/images/reading/202104130002-to-hold-up-the-sky.jpg",
+      "format": "audiobook",
+      "finished": "2021-04-13",
+      "rating": 8
+    },
+    {
+      "title": "Catch-22",
+      "author": "Joseph Heller",
+      "cover": "/assets/images/reading/202103120000-catch-22.jpg",
+      "format": "audiobook",
+      "finished": "2021-03-12",
+      "rating": 2
+    },
+    {
+      "title": "Magic Lessons",
+      "author": "Alice Hoffman",
+      "cover": "/assets/images/reading/202102030000-magic-lessons.jpg",
+      "format": "audiobook",
+      "series": "Practical Magic",
+      "seriesNumber": 0.1,
+      "finished": "2021-02-03",
+      "rating": 8,
+      "review": "Very interesting book. Proof that you can tell a romantic story without making it cheesy. The topic of magic is way more explored than in the other two, but reads and plays well with the story. I would rate them in reverse, this being the best of the three and the first published being the worst. How things interconnect With each other almost make the existence of the first one to make sense."
+    },
+    {
+      "title": "The Rules of Magic",
+      "author": "Alice Hoffman",
+      "cover": "/assets/images/reading/202101110000-the-rules-of-magic.jpg",
+      "format": "audiobook",
+      "finished": "2021-01-11",
+      "rating": 8,
+      "review": "This is what the first book should have been; and the first shouldn't even be used as fuel for a fire. More magical, characters way less flat and you get to bond with them and grow attached while they grow as characters. Enough mysticism to keep you interested but not much to make it pure phantasy."
+    },
+    {
+      "title": "Practical Magic",
+      "author": "Alice Hoffman",
+      "cover": "/assets/images/reading/202012130000-practical-magic.jpg",
+      "format": "audiobook",
+      "series": "Practical Magic",
+      "seriesNumber": 1,
+      "finished": "2020-12-13",
+      "rating": 4,
+      "review": "I really wanted to like this book; despite that it was pretty dull. I guess I was expecting more magic and less generic-drama style of writing :/ The book is mostly just love and despair stories and no real twists. I'm already knee deep on this and I'm starting the 2nd book but mostly out of wanting to finish than because I feel involved with the story. I could do with just reading a 2 paragraphs summary of the book TBQF"
+    },
+    {
+      "title": "The Empire of Gold",
+      "author": "S.A. Chakraborty",
+      "cover": "/assets/images/reading/202011180000-the-empire-of-gold.jpg",
+      "format": "audiobook",
+      "series": "The Daevabad Trilogy",
+      "seriesNumber": 3,
+      "finished": "2020-11-18",
+      "rating": 8
+    },
+    {
+      "title": "The Managers Path A Guide for Tech Leaders Navigating Growth and Change",
+      "author": "Camille Fournier",
+      "cover": "/assets/images/reading/202010180000-the-managers-path-a-guide-for-tech-leaders-navigating-growth-and-change.jpg",
+      "format": "audiobook",
+      "finished": "2020-10-18",
+      "rating": 8,
+      "review": "Not particularly mind blowing but it contains a few nuggets of information on how to navigate this career path, making it a must read for Individual Contributors going the Management route. I particularly enjoyed the Team Lead definitions and role responsibilities as well as how nicely the author manages to clearly differentiate each role from the previous one."
+    },
+    {
+      "title": "Ball Lightning",
+      "author": "Liu Cixin, Joel Martinsen",
+      "cover": "/assets/images/reading/202009210000-ball-lightning.jpg",
+      "format": "audiobook",
+      "finished": "2020-09-21",
+      "rating": 8
+    },
+    {
+      "title": "Mister B. Gone",
+      "author": "Clive Barker",
+      "cover": "/assets/images/reading/202007130000-mister-b-gone.jpg",
+      "format": "audiobook",
+      "finished": "2020-07-13",
+      "rating": 6,
+      "review": "Not much to add than what others are commenting. The book has interesting ideas but the abuse of the breaking of the forth wall and the constants \"burn this book\" made the \"novel\" approach just an overused crotch. The story has its highlights, small nevertheless, but some highlights at least. The book will entertain you if you are looking for a light read; bud definitely do not expect a mind blowing experience. Done think Clive is offering anything extraordinary and at times reads repetitive, slow and just filled with \"big words\" to make the story seem more interesting and involved than what it is."
+    },
+    {
+      "title": "The Dreamers",
+      "author": "Karen Thompson Walker",
+      "cover": "/assets/images/reading/202006290000-the-dreamers.jpg",
+      "format": "audiobook",
+      "finished": "2020-06-29",
+      "rating": 4
+    },
+    {
+      "title": "Severance",
+      "author": "Ling  Ma",
+      "cover": "/assets/images/reading/202004050000-severance.jpg",
+      "format": "audiobook",
+      "finished": "2020-04-05",
+      "rating": 4,
+      "review": "The books is ok-ish. Nothing really happens and there's zero character development. I was waiting for some sort of surprise development nearing the end of the book and then it just ended... I felt like someone had ripped a few chapters at the end. Definitely not something I would recommend :/"
+    },
+    {
+      "title": "Moral Compass",
+      "author": "Danielle Steel",
+      "cover": "/assets/images/reading/202003150001-moral-compass.jpg",
+      "format": "audiobook",
+      "finished": "2020-03-15",
+      "rating": 6,
+      "review": "Nice interesting idea for a story. Development of the main topic happens too fast. Not enough time to build a relationship with the characters. Before you know they are fucked and you couldn't care less because you are not invested in them. Still a good idea, looking forward to reading future books from this author"
+    },
+    {
+      "title": "The Andromeda Strain",
+      "author": "Michael Crichton",
+      "cover": "/assets/images/reading/202003030000-the-andromeda-strain.jpg",
+      "format": "audiobook",
+      "series": "Andromeda",
+      "seriesNumber": 1,
+      "finished": "2020-03-03",
+      "rating": 6
+    },
+    {
+      "title": "The Fever King",
+      "author": "Victoria  Lee",
+      "cover": "/assets/images/reading/202002260000-the-fever-king.jpg",
+      "format": "audiobook",
+      "series": "Feverwake",
+      "seriesNumber": 1,
+      "finished": "2020-02-26",
+      "rating": 6,
+      "review": "It's a decent book. Interesting story about magic and political critic; then turns heads first into a 'Young Adult' hormone crazy borderline \"City of Bones\" (thankful not as horrible). So far so good; interesting progression, truth be told the plot twists are somewhat obvious. Up until that point I'm ok with the book. The ending though... feels too rushed; as if the author was running out of pages and had to cram in the end; quite unfortunate. Do recommend reading the companion Webtoon in WEBTOONs app/website; the illustrations are nice and the adaptation from the book is quite good."
+    },
+    {
+      "title": "Deaths End",
+      "author": "Liu Cixin, Ken Liu",
+      "cover": "/assets/images/reading/202002180000-deaths-end.jpg",
+      "format": "audiobook",
+      "series": "Remembrance of Earth’s Past",
+      "seriesNumber": 3,
+      "finished": "2020-02-18",
+      "rating": 10,
+      "favorite": true
+    },
+    {
+      "title": "The Dark Forest",
+      "author": "Liu Cixin, Joel Martinsen",
+      "cover": "/assets/images/reading/201912200000-the-dark-forest.jpg",
+      "format": "audiobook",
+      "series": "Remembrance of Earth’s Past",
+      "seriesNumber": 2,
+      "finished": "2019-12-20",
+      "rating": 10,
+      "favorite": true,
+      "review": "Liu kept the writing style and rhythm from the Three Body Problem in this one. The beginning is hard to digest and get into the pace that this book has; but once you get into it is a page turner Lots of seemingly disconnected plots converge at the very end to give the book a whole new meaning"
+    },
+    {
+      "title": "Recursion",
+      "author": "Blake Crouch",
+      "cover": "/assets/images/reading/201912030000-recursion.jpg",
+      "format": "audiobook",
+      "finished": "2019-12-03",
+      "rating": 8,
+      "review": "Interesting play in the old time travel story. The book is interesting; will keep you glued to the pages wondering what next; even though you already know as it doesn't propose any groundbreaking storytelling Avenue. Still quite interesting and enjoyable"
+    },
+    {
+      "title": "Krampus The Yule Lord",
+      "author": "Brom",
+      "cover": "/assets/images/reading/201911290001-krampus-the-yule-lord.jpg",
+      "format": "audiobook",
+      "finished": "2019-11-29",
+      "rating": 10
+    },
+    {
+      "title": "The Child Thief",
+      "author": "Brom",
+      "cover": "/assets/images/reading/201911260000-the-child-thief.jpg",
+      "format": "audiobook",
+      "finished": "2019-11-26",
+      "rating": 10,
+      "review": "I grabbed this book I think just because of the author; didn't read the synopsis and when I finished one book just took it she started reading it; this, had no idea it was a fresh take on Peter Pan. This gave me a nice perspective and some surprise when things started to fall into place. Really nice storytelling (sans the bit of the policeman that ran because \"left his stove on\"...) Loved the raw take on the old story and how unapologetic Peter is until Nick makes him see things as they truly are. Definitely recommended"
+    },
+    {
+      "title": "Lost Gods",
+      "author": "Brom",
+      "cover": "/assets/images/reading/201911120000-lost-gods.jpg",
+      "format": "audiobook",
+      "finished": "2019-11-12",
+      "rating": 8,
+      "review": "Very weak and boring beginning; almost rushed. Fortunately it starts to pick up pace. Lots of other works can be glimpsed in this book but integrates nicely"
+    },
+    {
+      "title": "Year Zero",
+      "author": "Rob  Reid",
+      "cover": "/assets/images/reading/201911080000-year-zero.jpg",
+      "format": "audiobook",
+      "finished": "2019-11-08",
+      "rating": 8,
+      "review": "Funny dumb easy to read book. Don't read it expecting simmering Uber clever. But does the job of entertaining Kind of follows the steps of Hitchhikers Guide to the Galaxy in comedy writing"
+    },
+    {
+      "title": "Turn the Ship Around! A True Story of Turning Followers into Leaders",
+      "author": "L. David Marquet",
+      "cover": "/assets/images/reading/201911040001-turn-the-ship-around-a-true-story-of-turning-followers-into-leaders.jpg",
+      "format": "audiobook",
+      "finished": "2019-11-04",
+      "rating": 8
+    },
+    {
+      "title": "Armada",
+      "author": "Ernest Cline",
+      "cover": "/assets/images/reading/201910300000-armada.jpg",
+      "format": "audiobook",
+      "finished": "2019-10-30",
+      "rating": 4,
+      "review": "- Zero buildup - Washed up Ready Player One - Character development nonexistent - Flat characters Quite bland and predictable. Borderline boring"
+    },
+    {
+      "title": "Radical Candor Be a Kickass Boss Without Losing Your Humanity",
+      "author": "Kim Malone Scott",
+      "cover": "/assets/images/reading/201910160000-radical-candor-be-a-kickass-boss-without-losing-your-humanity.jpg",
+      "format": "audiobook",
+      "finished": "2019-10-16",
+      "rating": 8
+    },
+    {
+      "title": "Getting Things Done The Art of Stress-Free Productivity",
+      "author": "David    Allen, James M. Fallows",
+      "cover": "/assets/images/reading/201910100001-getting-things-done-the-art-of-stress-free-productivity.jpg",
+      "format": "audiobook",
+      "finished": "2019-10-10",
+      "rating": 10
+    },
+    {
+      "title": "The Dying of the Light",
+      "author": "Derek Landy",
+      "cover": "/assets/images/reading/201910040000-the-dying-of-the-light.jpg",
+      "format": "audiobook",
+      "series": "Skulduggery Pleasant",
+      "seriesNumber": 9,
+      "finished": "2019-10-04",
+      "rating": 10
+    },
+    {
+      "title": "Last Stand of Dead Men",
+      "author": "Derek Landy",
+      "cover": "/assets/images/reading/201909290001-last-stand-of-dead-men.jpg",
+      "format": "audiobook",
+      "series": "Skulduggery Pleasant",
+      "seriesNumber": 8,
+      "finished": "2019-09-29",
+      "rating": 10
+    },
+    {
+      "title": "Death Bringer",
+      "author": "Derek Landy",
+      "cover": "/assets/images/reading/201909170000-death-bringer.jpg",
+      "format": "audiobook",
+      "series": "Skulduggery Pleasant",
+      "seriesNumber": 6,
+      "finished": "2019-09-17",
+      "rating": 10
+    },
+    {
+      "title": "Mortal Coil",
+      "author": "Derek Landy",
+      "cover": "/assets/images/reading/201909130000-mortal-coil.jpg",
+      "format": "audiobook",
+      "series": "Skulduggery Pleasant",
+      "seriesNumber": 5,
+      "finished": "2019-09-13",
+      "rating": 8
+    },
+    {
+      "title": "Dark Days",
+      "author": "Derek Landy",
+      "cover": "/assets/images/reading/201909090000-dark-days.jpg",
+      "format": "audiobook",
+      "series": "Skulduggery Pleasant",
+      "seriesNumber": 4,
+      "finished": "2019-09-09",
+      "rating": 8
+    },
+    {
+      "title": "The Faceless Ones",
+      "author": "Derek Landy",
+      "cover": "/assets/images/reading/201909050000-the-faceless-ones.jpg",
+      "format": "audiobook",
+      "series": "Skulduggery Pleasant",
+      "seriesNumber": 3,
+      "finished": "2019-09-05"
+    },
+    {
+      "title": "Playing with Fire",
+      "author": "Derek Landy",
+      "cover": "/assets/images/reading/201909030000-playing-with-fire.jpg",
+      "format": "audiobook",
+      "series": "Skulduggery Pleasant",
+      "seriesNumber": 2,
+      "finished": "2019-09-03",
+      "rating": 6
+    },
+    {
+      "title": "Skulduggery Pleasant",
+      "author": "Derek Landy, Tom Percival",
+      "cover": "/assets/images/reading/201908300000-skulduggery-pleasant.jpg",
+      "format": "audiobook",
+      "series": "Skulduggery Pleasant",
+      "seriesNumber": 1,
+      "finished": "2019-08-30",
+      "rating": 8,
+      "review": "Book is good enough for the type of writing. It is not really a YA book but more of a kid’s book with dark strokes at times. Overall is quite entertaining and I can see the appeal for this book. Don’t really know if I’m all that invested into the saga to continue with the next one (most likely yes) but is worth mentioning that it didn’t envelop me enough to make me want to keep consuming it like crazy"
+    },
+    {
+      "title": "Dark Places",
+      "author": "Gillian Flynn",
+      "cover": "/assets/images/reading/201908230000-dark-places.jpg",
+      "format": "audiobook",
+      "finished": "2019-08-23",
+      "rating": 8
+    },
+    {
+      "title": "The Kingdom of Copper",
+      "author": "S.A. Chakraborty",
+      "cover": "/assets/images/reading/201908190000-the-kingdom-of-copper.jpg",
+      "format": "audiobook",
+      "series": "The Daevabad Trilogy",
+      "seriesNumber": 2,
+      "finished": "2019-08-19",
+      "rating": 6
+    },
+    {
+      "title": "The City of Brass",
+      "author": "S.A. Chakraborty",
+      "cover": "/assets/images/reading/201908090000-the-city-of-brass.jpg",
+      "format": "audiobook",
+      "series": "The Daevabad Trilogy",
+      "seriesNumber": 1,
+      "finished": "2019-08-09",
+      "rating": 8,
+      "review": "There's a lot of complains about this book; honestly I enjoyed it quite enough. Didn't feel it was slow (but I was listening to it as an audiobook) and didn't have trouble following allegiances nor the rest of the political schemes. Ends with a good enough cliff hanger making me want to read the sequel"
+    },
+    {
+      "title": "Spinning Silver",
+      "author": "Naomi Novik",
+      "cover": "/assets/images/reading/201908020000-spinning-silver.jpg",
+      "format": "audiobook",
+      "finished": "2019-08-02",
+      "rating": 8,
+      "review": "Wasn't expecting much from this book to be honest. The beginning is like an Oliver Twist boring story and drags for a wee to long; but right after that it gains pace quickly and goes full speed into fantasy GoT-esque story. Like quite a lot hope the story is told by multiple characters giving it a different edge without having to retell the same thing from multiple angles but instead moving the story forward all the time"
+    },
+    {
+      "title": "The Binding",
+      "author": "Bridget Collins",
+      "cover": "/assets/images/reading/201907230000-the-binding.jpg",
+      "format": "audiobook",
+      "finished": "2019-07-23",
+      "rating": 8,
+      "review": "Good book. Keeps you interested most of the time. Perhaps a wee parts could have been shorter but all in all is enjoyable. Reads like a mix of - The Slow Regard of Silence Things - The name of the wind - To kill a mockingbird - The Crucible - And a pinch of: Brokeback Mountain"
+    },
+    {
+      "title": "Backlash",
+      "author": "Brad Thor",
+      "cover": "/assets/images/reading/201907170000-backlash.jpg",
+      "format": "audiobook",
+      "series": "Scott Harvath",
+      "seriesNumber": 18,
+      "finished": "2019-07-17",
+      "rating": 6,
+      "review": "Ok-ish book. It is somewhat ruined by the incessant need to portray the US as the best country in the world with the best army, intelligence and \"freedom\" and how Russia is crap :/ Feels written in the cold war era"
+    },
+    {
+      "title": "City of Heavenly Fire",
+      "author": "Cassandra Clare",
+      "cover": "/assets/images/reading/201907120001-city-of-heavenly-fire.jpg",
+      "format": "audiobook",
+      "series": "The Mortal Instruments",
+      "seriesNumber": 6,
+      "finished": "2019-07-12",
+      "rating": 8
+    },
+    {
+      "title": "City of Lost Souls",
+      "author": "Cassandra Clare",
+      "cover": "/assets/images/reading/201907080000-city-of-lost-souls.jpg",
+      "format": "audiobook",
+      "series": "The Mortal Instruments",
+      "seriesNumber": 5,
+      "finished": "2019-07-08",
+      "rating": 8
+    },
+    {
+      "title": "City of Fallen Angels",
+      "author": "Cassandra Clare",
+      "cover": "/assets/images/reading/201906300000-city-of-fallen-angels.jpg",
+      "format": "audiobook",
+      "series": "The Mortal Instruments",
+      "seriesNumber": 4,
+      "finished": "2019-06-30",
+      "rating": 4
+    },
+    {
+      "title": "City of Glass",
+      "author": "Cassandra Clare",
+      "cover": "/assets/images/reading/201906250000-city-of-glass.jpg",
+      "format": "audiobook",
+      "series": "The Mortal Instruments",
+      "seriesNumber": 3,
+      "finished": "2019-06-25",
+      "rating": 8
+    },
+    {
+      "title": "City of Ashes",
+      "author": "Cassandra Clare",
+      "cover": "/assets/images/reading/201906200000-city-of-ashes.jpg",
+      "format": "audiobook",
+      "series": "The Mortal Instruments",
+      "seriesNumber": 2,
+      "finished": "2019-06-20",
+      "rating": 6
+    },
+    {
+      "title": "City of Bones",
+      "author": "Cassandra Clare",
+      "cover": "/assets/images/reading/201906170000-city-of-bones.jpg",
+      "format": "audiobook",
+      "series": "The Mortal Instruments",
+      "seriesNumber": 1,
+      "finished": "2019-06-17",
+      "rating": 6
+    },
+    {
+      "title": "The Invisible Man",
+      "author": "H.G. Wells, Scott Westerfeld",
+      "cover": "/assets/images/reading/201906110000-the-invisible-man.jpg",
+      "format": "audiobook",
+      "finished": "2019-06-11",
+      "rating": 4,
+      "review": "Don't know if it was the book or the audiobook I listen to; but the story felt very bland. Obviously the idea is amazing but I feel like the execution left me lots to be desired"
+    },
+    {
+      "title": "Legion The Many Lives of Stephen Leeds",
+      "author": "Brandon Sanderson",
+      "cover": "/assets/images/reading/201906040000-legion-the-many-lives-of-stephen-leeds.jpg",
+      "format": "audiobook",
+      "series": "Legion",
+      "finished": "2019-06-04",
+      "rating": 10
+    },
+    {
+      "title": "InterWorld",
+      "author": "Neil Gaiman, Michael Reaves",
+      "cover": "/assets/images/reading/201905280000-interworld.jpg",
+      "format": "audiobook",
+      "series": "InterWorld",
+      "seriesNumber": 1,
+      "finished": "2019-05-28",
+      "rating": 8
+    },
+    {
+      "title": "M Is for Magic",
+      "author": "Neil Gaiman, Teddy Kristiansen",
+      "cover": "/assets/images/reading/201905260000-m-is-for-magic.jpg",
+      "format": "audiobook",
+      "finished": "2019-05-26",
+      "rating": 8
+    },
+    {
+      "title": "The Three-Body Problem",
+      "author": "Liu Cixin, Ken Liu",
+      "cover": "/assets/images/reading/201905220000-the-three-body-problem.jpg",
+      "format": "audiobook",
+      "series": "Remembrance of Earth’s Past",
+      "seriesNumber": 1,
+      "finished": "2019-05-22",
+      "rating": 8
+    },
+    {
+      "title": "Preacher Book 1",
+      "author": "Garth Ennis, Steve Dillon",
+      "cover": "/assets/images/reading/201905140000-preacher-book-1.jpg",
+      "format": "book",
+      "series": "Preacher Deluxe",
+      "seriesNumber": 1,
+      "finished": "2019-05-14",
+      "rating": 9
+    },
+    {
+      "title": "Nimona",
+      "author": "N.D. Stevenson",
+      "cover": "/assets/images/reading/201905140001-nimona.jpg",
+      "format": "book",
+      "finished": "2019-05-14",
+      "favorite": true
+    },
+    {
+      "title": "Preacher Book Two",
+      "author": "Garth Ennis, Steve Dillon",
+      "cover": "/assets/images/reading/201905140002-preacher-book-two.jpg",
+      "format": "book",
+      "series": "Preacher Deluxe",
+      "seriesNumber": 2,
+      "finished": "2019-05-14",
+      "rating": 9
+    },
+    {
+      "title": "Preacher Book Three",
+      "author": "Garth Ennis, Steve Dillon",
+      "cover": "/assets/images/reading/201905140003-preacher-book-three.jpg",
+      "format": "book",
+      "series": "Preacher Deluxe",
+      "seriesNumber": 3,
+      "finished": "2019-05-14",
+      "rating": 9
+    },
+    {
+      "title": "Preacher Book Four",
+      "author": "Garth Ennis, Steve Dillon, Various",
+      "cover": "/assets/images/reading/201905140004-preacher-book-four.jpg",
+      "format": "book",
+      "series": "Preacher Deluxe",
+      "seriesNumber": 4,
+      "finished": "2019-05-14",
+      "rating": 9
+    },
+    {
+      "title": "Year One",
+      "author": "Nora Roberts",
+      "cover": "/assets/images/reading/201905140005-year-one.jpg",
+      "format": "audiobook",
+      "series": "Chronicles of The One",
+      "seriesNumber": 1,
+      "finished": "2019-05-14",
+      "rating": 8
+    },
+    {
+      "title": "The Martian Chronicles",
+      "author": "Ray Bradbury, Michael Whelan",
+      "cover": "/assets/images/reading/201905080000-the-martian-chronicles.jpg",
+      "format": "audiobook",
+      "finished": "2019-05-08",
+      "rating": 8
+    },
+    {
+      "title": "The City  the City",
+      "author": "China Miéville",
+      "cover": "/assets/images/reading/201905080001-the-city-the-city.jpg",
+      "format": "audiobook",
+      "finished": "2019-05-08",
+      "rating": 8
+    },
+    {
+      "title": "Redemption",
+      "author": "Brandon Sanderson",
+      "cover": "/assets/images/reading/201905020000-redemption.jpg",
+      "format": "audiobook",
+      "series": "Infinity Blade",
+      "seriesNumber": 2,
+      "finished": "2019-05-02",
+      "rating": 10,
+      "review": "Great write-up of a great game. Brandon did a great job incorporating the mechanics of the game into the story"
+    },
+    {
+      "title": "Awakening",
+      "author": "Brandon Sanderson",
+      "cover": "/assets/images/reading/201904300000-awakening.jpg",
+      "format": "audiobook",
+      "series": "Infinity Blade",
+      "seriesNumber": 1,
+      "finished": "2019-04-30",
+      "rating": 8
+    },
+    {
+      "title": "Sapiens A Brief History of Humankind",
+      "author": "Yuval Noah Harari",
+      "cover": "/assets/images/reading/201904290000-sapiens-a-brief-history-of-humankind.jpg",
+      "format": "audiobook",
+      "finished": "2019-04-29",
+      "rating": 8
+    },
+    {
+      "title": "A Darkling Plain",
+      "author": "Philip Reeve, Annemarie de Vries",
+      "cover": "/assets/images/reading/201904190000-a-darkling-plain.jpg",
+      "format": "audiobook",
+      "series": "The Hungry City Chronicles",
+      "seriesNumber": 4,
+      "finished": "2019-04-19",
+      "rating": 8
+    },
+    {
+      "title": "Infernal Devices",
+      "author": "Philip Reeve",
+      "cover": "/assets/images/reading/201904120000-infernal-devices.jpg",
+      "format": "audiobook",
+      "series": "The Hungry City Chronicles",
+      "seriesNumber": 3,
+      "finished": "2019-04-12",
+      "rating": 8
+    },
+    {
+      "title": "Predators Gold",
+      "author": "Philip Reeve",
+      "cover": "/assets/images/reading/201904100000-predators-gold.jpg",
+      "format": "audiobook",
+      "series": "Mortal Engines Quartet",
+      "seriesNumber": 2,
+      "finished": "2019-04-10",
+      "rating": 8
+    },
+    {
+      "title": "Mortal Engines",
+      "author": "Philip Reeve",
+      "cover": "/assets/images/reading/201904070000-mortal-engines.jpg",
+      "format": "audiobook",
+      "series": "Mortal Engines",
+      "seriesNumber": 1,
+      "finished": "2019-04-07",
+      "rating": 8
+    },
+    {
+      "title": "An Anonymous Girl",
+      "author": "Greer Hendricks, Sarah Pekkanen",
+      "cover": "/assets/images/reading/201903280000-an-anonymous-girl.jpg",
+      "format": "audiobook",
+      "finished": "2019-03-28",
+      "rating": 10,
+      "review": "Has a similar vibe to \"A Simple Favor\". A story told mostly from 2 opposing sides until a 3rd and more appear. Not all filled with surprises; mostly everything is expected but is written very cleanly and the narrative makes it very interesting. Makes you want to keep reading to confirm your suspicions"
+    },
+    {
+      "title": "Nightflyers",
+      "author": "George R.R. Martin, David Palumbo",
+      "cover": "/assets/images/reading/201812170000-nightflyers.jpg",
+      "format": "audiobook",
+      "finished": "2019-03-20",
+      "rating": 10
+    },
+    {
+      "title": "Wild Cards",
+      "author": "George R.R. Martin, Walter Jon Williams, Melinda M. Snodgrass, Lewis Shiner, Victor Milán, Stephen Leigh, John J.  Miller, Edward Bryant, Brian Bolland, Mike Zeck, Howard Waldrop, Roger Zelazny, Leanne C. Harper",
+      "cover": "/assets/images/reading/201903150000-wild-cards.jpg",
+      "format": "audiobook",
+      "series": "Wild Cards",
+      "seriesNumber": 1,
+      "finished": "2019-03-15",
+      "rating": 10
+    },
+    {
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "cover": "/assets/images/reading/201903050000-to-kill-a-mockingbird.jpg",
+      "format": "audiobook",
+      "finished": "2019-03-05",
+      "rating": 6
+    },
+    {
+      "title": "The Count of Monte Cristo",
+      "author": "Alexandre Dumas, Robin Buss",
+      "cover": "/assets/images/reading/201902280000-the-count-of-monte-cristo.jpg",
+      "format": "audiobook",
+      "finished": "2019-02-28",
+      "rating": 10,
+      "review": "Not in vain this is one of the far classics in literature Great pace and full of intense emotions"
+    },
+    {
+      "title": "The Man in the High Castle (Vintage)",
+      "author": "Philip K. Dick",
+      "cover": "/assets/images/reading/201901150000-the-man-in-the-high-castle-vintage.jpg",
+      "format": "audiobook",
+      "finished": "2019-01-15",
+      "rating": 8
+    },
+    {
+      "title": "The Crucible",
+      "author": "Arthur Miller, Christopher W.E. Bigsby",
+      "cover": "/assets/images/reading/201812060000-the-crucible.jpg",
+      "format": "audiobook",
+      "finished": "2018-12-06",
+      "rating": 6
+    },
+    {
+      "title": "Odd and the Frost Giants",
+      "author": "Neil Gaiman, Mark Buckingham",
+      "cover": "/assets/images/reading/201812040001-odd-and-the-frost-giants.jpg",
+      "format": "audiobook",
+      "finished": "2018-12-04",
+      "rating": 6,
+      "review": "Interesting book. Very Gaiman. As many Gaiman books this one was entertaining but not mind blowing. Good quick and entertaining read though"
+    },
+    {
+      "title": "The Reckoning",
+      "author": "John Grisham",
+      "cover": "/assets/images/reading/201811300000-the-reckoning.jpg",
+      "format": "audiobook",
+      "finished": "2018-11-30",
+      "rating": 6,
+      "review": "So so. The beginning hints of something obscure and intricate. The ear stories are pretty engaging and the lawsuits add a bit of spice. The college life if the kids is pretty much filling in the book and the end is pretty bland. I thought the end was going to be more convoluted and intricate but ended up being a regular old sex \"betrayal\" story about a widow woman having sex and a man unable to let go the past. Unfortunate because I had high hopes"
+    },
+    {
+      "title": "A Simple Favor",
+      "author": "Darcey Bell",
+      "cover": "/assets/images/reading/201811080000-a-simple-favor.jpg",
+      "format": "audiobook",
+      "finished": "2018-11-08",
+      "rating": 10
+    },
+    {
+      "title": "The Rook",
+      "author": "Daniel O'Malley",
+      "cover": "/assets/images/reading/201811010000-the-rook.jpg",
+      "format": "audiobook",
+      "series": "The Checquy Files",
+      "seriesNumber": 1,
+      "finished": "2018-11-01",
+      "rating": 8
+    },
+    {
+      "title": "Serpentine",
+      "author": "Laurell K. Hamilton",
+      "cover": "/assets/images/reading/201810150000-serpentine.jpg",
+      "format": "audiobook",
+      "series": "Anita Blake, Vampire Hunter",
+      "seriesNumber": 26,
+      "finished": "2018-10-15",
+      "rating": 6,
+      "review": "The first half reads like a horny teens fantasy book, don't know if that's the \"style\" for the series but it felt pretty forced and rushed. Ignoring those parts the book is interesting although a bit slow and not that robust in terms of story. This could easily be a pretty good short story, as a book is ok-ish"
+    },
+    {
+      "title": "Filthy Fantasies Stories of Domination and Submission",
+      "author": "Emmannuelle Blue",
+      "cover": "/assets/images/reading/201809280000-filthy-fantasies-stories-of-domination-and-submission.jpg",
+      "format": "audiobook",
+      "finished": "2018-09-28",
+      "rating": 2
+    },
+    {
+      "title": "Imprisoned with the Pharaohs",
+      "author": "H.P. Lovecraft",
+      "cover": "/assets/images/reading/201809270001-imprisoned-with-the-pharaohs.jpg",
+      "format": "audiobook",
+      "finished": "2018-09-27",
+      "rating": 6
+    },
+    {
+      "title": "Ill Be Gone in the Dark One Womans Obsessive Search for the Golden State Killer",
+      "author": "Michelle McNamara, Gillian Flynn, Patton Oswalt",
+      "cover": "/assets/images/reading/201809220000-ill-be-gone-in-the-dark-one-womans-obsessive-search-for-the-golden-state-killer.jpg",
+      "format": "audiobook",
+      "finished": "2018-09-22",
+      "rating": 8
+    },
+    {
+      "title": "Dark Matter",
+      "author": "Blake Crouch",
+      "cover": "/assets/images/reading/201809120000-dark-matter.jpg",
+      "format": "audiobook",
+      "finished": "2018-09-12",
+      "rating": 10,
+      "review": "Fast paced but not rushed. Written to connect with the reader at an emotional level. Been a while since I've enjoyed a book this genre this much"
+    },
+    {
+      "title": "Anansi Boys",
+      "author": "Neil Gaiman",
+      "cover": "/assets/images/reading/201809040000-anansi-boys.jpg",
+      "format": "book",
+      "finished": "2018-09-04",
+      "rating": 10
+    },
+    {
+      "title": "Reboot",
+      "author": "Amy Tintera",
+      "cover": "/assets/images/reading/201808170000-reboot.jpg",
+      "format": "audiobook",
+      "series": "Reboot",
+      "seriesNumber": 1,
+      "finished": "2018-08-17",
+      "rating": 6
+    },
+    {
+      "title": "A Dance with Dragons",
+      "author": "George R.R. Martin",
+      "cover": "/assets/images/reading/201808070000-a-dance-with-dragons.jpg",
+      "format": "audiobook",
+      "series": "A Song of Ice and Fire",
+      "seriesNumber": 5,
+      "finished": "2018-08-07",
+      "rating": 10
+    },
+    {
+      "title": "A Feast for Crows",
+      "author": "George R.R. Martin",
+      "cover": "/assets/images/reading/201807120000-a-feast-for-crows.jpg",
+      "format": "audiobook",
+      "series": "A Song of Ice and Fire",
+      "seriesNumber": 4,
+      "finished": "2018-07-12",
+      "rating": 10
+    },
+    {
+      "title": "A Storm of Swords",
+      "author": "George R.R. Martin",
+      "cover": "/assets/images/reading/201806200000-a-storm-of-swords.jpg",
+      "format": "audiobook",
+      "series": "A Song of Ice and Fire",
+      "seriesNumber": 3,
+      "finished": "2018-06-20",
+      "rating": 10
+    },
+    {
+      "title": "A Clash of Kings",
+      "author": "George R.R. Martin",
+      "cover": "/assets/images/reading/201805160000-a-clash-of-kings.jpg",
+      "format": "book",
+      "series": "A Song of Ice and Fire",
+      "seriesNumber": 2,
+      "finished": "2018-05-16",
+      "rating": 10
+    },
+    {
+      "title": "American Gods",
+      "author": "Neil Gaiman",
+      "cover": "/assets/images/reading/201803290000-american-gods.jpg",
+      "format": "audiobook",
+      "series": "American Gods",
+      "seriesNumber": 1,
+      "finished": "2018-03-29",
+      "rating": 10
+    },
+    {
+      "title": "The Dark Tower",
+      "author": "Stephen  King, Michael   Whelan",
+      "cover": "/assets/images/reading/201803200000-the-dark-tower.jpg",
+      "format": "audiobook",
+      "series": "Dark Tower",
+      "seriesNumber": 7,
+      "finished": "2018-03-20",
+      "rating": 10
+    },
+    {
+      "title": "Song of Susannah",
+      "author": "Stephen  King, Darrel Anderson",
+      "cover": "/assets/images/reading/201802160000-song-of-susannah.jpg",
+      "format": "audiobook",
+      "series": "Dark Tower",
+      "seriesNumber": 6,
+      "finished": "2018-02-16",
+      "rating": 6,
+      "review": "Feels a little «weak» compared to the rest of the series (up until this one; haven't read the last one yet). I feel the «meta» part of the story doesn't go too well with the rest of the book; I enjoyed it anyways and can't wait to hang some more with the group"
+    },
+    {
+      "title": "Wolves of the Calla",
+      "author": "Stephen  King, Bernie Wrightson",
+      "cover": "/assets/images/reading/201802080000-wolves-of-the-calla.jpg",
+      "format": "audiobook",
+      "series": "Dark Tower",
+      "seriesNumber": 5,
+      "finished": "2018-02-08",
+      "rating": 10
+    },
+    {
+      "title": "The Wind Through the Keyhole",
+      "author": "Stephen  King",
+      "cover": "/assets/images/reading/201801170000-the-wind-through-the-keyhole.jpg",
+      "format": "audiobook",
+      "series": "The Dark Tower",
+      "seriesNumber": 4.5,
+      "finished": "2018-01-17",
+      "rating": 8
+    },
+    {
+      "title": "Wizard and Glass",
+      "author": "Stephen  King",
+      "cover": "/assets/images/reading/201712120000-wizard-and-glass.jpg",
+      "format": "audiobook",
+      "series": "The Dark Tower",
+      "seriesNumber": 4,
+      "finished": "2017-12-12",
+      "rating": 8
+    },
+    {
+      "title": "The Waste Lands",
+      "author": "Stephen  King, Ned Dameron",
+      "cover": "/assets/images/reading/201711090000-the-waste-lands.jpg",
+      "format": "audiobook",
+      "series": "Dark Tower",
+      "seriesNumber": 3,
+      "finished": "2017-11-09",
+      "rating": 10
+    },
+    {
+      "title": "The Color of Magic",
+      "author": "Terry Pratchett",
+      "cover": "/assets/images/reading/201710170000-the-color-of-magic.jpg",
+      "format": "audiobook",
+      "series": "Discworld,",
+      "seriesNumber": 1,
+      "finished": "2017-10-17",
+      "rating": 8
+    },
+    {
+      "title": "The Drawing of the Three",
+      "author": "Stephen  King",
+      "cover": "/assets/images/reading/201709280000-the-drawing-of-the-three.jpg",
+      "format": "audiobook",
+      "series": "Dark Tower",
+      "seriesNumber": 2,
+      "finished": "2017-09-28",
+      "rating": 10
+    },
+    {
+      "title": "The Gunslinger",
+      "author": "Stephen  King",
+      "cover": "/assets/images/reading/201709130000-the-gunslinger.jpg",
+      "format": "audiobook",
+      "series": "The Dark Tower",
+      "seriesNumber": 1,
+      "finished": "2017-09-13",
+      "rating": 6
+    },
+    {
+      "title": "Assassins Quest",
+      "author": "Robin Hobb",
+      "cover": "/assets/images/reading/201708290000-assassins-quest.jpg",
+      "format": "audiobook",
+      "series": "Farseer Trilogy",
+      "seriesNumber": 3,
+      "finished": "2017-08-29",
+      "rating": 10
+    },
+    {
+      "title": "Royal Assassin",
+      "author": "Robin Hobb",
+      "cover": "/assets/images/reading/201707170000-royal-assassin.jpg",
+      "format": "audiobook",
+      "series": "Farseer Trilogy",
+      "seriesNumber": 2,
+      "finished": "2017-07-17",
+      "rating": 8
+    },
+    {
+      "title": "Assassins Apprentice",
+      "author": "Robin Hobb",
+      "cover": "/assets/images/reading/201706070000-assassins-apprentice.jpg",
+      "format": "audiobook",
+      "series": "Farseer Trilogy",
+      "seriesNumber": 1,
+      "finished": "2017-06-07",
+      "rating": 8
+    },
+    {
+      "title": "The Complete Sherlock Holmes",
+      "author": "Arthur Conan Doyle",
+      "cover": "/assets/images/reading/201704130000-the-complete-sherlock-holmes.jpg",
+      "format": "book",
+      "finished": "2017-04-13",
+      "rating": 10
+    },
+    {
+      "title": "The Wise Mans Fear",
+      "author": "Patrick Rothfuss",
+      "cover": "/assets/images/reading/201702080001-the-wise-mans-fear.jpg",
+      "format": "audiobook",
+      "series": "The Kingkiller Chronicle",
+      "seriesNumber": 2,
+      "finished": "2017-03-12",
+      "rating": 10
+    },
+    {
+      "title": "Miss Peregrines Home for Peculiar Children",
+      "author": "Ransom Riggs",
+      "cover": "/assets/images/reading/201701180000-miss-peregrines-home-for-peculiar-children.jpg",
+      "format": "audiobook",
+      "series": "Miss Peregrine's Peculiar Children",
+      "seriesNumber": 1,
+      "finished": "2017-01-18",
+      "rating": 8,
+      "review": "The characters are not that well developed honestly; some of the children are pretty flat. That being said I enjoyed the book; the narrative is not incredible or full of surprises but it leads you nicely and in the end I had a really good time and was a bit disappointed by how it ended (because it left me wanting more; which means I'll probably read/listen to the 2nd book in the trilogy)"
+    },
+    {
+      "title": "Ready Player One",
+      "author": "Ernest Cline",
+      "cover": "/assets/images/reading/201612170000-ready-player-one.jpg",
+      "format": "audiobook",
+      "series": "Ready Player One",
+      "seriesNumber": 1,
+      "finished": "2016-12-17",
+      "rating": 6,
+      "review": "The beginning is quite slow and would dare say boring. The author takes it sweet time seeing the mod and explaining the world. The middle of the book improves this pase and the story becomes more interesting. The end is not bad but isn't great. Overall the book is pretty predictable except for one or two minor surprises. I enjoyed the book but wanted too floored by it."
+    },
+    {
+      "title": "Altar of Bones",
+      "author": "Philip Carter",
+      "cover": "/assets/images/reading/201610120000-altar-of-bones.jpg",
+      "format": "book",
+      "finished": "2016-10-12",
+      "rating": 6
+    },
+    {
+      "title": "Childhood’s End",
+      "author": "Arthur C. Clarke",
+      "cover": "/assets/images/reading/201607120000-childhood-s-end.jpg",
+      "format": "book",
+      "finished": "2016-07-12",
+      "rating": 8
+    }
+  ]
+}
