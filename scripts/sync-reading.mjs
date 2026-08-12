@@ -14,13 +14,7 @@ import { load as loadYaml } from 'js-yaml';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = resolve(__dirname, '..');
 
-const DEFAULT_VAULT_PATH = resolve(
-  projectRoot,
-  '..',
-  'second_brain',
-  'Knowledgebase',
-  'Books',
-);
+const DEFAULT_VAULT_PATH = resolve(projectRoot, '..', 'second_brain', 'Knowledgebase', 'Books');
 
 const vaultPath = process.argv[2] ?? process.env.READING_VAULT_PATH ?? DEFAULT_VAULT_PATH;
 
@@ -71,6 +65,29 @@ function parseSeriesNumber(value) {
     return Number(value);
   }
   return undefined;
+}
+
+// Statuses that mean "stopped reading, doesn't count" — these carry a finished
+// date like a completed book does, so they need an explicit opt-out.
+const ABANDONED_STATUSES = new Set(['dnf', 'abandoned']);
+
+// Which bucket a vault note belongs in — 'finished', 'currentlyReading', or
+// 'skipped'.
+//
+// Completion is signalled two ways in the vault: older notes set `read: true`,
+// newer ones set `status: read` and leave `read` at false. Trusting `read`
+// alone silently dropped every note using the newer shape, so the `finished`
+// date decides the bucket instead — it is the one field both shapes agree on.
+// The flags now only matter for excluding abandoned reads.
+//
+// Out of scope: backlog (never started, never finished) and DNFs.
+export function classify(fm) {
+  const status = typeof fm.status === 'string' ? fm.status.trim().toLowerCase() : undefined;
+  if (status && ABANDONED_STATUSES.has(status)) return 'skipped';
+
+  if (parseDate(fm.finished)) return 'finished';
+  if (parseDate(fm.started)) return 'currentlyReading';
+  return 'skipped';
 }
 
 function slugify(stem) {
@@ -153,6 +170,7 @@ async function main() {
 
   const finishedRaw = [];
   const currentlyReadingRaw = [];
+  const skipped = [];
 
   for (const file of files) {
     const fm = await loadFrontmatter(resolve(vaultPath, file));
@@ -175,11 +193,8 @@ async function main() {
       _stem: stem,
     };
 
-    // In scope: finished (read:true with a finished date) or genuinely in
-    // progress (started, not yet finished). Everything else — backlog
-    // (read:false, never started), DNF (started === finished same-day
-    // abandons) — is deliberately dropped; see grill-me notes.
-    if (fm.read === true && finished) {
+    const bucket = classify(fm);
+    if (bucket === 'finished') {
       finishedRaw.push({
         ...base,
         finished,
@@ -187,12 +202,23 @@ async function main() {
         favorite: fm.favorite === true ? true : undefined,
         review: stripHtml(fm.review),
       });
-    } else if (started && !finished) {
+    } else if (bucket === 'currentlyReading') {
       currentlyReadingRaw.push({ ...base, started });
+    } else {
+      skipped.push({ stem, read: fm.read, status: fm.status });
     }
   }
 
   log(`In scope: ${finishedRaw.length} finished, ${currentlyReadingRaw.length} currently reading`);
+
+  // Most skips are backlog and entirely expected, so they stay quiet. A note
+  // that claims to be read but still got dropped is the shape that hid three
+  // finished books, so name those explicitly instead of failing silently.
+  const unplaceable = skipped.filter((s) => s.read === true || s.status === 'read');
+  log(`Skipped ${skipped.length} notes (backlog, DNF, or undated)`);
+  for (const s of unplaceable) {
+    log(`  ! "${s.stem}" is marked read but has no usable date — not published`);
+  }
 
   const all = [...finishedRaw, ...currentlyReadingRaw];
   const existing = await existingCoversBySlug();
@@ -220,7 +246,9 @@ async function main() {
     }
   });
 
-  log(`Covers: ${downloaded} newly downloaded, ${cached} already cached (skipped), ${failed} failed (kept remote URL)`);
+  log(
+    `Covers: ${downloaded} newly downloaded, ${cached} already cached (skipped), ${failed} failed (kept remote URL)`,
+  );
 
   function clean({ _stem, ...rest }) {
     return Object.fromEntries(Object.entries(rest).filter(([, v]) => v !== undefined));
@@ -234,7 +262,13 @@ async function main() {
     .sort((a, b) => +new Date(b.started) - +new Date(a.started));
 
   await writeFile(outputJsonPath, `${JSON.stringify({ currentlyReading, finished }, null, 2)}\n`);
-  log(`Wrote ${finished.length} finished + ${currentlyReading.length} currently-reading books to ${outputJsonPath}`);
+  log(
+    `Wrote ${finished.length} finished + ${currentlyReading.length} currently-reading books to ${outputJsonPath}`,
+  );
 }
 
-main();
+// Only sync when run as a script — importing this module (e.g. from the tests)
+// must not touch the network or rewrite reading.json.
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main();
+}

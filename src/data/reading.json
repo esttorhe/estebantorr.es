@@ -10,6 +10,36 @@
   ],
   "finished": [
     {
+      "title": "The Tapestry of Fate",
+      "author": "Shannon Chakraborty",
+      "cover": "/assets/images/reading/202511080000-the-tapestry-of-fate.jpg",
+      "format": "audiobook",
+      "series": "Amina al-Sirafi",
+      "seriesNumber": 2,
+      "finished": "2026-08-12",
+      "rating": 6,
+      "review": "Start was a little meh and predictable with lots of cheesy predictable parts. It picks up nicely but very late into the book. Could have been better but at least it was ok at the end."
+    },
+    {
+      "title": "The Second Legend of Uh",
+      "author": "Aaron N. Hall",
+      "cover": "/assets/images/reading/202607282107-the-second-legend-of-uh.jpg",
+      "format": "book",
+      "series": "The Legend of Uh",
+      "seriesNumber": 2,
+      "finished": "2026-08-04",
+      "rating": 6.5,
+      "review": "Entertaining book. Lots of references, some bits were a bit too predictive but overall it was quite enjoyable. Allows the listener/reader to distract themselves without having to be laser focus on the story as it is very easy to follow."
+    },
+    {
+      "title": "Transmetropolitan Vol. 0 Tales of Human Waste",
+      "author": "Warren Ellis, Darick Robertson",
+      "cover": "/assets/images/reading/201702080000-transmetropolitan-vol-0-tales-of-human-waste.jpg",
+      "format": "book",
+      "finished": "2026-07-30",
+      "rating": 10
+    },
+    {
       "title": "The Legend of Uh",
       "author": "Aaron N. Hall",
       "cover": "/assets/images/reading/202607282118-the-legend-of-uh.jpg",
