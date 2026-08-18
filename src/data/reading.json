@@ -1,14 +1,23 @@
 {
   "currentlyReading": [
     {
+      "title": "How to Become the Dark Lord and Die Trying",
+      "author": "Django Wexler",
+      "cover": "/assets/images/reading/202608170833-how-to-become-the-dark-lord-and-die-trying.jpg",
+      "format": "book",
+      "started": "2026-08-17"
+    }
+  ],
+  "finished": [
+    {
       "title": "Operation Bounce House",
       "author": "Matt Dinniman",
       "cover": "/assets/images/reading/202602090000-operation-bounce-house.jpg",
       "format": "audiobook",
-      "started": "2026-08-12"
-    }
-  ],
-  "finished": [
+      "finished": "2026-08-17",
+      "rating": 4.5,
+      "review": "Ok-ish. Starts pretty slow, kind of stereotypical and lots of parallels with DCC. There are a couple of posts that are inspiring."
+    },
     {
       "title": "The Tapestry of Fate",
       "author": "Shannon Chakraborty",
