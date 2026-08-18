@@ -4,67 +4,77 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-Source for `https://estebantorr.es`, the personal site of Esteban Torres. Two branches, two stacks:
+Source for `https://estebantorr.es`, the personal site of Esteban Torres. One branch (`main`), one stack: **Astro 5**, static output, deployed to Cloudflare Workers.
 
-- **`source`** — Hugo + `KeepIt` theme (Git submodule). The live deploy. CI builds and pushes to `master` → GitHub Pages.
-- **`astro-v2`** — in-flight Astro 5 redesign. Will replace `source` when the redesign is shipped. This file describes the **`astro-v2`** stack; switch to `source` to see Hugo guidance in git history.
+`external/cv` is a Git submodule (`git@github.com:esttorhe/cv.git`) that owns the CV markdown and its PDF pipeline. Clone with `--recurse-submodules`, or run `git submodule update --init` after the fact.
 
 ## Common commands
 
 Astro runs through bun.
 
-| Task                         | Command                               |
-| ---------------------------- | ------------------------------------- |
-| Install deps                 | `bun install`                         |
-| Dev server (live reload)     | `bun run dev` (http://localhost:4321) |
-| Static build into `dist/`    | `bun run build`                       |
-| Preview the production build | `bun run preview`                     |
-| Format code                  | `bun run format`                      |
-| Verify formatting            | `bun run format:check`                |
+| Task                         | Command                                  |
+| ---------------------------- | ---------------------------------------- |
+| Install deps                 | `bun install`                            |
+| Dev server (live reload)     | `bun run dev` (http://localhost:4321)    |
+| Static build into `dist/`    | `bun run build`                          |
+| Preview the production build | `bun run preview`                        |
+| Format code                  | `bun run format`                         |
+| Verify formatting            | `bun run format:check`                   |
+| Run tests                    | `bun test scripts/sync-reading.test.mjs` |
+| Rebuild the CV PDF           | `bun run cv:pdf`                         |
+| Sync the reading list        | `bun run library:sync`                   |
 
-Run `mise install` first to pull the pinned bun / node versions from `.mise.toml`.
+Run `mise install` first to pull the pinned bun / node versions from `.mise.toml`. `mise` also defines tasks: `mise run new-post` and `mise run new-til` scaffold content (they wrap `scripts/new-post.mjs` / `scripts/new-til.mjs`), and `mise run dev` proxies the dev server.
+
+`bun run cv:pdf` delegates to `mise run pdf` inside `external/cv/` (weasyprint lives there) and copies the result to `public/cv/esteban-torres-cv.pdf` — it needs the submodule checked out.
 
 ## Architecture
 
 Astro's standard layout:
 
-- `src/pages/` — file-based routes. Homepage at `index.astro`; blog index at `blog/index.astro`; individual posts at `[year]/[month]/[...slug].astro` (URL shape `/:year/:month/:title/`, intentionally matching the old Hugo permalinks).
-- `src/content/blog/*.mdx` — blog posts as MDX. Frontmatter validated by the strict schema in `src/content/config.ts` (Content Layer API + glob loader). Categories enum: `Tech`, `Leadership`, `Productivity`, `Personal`, `Community`.
-- `src/content/config.ts` — collection schema. Adding fields means updating both the schema and the frontmatter on existing posts.
-- `src/layouts/BaseLayout.astro` — bare HTML shell (skip-link, meta, slot). The real visual treatment lives in `src/styles/global.css`.
-- `src/components/shortcodes/` — MDX-callable components: `Blockquote`, `Terminal`, `TweetQuote`, `GitHubRepo`. Each MDX post imports the ones it needs from `../../components/shortcodes/<Name>.astro`.
-- `src/styles/global.css` — Tailwind v4 (`@import "tailwindcss"`) plus CSS custom-property design tokens. **The token values are scaffold placeholders**; the real palette / typography is shaped via the impeccable skill — see PRODUCT.md.
-- `public/` — served verbatim (favicons, manifest, CNAME, `.well-known/`, post images, portfolio thumbs).
-- `src/assets/` — images imported via `import` (processed by Astro's image pipeline). Distinct from `public/`.
-- `src/data/` — static JSON (portfolio, etc.).
-- `src/lib/` — utilities (Goodreads helper, etc.).
+- `src/pages/` — file-based routes. Homepage `index.astro`; blog index `blog/[...page].astro` (paginated); posts at `[year]/[month]/[...slug].astro` (URL shape `/:year/:month/:title/`, intentionally matching the old Hugo permalinks). Also `about`, `talks`, `portfolio`, `library` (+ `library/[year]`), `til/` (index + `[...slug]`), and `cv` (+ `cv/print`, the PDF source, excluded from the sitemap).
+- `src/content/` — two collections, both MDX/MD via the Content Layer API + glob loader: `blog/` and `til/`. Schemas in `src/content/config.ts`.
+- `src/content/config.ts` — collection schemas. Adding fields means updating both the schema and the frontmatter on existing entries.
+- `src/layouts/BaseLayout.astro` — HTML shell (skip-link, meta, `og:image` / `twitter:image` when a page passes one). Real visual treatment lives in `src/styles/global.css`.
+- `src/components/` — grouped by surface: `site/` (header, footer), `article/`, `blog/`, `til/`, `reading/`, `home/`, `cv/`, `marks/` (the Sigil), and `shortcodes/`.
+- `src/components/shortcodes/` — MDX-callable: `Blockquote`, `Terminal`, `TweetQuote`, `GitHubRepo`. Each MDX post imports the ones it needs.
+- `src/styles/global.css` — Tailwind v4 (`@import "tailwindcss"`) plus OKLCH design tokens, with light + dark parity. Webfonts (Bricolage Grotesque Variable, Geist Mono, Vollkorn) are imported here from local fontsource packages. `src/styles/cv.css` is scoped to the CV routes.
+- `src/lib/` — utilities: `cvParser.ts` / `cvRender.ts` (CV markdown → HTML), `goodreads.ts`, `heroResolver.ts` / `heroFallback.ts` (post hero images, see below).
+- `src/data/` — static data as JSON + typed accessors (`portfolio`, `reading`, `talks`, `tvshows`, `cvGroups`).
+- `src/assets/` — images imported via `import`, processed by Astro's image pipeline (`me.jpg`, `post-heroes/`). Distinct from `public/`.
+- `public/` — served verbatim: favicons/manifests, `keybase.txt`, `cv/esteban-torres-cv.pdf`, `assets/images/`.
 
 Permalinks for blog posts are `/:year/:month/:title/`. RSS lives at `/rss.xml`. Sitemap is generated by `@astrojs/sitemap`.
 
+**Post hero images** resolve in three steps: the `featured_image` frontmatter field, then the convention path `src/assets/post-heroes/<slug>.*`, then a Sigil-generated SVG fallback (10 slug-seeded variants, so a row of fallbacks reads as a family). See `src/lib/heroResolver.ts`.
+
 ## Deployment
 
-`.github/workflows/build-and-deploy.yml` currently still triggers on push to `source` and builds Hugo. **It is not updated for Astro yet** — the swap happens in the same PR that merges `astro-v2` → `source`. Until then, the Astro branch deploys nowhere; `bun run build` locally is the only way to see production output.
+`.github/workflows/deploy.yml` builds the Astro site and deploys to **Cloudflare Workers** (static assets, not Pages — CF deprecated the Pages create flow). Push to `main` = production deploy; PRs build only, and are gated to `esttorhe` so fork PRs can't reach the secrets. `wrangler.jsonc` at the repo root carries the Worker name and points the assets bucket at `dist/`.
+
+`PUBLIC_POSTHOG_KEY` comes from repo secrets; when it's absent no PostHog snippet is emitted.
 
 ## Writing content
 
-- New post: drop a file at `src/content/blog/YYYY-MM-<slug>.mdx`. Frontmatter must satisfy `src/content/config.ts` (`title`, `date`, `category`; `tags`, `description`, `draft`, `featured_image` optional).
-- Drafts: set `draft: true` in frontmatter. Filtered out by `getCollection('blog', ({ data }) => !data.draft)` everywhere.
-- Shortcodes inside MDX: add `import Terminal from '../../components/shortcodes/Terminal.astro';` (or whichever shortcode) at the top of the MDX file. Available: `Blockquote` (cite, source), `Terminal` (prompt), `TweetQuote` (author, username, date), `GitHubRepo` (owner, repo, commit).
-- Code blocks use Shiki with the `github-dark` theme (configured in `astro.config.mjs`).
+- New post: `mise run new-post`, or drop a file at `src/content/blog/YYYY-MM-<slug>.mdx`. Frontmatter must satisfy `src/content/config.ts`: `title`, `date`, `category` required (enum: `Tech`, `Leadership`, `Productivity`, `Personal`, `Community`); `description`, `tags`, `featured_image`, `featured_image_alt`, `draft` optional.
+- New TIL: `mise run new-til`, or a file under `src/content/til/`. Same shape, but `description` is **required** — the `/til` index shows it in place of a body preview — and there's no category.
+- Drafts: set `draft: true`. Filtered out by `getCollection('blog', ({ data }) => !data.draft)` everywhere.
+- Shortcodes inside MDX: add `import Terminal from '../../components/shortcodes/Terminal.astro';` (or whichever) at the top of the file.
+- Code blocks use Shiki with dual themes (`github-light` / `github-dark`) and `wrap: true`, configured in `astro.config.mjs`.
 
 ## Tool versions
 
-`.mise.toml` pins exact versions of `bun`, `node`, `npm:impeccable`, and `github:gastownhall/beads`. Ruby and `pipx:harlequin` are intentionally absent — they're not used by `astro-v2`. Project-level npm devDeps (`puppeteer`, `prettier`, `prettier-plugin-astro`) live in `package.json` and are exact-pinned by `bun.lock`.
+`.mise.toml` pins exact versions of `bun`, `node`, `npm:impeccable`, and `github:gastownhall/beads`. Project-level npm devDeps (`prettier`, `prettier-plugin-astro`, `puppeteer`, `js-yaml`, `marked`) live in `package.json` and are exact-pinned by `bun.lock`.
 
-`puppeteer` is required by the impeccable detector's URL scanner (`scripts/detector/engines/browser/detect-url.mjs` does a lazy `import('puppeteer')`); without it, `/impeccable audit <url>` and live browser-rendered checks fail at runtime.
+`puppeteer` is required by the impeccable detector's URL scanner, which does a lazy `import('puppeteer')`; without it, `/impeccable audit <url>` and live browser-rendered checks fail at runtime.
 
 ## Untracked output directories
 
-`dist/` and `.astro/` are build outputs and Astro's content cache. Both `.gitignore`d.
+`dist/` and `.astro/` are build outputs and Astro's content cache. `.claude-visual/` holds working screenshots. All three are `.gitignore`d.
 
 ## Design context
 
-- `PRODUCT.md` at the project root holds the strategic design brief: register (`brand`), three equally-weighted audiences, brand personality (plainspoken, opinionated, idiosyncratic), anti-references, accessibility commitments, and the five design principles. Read it before any visual / UX / copy work.
+- `PRODUCT.md` holds the strategic design brief: register (`brand`), three equally-weighted audiences, brand personality (plainspoken, opinionated, idiosyncratic), anti-references, accessibility commitments, and the five design principles. Read it before any visual / UX / copy work.
+- `DESIGN.md` is the built design system: OKLCH palette, type scale, motion, component specs, and the Sigil's rules. Read it before touching styles — the tokens in `src/styles/global.css` are the implementation of it, not placeholders.
 - North-star metric: reading depth (people read more than one post per visit). Hard-banned aesthetics: cream/sand editorial-warm, generic SaaS landing, Medium-clone, dev-blog-2018.
-- `DESIGN.md` (visual tokens / components / palette) is not written yet. Run `/impeccable document` once the design system has been shaped + crafted.
-- The scaffold pages and `src/styles/global.css` tokens are intentionally undesigned. Shape the homepage with `/impeccable shape homepage`, then build with `/impeccable craft homepage`.
+- `.impeccable/` holds the design tooling's own state (`design.json`, references).
