@@ -59,6 +59,23 @@ const nav = [
   </header>
 </div>
 
+<script>
+  // On phones the nav is a horizontal scroll strip. When the page you're on
+  // sits past its visible edge, the "you are here" marker is hidden until you
+  // swipe — so centre the current item on load. Measured off bounding rects
+  // rather than offsetLeft, which would need a positioned ancestor to be
+  // meaningful. Writes scrollLeft only, so the page itself never moves; a no-op
+  // on viewports where the row already fits and there's nothing to scroll.
+  const nav = document.querySelector('.site-nav');
+  const current = nav?.querySelector('.is-current');
+
+  if (nav && current) {
+    const navBox = nav.getBoundingClientRect();
+    const itemBox = current.getBoundingClientRect();
+    nav.scrollLeft += itemBox.left - navBox.left - (navBox.width - itemBox.width) / 2;
+  }
+</script>
+
 <style>
   /* Sticky wrapper — full viewport width so the blurred bg covers content on
      either side of the centered header even on wide viewports. */
@@ -157,19 +174,55 @@ const nav = [
     border-color: var(--accent);
   }
 
-  @media (max-width: 540px) {
+  /* 720px is where the one-row header stops fitting: wordmark + the seven nav
+     items + toggle need ~658px of content box, and below this the flex row
+     starts compressing the labels — at phone widths it squeezed the theme
+     toggle clean off the screen. Under it, the nav drops to its own row. */
+  @media (max-width: 720px) {
     .site-header {
       flex-wrap: wrap;
       gap: var(--space-sm);
     }
+
+    /* Seven items don't fit across a phone, so the row scrolls rather than
+       clipping whatever falls past the edge. It bleeds out to the viewport
+       edges — a strip that runs edge-to-edge reads as scrollable, where one
+       stopping short of the margin reads as cut off. */
     .site-nav {
       order: 3;
-      width: 100%;
+      width: calc(100% + var(--gutter) * 2);
+      margin-inline: calc(var(--gutter) * -1);
+      /* Bottom padding is for the focus ring (2px outline, 3px offset), which
+         the scroll container would otherwise clip. */
+      padding-block: var(--space-sm) var(--space-xs);
       border-top: 1px solid var(--rule);
-      padding-top: var(--space-sm);
+      overflow-x: auto;
+      /* Don't hand the swipe to the page once the row hits its end. */
+      overscroll-behavior-x: contain;
+      /* The item cut off at the edge is the affordance; a scrollbar here would
+         sit under the labels and add noise to a deliberately quiet header. */
+      scrollbar-width: none;
     }
+
+    .site-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* The gutter lives on the list, not on the scroll container: a scroller's
+       trailing padding is left out of its scroll extent, so putting it on
+       .site-nav would leave the last item flush against the screen edge at
+       full scroll. Sizing the list to max-content makes the padding part of
+       the scrolled box, which gives both ends a real gutter. */
     .site-nav ul {
       justify-content: flex-start;
+      width: max-content;
+      padding-inline: var(--gutter);
+    }
+
+    /* Without this the labels compress toward min-content instead of
+       overflowing into the scroll. */
+    .site-nav li {
+      flex: 0 0 auto;
     }
   }
 </style>
