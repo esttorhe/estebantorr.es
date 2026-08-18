@@ -245,7 +245,7 @@ A small hand-drawn SVG of a wobbly ring (`stroke-width: 1.6`) with an off-centre
 - Punctuating glyph between "Berlin" and "San José" in the footer location strip.
 - As the _favicon_ (both `favicon.svg` and the rasters), with `#C97114` hex pinned for browser-tab use.
 - As the **post-hero fallback** when a blog post or talk doesn't have a committed cover image — 10 curated rotation/scale/position variants seeded by the post slug, so a row of fallbacks reads as a family rather than 10 copies.
-- As a "thumbnail mark" inside the footer avatar slot (when no me.png), at 36px.
+- As a "thumbnail mark" inside the footer avatar slot (when no me.jpg), at 36px.
 
 The Sigil is the only mark. There is no second mark. There is no monogram.
 

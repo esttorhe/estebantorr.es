@@ -4,7 +4,7 @@
 
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import mePhoto from '../assets/me.png';
+import mePhoto from '../assets/me.jpg';
 ---
 
 <BaseLayout
@@ -21,7 +21,7 @@ import mePhoto from '../assets/me.png';
       <figure class="about-page__photo reveal" aria-hidden="false">
         <Image
           src={mePhoto}
-          alt="Esteban Torres — selfie styled as a Spotify 'This Is' playlist cover."
+          alt="Esteban Torres — studio portrait against a dark grey backdrop, black t-shirt, neck tattoo visible."
           widths={[280, 420, 560, 840]}
           sizes="(max-width: 720px) min(320px, 100vw), 280px"
           loading="eager"
