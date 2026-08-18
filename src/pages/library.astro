@@ -63,9 +63,7 @@ for (const book of sortedFinished) {
     }
 
     <section class="reading-page__finished" aria-labelledby="finished-heading">
-      <h2 id="finished-heading" class="sr-only">
-        Finished
-      </h2>
+      <h2 id="finished-heading" class="sr-only">Finished</h2>
 
       {
         yearGroups.map(({ year, books }) => (
@@ -83,7 +81,9 @@ for (const book of sortedFinished) {
             </div>
             {books.length > PREVIEW_COUNT && (
               <a class="reading-page__see-all" href={`/library/${year}/`}>
-                <span>See all {books.length} from {year}</span>
+                <span>
+                  See all {books.length} from {year}
+                </span>
                 <span aria-hidden="true">→</span>
               </a>
             )}

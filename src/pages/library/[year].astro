@@ -32,7 +32,8 @@ const { year, books } = Astro.props;
       </a>
       <h1 id="year-heading" class="year-page__title">{year}</h1>
       <p class="year-page__meta tabular">
-        {books.length} {books.length === 1 ? 'book' : 'books'} finished
+        {books.length}
+        {books.length === 1 ? 'book' : 'books'} finished
       </p>
     </header>
 

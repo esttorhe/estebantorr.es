@@ -13,7 +13,11 @@ interface Props {
 const { book, index } = Astro.props;
 
 const date = new Date(book.started);
-const dateFormat = new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
+const dateFormat = new Intl.DateTimeFormat('en-GB', {
+  year: 'numeric',
+  month: 'short',
+  day: '2-digit',
+});
 
 const relatedPost = book.relatedPost ? await getEntry('blog', book.relatedPost) : undefined;
 const relatedHref = relatedPost
@@ -33,7 +37,9 @@ const relatedHref = relatedPost
   </figure>
   <div class="reading-card__text">
     <p class="reading-card__kicker tabular">Currently reading</p>
-    <h3 class="reading-card__title">{relatedHref ? <a href={relatedHref}>{book.title}</a> : book.title}</h3>
+    <h3 class="reading-card__title">
+      {relatedHref ? <a href={relatedHref}>{book.title}</a> : book.title}
+    </h3>
     <p class="reading-card__author">{book.author}</p>
     <p class="reading-card__meta tabular">
       Started <time datetime={date.toISOString()}>{dateFormat.format(date)}</time>

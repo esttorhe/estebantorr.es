@@ -47,11 +47,13 @@ const relatedHref = relatedPost
     <p class="book-card__author">{book.author}</p>
     <p class="book-card__meta tabular">
       {book.rating != null && <StarRating rating={book.rating} />}
-      {book.rating != null && (
-        <span class="book-card__dot" aria-hidden="true">
-          ·
-        </span>
-      )}
+      {
+        book.rating != null && (
+          <span class="book-card__dot" aria-hidden="true">
+            ·
+          </span>
+        )
+      }
       <time datetime={date.toISOString()}>{dateFormat.format(date)}</time>
       {
         book.format === 'audiobook' && (
