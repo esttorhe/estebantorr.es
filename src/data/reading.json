@@ -1,14 +1,23 @@
 {
   "currentlyReading": [
     {
+      "title": "Everybody Wants to Rule the World Except Me",
+      "author": "Django Wexler",
+      "cover": "/assets/images/reading/202608211238-everybody-wants-to-rule-the-world-except-me.jpg",
+      "format": "book",
+      "started": "2026-08-21"
+    }
+  ],
+  "finished": [
+    {
       "title": "How to Become the Dark Lord and Die Trying",
       "author": "Django Wexler",
       "cover": "/assets/images/reading/202608170833-how-to-become-the-dark-lord-and-die-trying.jpg",
       "format": "book",
-      "started": "2026-08-17"
-    }
-  ],
-  "finished": [
+      "finished": "2026-08-21",
+      "rating": 7,
+      "review": "Silly and entertaining. Has all the elements to keep you coming back without being a \"cult book\". Is not great by any measure but it will most definitely keep you entertained. Looking forward to the next one"
+    },
     {
       "title": "Operation Bounce House",
       "author": "Matt Dinniman",
