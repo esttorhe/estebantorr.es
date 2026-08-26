@@ -1,14 +1,23 @@
 {
   "currentlyReading": [
     {
+      "title": "How Minds Change",
+      "author": "David McRaney",
+      "cover": "/assets/images/reading/202608261540-how-minds-change.jpg",
+      "format": "book",
+      "started": "2026-08-26"
+    }
+  ],
+  "finished": [
+    {
       "title": "Everybody Wants to Rule the World Except Me",
       "author": "Django Wexler",
       "cover": "/assets/images/reading/202608211238-everybody-wants-to-rule-the-world-except-me.jpg",
       "format": "book",
-      "started": "2026-08-21"
-    }
-  ],
-  "finished": [
+      "finished": "2026-08-26",
+      "rating": 7,
+      "review": "Silly as the previous, slightly better structured and with a huge character growth/destruction. Quite enjoyable as the previous one. Great for chilling and just \"turning the brain off\" and enjoying some silly"
+    },
     {
       "title": "How to Become the Dark Lord and Die Trying",
       "author": "Django Wexler",
