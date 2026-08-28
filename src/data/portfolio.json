@@ -1,17 +1,38 @@
 {
   "featured": [
     {
+      "title": "Peec AI",
+      "description": "Engineering Manager: Leading the platform team that lays the foundations every other team builds on, powering AI search analytics for marketing teams.",
+      "tags": [
+        "AI",
+        "Platform Engineering",
+        "Leadership"
+      ],
+      "url": "https://peec.ai",
+      "role": "Engineering Manager",
+      "image": "/assets/images/portfolio/peec.png",
+      "imageMode": "logo",
+      "imageInvertOnDark": true
+    },
+    {
       "title": "BlueTip",
       "description": "AI writing platform that helps brainstorm, outline, write, and publish content with collaborative review and multi-format export.",
-      "tags": ["AI", "Writing", "SaaS"],
+      "tags": [
+        "AI",
+        "Writing",
+        "SaaS"
+      ],
       "url": "https://www.bluetip.ai/",
       "role": "Founder",
       "image": "/assets/images/portfolio/bluetip.png"
     },
     {
       "title": "Zenjob",
-      "description": "Head of Platform – Leading a 12+ engineers platform organization. Supporting DevOps, providing tools and empowering Germany's leading microjobs platform.",
-      "tags": ["Platform Engineering", "Leadership"],
+      "description": "Head of Platform: Led a 12+ engineers platform organization. Supported DevOps, provided tools and empowered Germany's leading microjobs platform.",
+      "tags": [
+        "Platform Engineering",
+        "Leadership"
+      ],
       "url": "https://www.zenjob.com/",
       "role": "Head of Platform",
       "image": "/assets/images/portfolio/zenjob.png"
@@ -19,7 +40,11 @@
     {
       "title": "FitForge",
       "description": "Fitness management platform for gyms, trainers, and clients.",
-      "tags": ["SaaS", "B2B", "Platform"],
+      "tags": [
+        "SaaS",
+        "B2B",
+        "Platform"
+      ],
       "url": "https://fitforge.fit",
       "role": "Co-founder",
       "image": "/assets/images/portfolio/fitforge.png",
@@ -28,7 +53,11 @@
     {
       "title": "Quik",
       "description": "AI-native product discovery. Ingests every signal your org produces, synthesizes patterns, ships features end to end.",
-      "tags": ["AI", "SaaS", "Product"],
+      "tags": [
+        "AI",
+        "SaaS",
+        "Product"
+      ],
       "url": "https://quik.so",
       "role": "Co-founder",
       "image": "/assets/images/portfolio/quik.png",
@@ -37,16 +66,25 @@
     },
     {
       "title": "Backstage by Spotify",
-      "description": "Engineering Manager – Lead a 10 engineers team distributed globally in charge of plugins and the foundational work for the plugins marketplace.",
-      "tags": ["Leadership", "Platform", "OSS"],
+      "description": "Engineering Manager: Led a 10 engineers team distributed globally in charge of plugins and the foundational work for the plugins marketplace.",
+      "tags": [
+        "Leadership",
+        "Platform",
+        "OSS"
+      ],
       "url": "https://backstage.spotify.com/",
       "role": "Engineering Manager",
       "image": "/assets/images/portfolio/backstage.png"
     },
     {
       "title": "SoundCloud",
-      "description": "Engineering Manager of Core Clients and Backend Core teams. Providing foundational frameworks, tools, APIs and foundational mobile work that powered SoundCloud's ecosystem.",
-      "tags": ["Platform Engineering", "Microservices", "DevOps", "APIs"],
+      "description": "Engineering Manager of Core Clients and Backend Core teams. Provided foundational frameworks, tools, APIs and foundational mobile work that powered SoundCloud's ecosystem.",
+      "tags": [
+        "Platform Engineering",
+        "Microservices",
+        "DevOps",
+        "APIs"
+      ],
       "url": "https://www.soundcloud.com/",
       "role": "Engineering Manager",
       "image": "/assets/images/portfolio/soundcloud.webp"
@@ -56,7 +94,11 @@
     {
       "title": "Elecciones Costa Rica",
       "description": "Open source platform comparing political party platforms for Costa Rica's 2026 elections using AI analysis of official TSE data.",
-      "tags": ["AI", "Civic Tech", "Open Source"],
+      "tags": [
+        "AI",
+        "Civic Tech",
+        "Open Source"
+      ],
       "url": "https://www.eleccionescostarica.org/",
       "github": null,
       "image": "/assets/images/portfolio/elecciones-cr.png"
@@ -64,7 +106,11 @@
     {
       "title": "SpicyPills",
       "description": "AI-powered productivity app for neurodiverse individuals with task breakdown, time estimation, and communication tools.",
-      "tags": ["AI", "Mobile", "Productivity"],
+      "tags": [
+        "AI",
+        "Mobile",
+        "Productivity"
+      ],
       "url": "https://spicypills.com/",
       "github": null,
       "image": "/assets/images/portfolio/spicypills.svg"
@@ -72,7 +118,11 @@
     {
       "title": "Movie & TV Visualizer",
       "description": "Obsidian plugin that turns movie and TV show notes into a visual media dashboard — carousels, top lists, tier lists, and season/episode progress tracking, all from note frontmatter.",
-      "tags": ["Obsidian", "Plugin", "TypeScript"],
+      "tags": [
+        "Obsidian",
+        "Plugin",
+        "TypeScript"
+      ],
       "url": null,
       "github": "https://github.com/esttorhe/obsidian-movie-tv-visualizer",
       "image": "/assets/images/portfolio/obsidian-movie-tv-visualizer.jpg"
@@ -80,7 +130,11 @@
     {
       "title": "Book Visualizer",
       "description": "Obsidian plugin that turns book notes into a reading dashboard — top lists, author stats, series completion tracking, and reading progress, all from note frontmatter.",
-      "tags": ["Obsidian", "Plugin", "TypeScript"],
+      "tags": [
+        "Obsidian",
+        "Plugin",
+        "TypeScript"
+      ],
       "url": null,
       "github": "https://github.com/esttorhe/obsidian-book-visualizer",
       "image": "/assets/images/portfolio/obsidian-book-visualizer.jpg"
@@ -88,7 +142,11 @@
     {
       "title": "blogwatcher-ui",
       "description": "A modern, self-contained web application for tracking blog articles and managing read/unread status. Works independently without external CLI.",
-      "tags": ["Web", "RSS", "Go"],
+      "tags": [
+        "Web",
+        "RSS",
+        "Go"
+      ],
       "url": null,
       "github": "https://github.com/esttorhe/blogwatcher-ui",
       "image": "/assets/images/portfolio/github.svg"
@@ -96,7 +154,11 @@
     {
       "title": "Stethoscope",
       "description": "External website monitoring tool with Prometheus metrics integration.",
-      "tags": ["Go", "Monitoring", "Prometheus"],
+      "tags": [
+        "Go",
+        "Monitoring",
+        "Prometheus"
+      ],
       "url": null,
       "github": "https://github.com/esttorhe/stethoscope",
       "image": "/assets/images/portfolio/github.svg"
