@@ -1,0 +1,71 @@
+# ABOUTME: Pulls new webmentions into src/data/webmentions.json daily and commits them, which triggers deploy.yml and puts them on the site.
+# ABOUTME: Mentions are merged into the committed cache, never replaced — the archive is the point, so a webmention.io outage can only ever mean "no new mentions".
+
+name: Sync webmentions
+
+on:
+  schedule:
+    # 04:20 UTC daily. Mentions arrive at whatever pace Bridgy polls, so once a
+    # day is plenty; a webhook-triggered sync is the planned follow-up (see
+    # repository_dispatch below, which is already wired for it).
+    - cron: '20 4 * * *'
+  workflow_dispatch:
+  repository_dispatch:
+    types: [webmention_received]
+
+# Two overlapping syncs would race on the same commit. Queue rather than cancel:
+# a cancelled run silently drops whatever it had already fetched.
+concurrency:
+  group: sync-webmentions
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    name: Sync
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    # Promoted to job-level env so the steps below can branch on whether the
+    # token exists. The `secrets` context is not available in a step's `if`,
+    # but `env` is — without this the daily cron would fail red every day until
+    # the secret is added, which is noise rather than signal.
+    env:
+      WEBMENTION_IO_TOKEN: ${{ secrets.WEBMENTION_IO_TOKEN }}
+
+    steps:
+      - name: Skip when unconfigured
+        if: env.WEBMENTION_IO_TOKEN == ''
+        run: |
+          echo '::notice::WEBMENTION_IO_TOKEN is not set — skipping. Sign in at https://webmention.io with estebantorr.es, then add the token as a repository secret.'
+
+      - name: Checkout
+        if: env.WEBMENTION_IO_TOKEN != ''
+        uses: actions/checkout@v4
+
+      - name: Install mise + pinned toolchain
+        if: env.WEBMENTION_IO_TOKEN != ''
+        uses: jdx/mise-action@v2
+        with:
+          install: true
+          cache: true
+
+      - name: Sync webmentions
+        if: env.WEBMENTION_IO_TOKEN != ''
+        run: bun run webmentions:sync
+
+      # Commits both the data file and any newly downloaded sender avatars.
+      # The `git diff --quiet` guard means a sync that found nothing new is a
+      # no-op rather than an empty commit — and therefore triggers no deploy.
+      - name: Commit new mentions
+        if: env.WEBMENTION_IO_TOKEN != ''
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/data/webmentions.json public/assets/images/webmentions
+          if git diff --staged --quiet; then
+            echo 'No new webmentions.'
+          else
+            git commit -m 'chore(webmentions): sync new mentions'
+            git push
+          fi
