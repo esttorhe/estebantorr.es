@@ -79,6 +79,21 @@ const posthogEnabled = import.meta.env.PROD && Boolean(posthogKey);
 
     <link rel="alternate" type="application/rss+xml" title={siteName} href="/rss.xml" />
 
+    {
+      /*
+      Webmention endpoint discovery. webmention.io receives on this domain's
+      behalf (a static site has no server to accept the POST), and the pingback
+      line converts legacy XML-RPC pingbacks into webmentions landing in the
+      same inbox. Mentions are pulled into src/data/webmentions.json by
+      scripts/sync-webmentions.mjs and rendered at build time.
+    */
+    }
+    <link rel="webmention" href="https://webmention.io/estebantorr.es/webmention" />
+    <link
+      rel="pingback"
+      href="https://webmention.io/webmention?forward=https://webmention.io/estebantorr.es/webmention"
+    />
+
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
