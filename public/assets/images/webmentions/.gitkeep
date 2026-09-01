@@ -1,0 +1,2 @@
+Sender avatars land here, downloaded by scripts/sync-webmentions.mjs.
+Kept in git so the sync workflow's `git add` always has a path to match.

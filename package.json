@@ -11,7 +11,9 @@
     "format": "prettier --write \"**/*.{astro,mjs,ts,tsx,js,jsx,md,css,json}\"",
     "format:check": "prettier --check \"**/*.{astro,mjs,ts,tsx,js,jsx,md,css,json}\"",
     "cv:pdf": "node scripts/build-cv-pdf.mjs",
-    "library:sync": "node scripts/sync-reading.mjs"
+    "library:sync": "node scripts/sync-reading.mjs",
+    "webmentions:sync": "bun scripts/sync-webmentions.mjs",
+    "test": "bun test scripts/"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
