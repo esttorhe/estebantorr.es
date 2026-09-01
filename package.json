@@ -13,6 +13,7 @@
     "cv:pdf": "node scripts/build-cv-pdf.mjs",
     "library:sync": "node scripts/sync-reading.mjs",
     "webmentions:sync": "bun scripts/sync-webmentions.mjs",
+    "webmentions:send": "bun scripts/send-webmentions.mjs",
     "test": "bun test"
   },
   "dependencies": {
