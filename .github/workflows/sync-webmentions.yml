@@ -25,6 +25,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      # Required to dispatch deploy.yml — see the last step for why that is
+      # necessary rather than relying on the push.
+      actions: write
 
     # Promoted to job-level env so the steps below can branch on whether the
     # token exists. The `secrets` context is not available in a step's `if`,
@@ -56,8 +59,9 @@ jobs:
 
       # Commits both the data file and any newly downloaded sender avatars.
       # The `git diff --quiet` guard means a sync that found nothing new is a
-      # no-op rather than an empty commit — and therefore triggers no deploy.
+      # no-op rather than an empty commit.
       - name: Commit new mentions
+        id: commit
         if: env.WEBMENTION_IO_TOKEN != ''
         run: |
           git config user.name 'github-actions[bot]'
@@ -65,7 +69,23 @@ jobs:
           git add src/data/webmentions.json public/assets/images/webmentions
           if git diff --staged --quiet; then
             echo 'No new webmentions.'
+            echo 'committed=false' >> "$GITHUB_OUTPUT"
           else
             git commit -m 'chore(webmentions): sync new mentions'
             git push
+            echo 'committed=true' >> "$GITHUB_OUTPUT"
           fi
+
+      # A push authenticated with GITHUB_TOKEN does NOT trigger other
+      # workflows — GitHub suppresses that to prevent recursive runs. So the
+      # commit above reaches main but never reaches the site, and the mention
+      # sits in the repo unpublished. deploy.yml already declares
+      # workflow_dispatch, so dispatch it explicitly.
+      #
+      # Only on an actual commit: dispatching on a no-op sync would redeploy
+      # identical output every single day.
+      - name: Deploy the new mentions
+        if: steps.commit.outputs.committed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run deploy.yml --ref main
