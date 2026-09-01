@@ -75,5 +75,20 @@ jobs:
             echo 'Ledger unchanged.'
           else
             git commit -m 'chore(webmentions): record sent webmentions'
-            git push
+
+            # Same race as the sync workflow: main can move between checkout
+            # and push. Losing it here would discard the record of webmentions
+            # that were actually delivered, so the next run would send them
+            # again. Rebase and retry.
+            pushed=false
+            for attempt in 1 2 3; do
+              if git push; then pushed=true; break; fi
+              echo "push rejected (attempt ${attempt}/3) — rebasing onto origin/main"
+              git pull --rebase --autostash origin main
+            done
+
+            if [ "$pushed" != 'true' ]; then
+              echo '::error::could not push the sent-ledger after 3 attempts — the next run may re-send'
+              exit 1
+            fi
           fi

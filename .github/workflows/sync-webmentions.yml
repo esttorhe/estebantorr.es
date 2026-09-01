@@ -72,7 +72,23 @@ jobs:
             echo 'committed=false' >> "$GITHUB_OUTPUT"
           else
             git commit -m 'chore(webmentions): sync new mentions'
-            git push
+
+            # main can move between checkout and push — a human push, the send
+            # workflow's ledger commit, or a queued sibling sync. A plain push
+            # loses the race, fails the run, and discards the mentions this run
+            # just fetched. Rebase and retry instead; the only local change is
+            # webmentions.json plus new avatars, so a rebase is always safe.
+            pushed=false
+            for attempt in 1 2 3; do
+              if git push; then pushed=true; break; fi
+              echo "push rejected (attempt ${attempt}/3) — rebasing onto origin/main"
+              git pull --rebase --autostash origin main
+            done
+
+            if [ "$pushed" != 'true' ]; then
+              echo '::error::could not push the synced mentions after 3 attempts'
+              exit 1
+            fi
             echo 'committed=true' >> "$GITHUB_OUTPUT"
           fi
 
