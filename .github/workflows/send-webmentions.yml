@@ -49,11 +49,18 @@ jobs:
       - name: Build the site
         run: bun run build
 
+      # Inputs are passed through env rather than interpolated into the script.
+      # A ${{ }} expression is substituted before the shell runs, so a crafted
+      # input value would be executed as shell; via env the shell only ever sees
+      # it as data.
       - name: Send webmentions
+        env:
+          DRY_RUN: ${{ inputs.dry_run }}
+          SEND_LIMIT: ${{ inputs.limit }}
         run: |
           ARGS=''
-          if [ '${{ inputs.dry_run }}' = 'true' ]; then ARGS="$ARGS --dry"; fi
-          if [ -n '${{ inputs.limit }}' ]; then ARGS="$ARGS --limit ${{ inputs.limit }}"; fi
+          if [ "$DRY_RUN" = 'true' ]; then ARGS="$ARGS --dry"; fi
+          if [ -n "$SEND_LIMIT" ]; then ARGS="$ARGS --limit $SEND_LIMIT"; fi
           bun run webmentions:send -- $ARGS
 
       # No deploy is dispatched: the ledger is bookkeeping and changes nothing
