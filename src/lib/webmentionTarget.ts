@@ -1,4 +1,4 @@
-// ABOUTME: Shared vocabulary for webmentions — target URL normalization and wm-property classification.
+// ABOUTME: Shared vocabulary for webmentions — target URL normalization, wm-property classification, and self-author detection.
 // ABOUTME: Imported by both scripts/sync-webmentions.mjs (writes the cache) and src/data/webmentions.ts (reads it), so the two can never disagree about what counts as the same page.
 
 /** The `wm-property` values this site renders. */
@@ -62,4 +62,41 @@ export function classifyProperty(wmProperty: string | undefined | null): Mention
   if (RESPONSE_PROPERTIES.has(wmProperty)) return 'response';
   if (REACTION_PROPERTIES.has(wmProperty)) return 'reaction';
   return 'ignore';
+}
+
+/**
+ * Every URL that is "me".
+ *
+ * Bridgy Fed (bsky.brid.gy) backfeeds your own POSSE announcement to your own
+ * page as a `mention-of`, so without this the post quotes you back at yourself
+ * in its own Responses region. Kept in the committed archive — it is a real
+ * record that the post was syndicated — but never rendered.
+ *
+ * These are the same identities the footer publishes as rel=me.
+ */
+export const OWN_IDENTITIES = [
+  'https://estebantorr.es',
+  'https://bsky.app/profile/estebantorr.es',
+  'https://bsky.app/profile/did:plc:d3j753j2jsi5lk7pr7ho4ven',
+  'https://mastodon.social/@esttorhe',
+  'https://github.com/esttorhe',
+  'https://linkedin.com/in/estebantorres',
+] as const;
+
+const NORMALIZED_OWN_IDENTITIES = new Set(
+  OWN_IDENTITIES.map((identity) => normalizeTarget(identity)).filter(
+    (identity): identity is string => identity !== null,
+  ),
+);
+
+/**
+ * Whether a mention was authored by one of my own accounts.
+ *
+ * Compares the whole normalized URL rather than just the host, so another
+ * account on mastodon.social or bsky.app is not swept up. A mention with no
+ * author URL is never self — anonymous senders must keep rendering.
+ */
+export function isSelfAuthor(authorUrl: string | undefined | null): boolean {
+  const normalized = normalizeTarget(authorUrl);
+  return normalized !== null && NORMALIZED_OWN_IDENTITIES.has(normalized);
 }

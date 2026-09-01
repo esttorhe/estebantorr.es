@@ -13,7 +13,7 @@
     "cv:pdf": "node scripts/build-cv-pdf.mjs",
     "library:sync": "node scripts/sync-reading.mjs",
     "webmentions:sync": "bun scripts/sync-webmentions.mjs",
-    "test": "bun test scripts/"
+    "test": "bun test"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
