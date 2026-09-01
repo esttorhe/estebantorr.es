@@ -1,0 +1,18 @@
+// ABOUTME: Cloudflare Worker config for the webmention.io -> GitHub repository_dispatch relay.
+// ABOUTME: Deliberately separate from the repo-root wrangler.jsonc so the site Worker stays assets-only with no script.
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "estebantorres-webmention-relay",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-06-18",
+  "observability": {
+    // Console output from the relay is the only way to see a dispatch failure,
+    // since webmention.io's dashboard only shows its own side of the call.
+    "enabled": true
+  },
+  "vars": {
+    "GITHUB_REPO": "esttorhe/estebantorr.es"
+  }
+  // WEBMENTION_WEBHOOK_SECRET and GITHUB_DISPATCH_TOKEN are secrets, set with
+  // `wrangler secret put <NAME>` from this directory. See README.md.
+}

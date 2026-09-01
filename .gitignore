@@ -2,6 +2,8 @@
 dist/
 # generated types
 .astro/
+# wrangler local state (both the site Worker and workers/webmention-relay)
+.wrangler/
 
 # dependencies
 node_modules/

@@ -1,0 +1,51 @@
+# ABOUTME: Deploys the webmention.io -> GitHub relay Worker when its source changes.
+# ABOUTME: Separate from deploy.yml because it is a script Worker with its own wrangler config, while the site Worker is assets-only.
+
+name: Deploy relay
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'workers/webmention-relay/**'
+      - '.github/workflows/deploy-relay.yml'
+
+concurrency:
+  group: deploy-relay
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    # Same reasoning as deploy.yml: public repo + secrets means fork PRs must
+    # never reach them. This workflow has no pull_request trigger at all, so
+    # only pushes to main (which require write access) and manual dispatch run.
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install mise + pinned toolchain
+        uses: jdx/mise-action@v2
+        with:
+          install: true
+          cache: true
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Test the relay logic
+        run: bun test workers/
+
+      - name: Deploy the Worker
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: '4'
+          workingDirectory: 'workers/webmention-relay'
+          command: deploy
