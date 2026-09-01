@@ -100,3 +100,23 @@ export function isSelfAuthor(authorUrl: string | undefined | null): boolean {
   const normalized = normalizeTarget(authorUrl);
   return normalized !== null && NORMALIZED_OWN_IDENTITIES.has(normalized);
 }
+
+/**
+ * Whether one of my own mentions is noise that should not render.
+ *
+ * Being mine is not enough to hide it — `wm-property` decides:
+ *
+ * - `in-reply-to` is me talking in a thread. That is the conversation, and
+ *   hiding it leaves the other person apparently talking to nobody.
+ * - anything else from me is either the POSSE announcement Bridgy Fed sends
+ *   back (title plus a link, no substance) or me liking my own post.
+ *
+ * Kept in the committed archive either way; this only governs rendering.
+ */
+export function isHiddenSelfResponse(
+  authorUrl: string | undefined | null,
+  type: string | undefined | null,
+): boolean {
+  if (!isSelfAuthor(authorUrl)) return false;
+  return type !== 'in-reply-to';
+}
