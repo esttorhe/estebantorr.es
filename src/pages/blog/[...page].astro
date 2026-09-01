@@ -44,9 +44,17 @@ const pageDescription =
 ---
 
 <BaseLayout title={pageTitle} description={pageDescription} current="writing">
-  <section class="writing-page" aria-labelledby="writing-heading">
+  {
+    /*
+    h-feed marks this index up as a microformats2 feed of h-entry items (each
+    PostListRow is one). Bridgy crawls the feed to match a silo post to the page
+    it links to; without it, matching relies entirely on whatever URL happens to
+    be inside the toot. Additive classes only.
+  */
+  }
+  <section class="writing-page h-feed" aria-labelledby="writing-heading">
     <header class="writing-page__header reveal">
-      <h1 id="writing-heading" class="writing-page__title">Writing</h1>
+      <h1 id="writing-heading" class="writing-page__title p-name">Writing</h1>
       <p class="writing-page__meta tabular">
         <span>{totalCount} posts</span>
         <span class="writing-page__sep" aria-hidden="true">·</span>

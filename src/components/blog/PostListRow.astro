@@ -49,8 +49,8 @@ const dateFormat = new Intl.DateTimeFormat('en-GB', {
 });
 ---
 
-<article class="post-row" style={`--i: ${index}`}>
-  <a class="post-row__link" href={href}>
+<article class="post-row h-entry" style={`--i: ${index}`}>
+  <a class="post-row__link u-url" href={href}>
     <figure
       class={`post-row__hero ${resolution.kind === 'fallback' ? 'post-row__hero--fallback' : 'post-row__hero--image'}`}
       aria-hidden="true"
@@ -73,10 +73,10 @@ const dateFormat = new Intl.DateTimeFormat('en-GB', {
 
     <div class="post-row__text">
       <p class="post-row__kicker tabular">{post.data.category}</p>
-      <h2 class="post-row__title">{post.data.title}</h2>
-      {post.data.description && <p class="post-row__lede">{post.data.description}</p>}
+      <h2 class="post-row__title p-name">{post.data.title}</h2>
+      {post.data.description && <p class="post-row__lede p-summary">{post.data.description}</p>}
       <p class="post-row__meta tabular">
-        <time datetime={date.toISOString()}>{dateFormat.format(date)}</time>
+        <time class="dt-published" datetime={date.toISOString()}>{dateFormat.format(date)}</time>
         <span class="post-row__sep" aria-hidden="true">·</span>
         <span>{readingMinutes} min</span>
       </p>

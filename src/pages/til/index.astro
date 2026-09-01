@@ -29,9 +29,10 @@ const totalCount = entries.length;
   description="Short technical (and sometimes not) notes, things I've figured out in ten minutes, maybe, who's counting?"
   current="til"
 >
-  <section class="til-page" aria-labelledby="til-heading">
+  {/* h-feed of h-entry items — see the blog index for why Bridgy needs it. */}
+  <section class="til-page h-feed" aria-labelledby="til-heading">
     <header class="til-page__header reveal">
-      <h1 id="til-heading" class="til-page__title">TIL</h1>
+      <h1 id="til-heading" class="til-page__title p-name">TIL</h1>
       <p class="til-page__intro">
         Short technical (and sometimes not) notes. Things I figured out in ten minutes, maybe… who's
         counting?

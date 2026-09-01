@@ -23,12 +23,12 @@ const dateFormat = new Intl.DateTimeFormat('en-GB', {
 });
 ---
 
-<article class="til-row" style={`--i: ${index}`}>
-  <a class="til-row__link" href={href}>
-    <h2 class="til-row__title">{entry.data.title}</h2>
-    <p class="til-row__lede">{entry.data.description}</p>
+<article class="til-row h-entry" style={`--i: ${index}`}>
+  <a class="til-row__link u-url" href={href}>
+    <h2 class="til-row__title p-name">{entry.data.title}</h2>
+    <p class="til-row__lede p-summary">{entry.data.description}</p>
     <p class="til-row__meta tabular">
-      <time datetime={date.toISOString()}>{dateFormat.format(date)}</time>
+      <time class="dt-published" datetime={date.toISOString()}>{dateFormat.format(date)}</time>
     </p>
   </a>
 </article>
