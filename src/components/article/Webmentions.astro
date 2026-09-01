@@ -2,7 +2,7 @@
 // ABOUTME: Renders the Responses region at the foot of a post — replies and mentions as h-cite cards, likes/reposts as a facepile with a mono tally.
 // ABOUTME: Data is inlined at build time from src/data/webmentions.json, so readers make no third-party request; the manual form is the only thing that talks to webmention.io.
 
-import { mentionsFor, type Mention } from '../../data/webmentions';
+import { mentionsFor, type RenderedMention } from '../../data/webmentions';
 
 interface Props {
   /** Canonical URL of the page these mentions belong to. */
@@ -53,7 +53,7 @@ function initial(name: string): string {
   return [...name.trim()][0]?.toUpperCase() ?? '?';
 }
 
-function verbFor(mention: Mention): string {
+function verbFor(mention: RenderedMention): string {
   switch (mention.type) {
     case 'in-reply-to':
       return 'replied';
@@ -166,7 +166,22 @@ const tally = [
                       {initial(mention.author.name)}
                     </span>
                   )}
-                  <span class="mention__name p-name">{mention.author.name}</span>
+                  {/*
+                    Name and badge share one wrapper because .mention__author is
+                    display:contents — every child of it becomes a grid item of
+                    .mention, so a bare third child would be auto-placed into
+                    the body's cell.
+                  */}
+                  <span class="mention__byline">
+                    <span class="mention__name p-name">{mention.author.name}</span>
+                    {/*
+                      "author", not "you" — the reader is not the site owner, so
+                      second person would address the wrong person. It tells a
+                      reader which voice in the thread owns the site without
+                      competing with the conversation.
+                    */}
+                    {mention.isAuthor && <span class="mention__badge">author</span>}
+                  </span>
                 </a>
 
                 <div class="mention__body">
@@ -397,16 +412,36 @@ const tally = [
     border: 1px solid var(--rule);
   }
 
+  .mention__byline {
+    grid-column: 2;
+    align-self: center;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5ch;
+    min-width: 0;
+  }
+
   .mention__name {
     font-family: var(--font-mono);
     font-size: var(--text-meta);
     color: var(--ink);
-    align-self: center;
   }
 
   .mention__author:hover .mention__name,
   .mention__author:focus-visible .mention__name {
     color: var(--accent-ink);
+  }
+
+  .mention__badge {
+    padding: 0.1em 0.45em;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    color: var(--accent-ink);
+    background: var(--accent-soft);
+    border-radius: var(--radius-sm);
   }
 
   .mention__body {

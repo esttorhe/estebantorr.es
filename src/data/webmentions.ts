@@ -4,6 +4,7 @@
 import webmentionsData from './webmentions.json';
 import {
   normalizeTarget,
+  isSelfAuthor,
   isHiddenSelfResponse,
   type MentionProperty,
 } from '../lib/webmentionTarget';
@@ -54,8 +55,20 @@ export interface WebmentionsData {
   targets: Record<string, TargetMentions>;
 }
 
+/** A mention as rendered, with the site-author flag resolved. */
+export interface RenderedMention extends Mention {
+  /**
+   * True when this is my own response. The UI marks it so a reader can tell
+   * who owns the site — otherwise my replies are indistinguishable from
+   * everyone else's in a thread.
+   */
+  isAuthor: boolean;
+}
+
 /** What a page needs to render its Responses region. */
-export interface PageMentions extends TargetMentions {
+export interface PageMentions {
+  responses: RenderedMention[];
+  reactions: RenderedMention[];
   counts: {
     likes: number;
     reposts: number;
@@ -104,8 +117,13 @@ export function mentionsFor(url: string | URL): PageMentions {
   const shown = (mention: Mention) =>
     mention.removed !== true && !isHiddenSelfResponse(mention.author.url, mention.type);
 
-  const responses = bucket.responses.filter(shown).sort(byPublishedAscending);
-  const reactions = bucket.reactions.filter(shown);
+  const withAuthorFlag = (mention: Mention): RenderedMention => ({
+    ...mention,
+    isAuthor: isSelfAuthor(mention.author.url),
+  });
+
+  const responses = bucket.responses.filter(shown).sort(byPublishedAscending).map(withAuthorFlag);
+  const reactions = bucket.reactions.filter(shown).map(withAuthorFlag);
 
   return {
     responses,
