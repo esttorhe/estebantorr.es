@@ -265,3 +265,101 @@ test('different author urls produce different avatar slugs', () => {
 test('an avatar slug is filesystem-safe', () => {
   expect(avatarSlug('https://mastodon.social/@esttorhe')).toMatch(/^[a-z0-9-]+$/);
 });
+
+// ---------------------------------------------------------------------------
+// markRemoved — mentions the sender has deleted
+// ---------------------------------------------------------------------------
+
+import { markRemoved } from './sync-webmentions.mjs';
+
+const AT = '2026-09-01T12:00:00.000Z';
+
+function targets(...ids) {
+  return {
+    'https://estebantorr.es/a-post': {
+      responses: ids.map((id) => ({ id, type: 'in-reply-to', author: { name: 'X' } })),
+      reactions: [],
+    },
+  };
+}
+
+// The whole point: webmention.io drops a deleted mention from the feed, but the
+// sync only ever merges, so without this it stays published forever.
+test('a mention absent from the feed is marked removed', () => {
+  const result = markRemoved(targets(1, 2), new Set([1]), { at: AT });
+  const [one, two] = result.targets['https://estebantorr.es/a-post'].responses;
+  expect(one.removed).toBeUndefined();
+  expect(two.removed).toBe(true);
+  expect(two.removedAt).toBe(AT);
+  expect(result.removedCount).toBe(1);
+});
+
+test('a mention still in the feed is left alone', () => {
+  const result = markRemoved(targets(1, 2), new Set([1, 2]), { at: AT });
+  expect(result.removedCount).toBe(0);
+  for (const m of result.targets['https://estebantorr.es/a-post'].responses) {
+    expect(m.removed).toBeUndefined();
+  }
+});
+
+// webmention.io can restore a mention, and a sender can repost. A previously
+// removed mention that comes back must render again.
+test('a removed mention that reappears is un-marked', () => {
+  const withRemoved = targets(1);
+  withRemoved['https://estebantorr.es/a-post'].responses[0].removed = true;
+  withRemoved['https://estebantorr.es/a-post'].responses[0].removedAt = AT;
+  const result = markRemoved(withRemoved, new Set([1]), { at: AT });
+  const m = result.targets['https://estebantorr.es/a-post'].responses[0];
+  expect(m.removed).toBeUndefined();
+  expect(m.removedAt).toBeUndefined();
+});
+
+// The dangerous failure mode: a transient API blip returning nothing would
+// otherwise mark the entire archive deleted and blank every Responses region.
+test('an empty feed never removes anything', () => {
+  const result = markRemoved(targets(1, 2, 3), new Set(), { at: AT });
+  expect(result.removedCount).toBe(0);
+  expect(result.skipped).toBe(true);
+});
+
+// Likewise a partial response: losing most of the archive in one run is far
+// more likely to be an API anomaly than everyone deleting at once.
+test('a mass removal is refused rather than applied', () => {
+  const result = markRemoved(targets(1, 2, 3, 4), new Set([1]), { at: AT });
+  expect(result.removedCount).toBe(0);
+  expect(result.skipped).toBe(true);
+});
+
+test('a removal within the ratio is applied', () => {
+  const result = markRemoved(targets(1, 2, 3, 4), new Set([1, 2, 3]), { at: AT });
+  expect(result.removedCount).toBe(1);
+  expect(result.skipped).toBe(false);
+});
+
+test('already-removed mentions do not count toward the mass-removal ratio', () => {
+  const t = targets(1, 2, 3, 4);
+  for (const m of t['https://estebantorr.es/a-post'].responses.slice(1)) {
+    m.removed = true;
+  }
+  // Only id 1 is present; 2-4 are already marked, so nothing new is removed.
+  const result = markRemoved(t, new Set([1]), { at: AT });
+  expect(result.removedCount).toBe(0);
+  expect(result.skipped).toBe(false);
+});
+
+test('markRemoved does not mutate the input', () => {
+  const before = targets(1, 2);
+  markRemoved(before, new Set([1]), { at: AT });
+  expect(before['https://estebantorr.es/a-post'].responses[1].removed).toBeUndefined();
+});
+
+test('reactions are checked as well as responses', () => {
+  const t = {
+    'https://estebantorr.es/a-post': {
+      responses: [{ id: 1, type: 'in-reply-to', author: { name: 'X' } }],
+      reactions: [{ id: 2, type: 'like-of', author: { name: 'Y' } }],
+    },
+  };
+  const result = markRemoved(t, new Set([1]), { at: AT });
+  expect(result.targets['https://estebantorr.es/a-post'].reactions[0].removed).toBe(true);
+});

@@ -126,6 +126,83 @@ export function groupByTarget(rawMentions) {
   return grouped;
 }
 
+/**
+ * Fraction of the archive that may be marked removed in a single run.
+ *
+ * Everyone deleting at once is far less likely than an API anomaly, so a
+ * larger-than-this removal is refused and reported instead of applied.
+ */
+const MAX_REMOVAL_RATIO = 0.5;
+
+/**
+ * Marks mentions that have disappeared from the feed as removed.
+ *
+ * webmention.io drops a mention when the sender deletes their post or I delete
+ * it from the dashboard, but the sync only ever merges — so without this a
+ * retracted reply stays published on the site indefinitely.
+ *
+ * Removed mentions stay in the committed archive (the record that it happened
+ * is worth keeping); only rendering skips them. A mention that comes back is
+ * un-marked.
+ *
+ * Refuses to act when the feed is empty or when the removal would take out more
+ * than MAX_REMOVAL_RATIO of the archive, because blanking every Responses
+ * region on a transient API blip is far worse than showing a stale reply for
+ * one more cycle.
+ */
+export function markRemoved(
+  existingTargets,
+  presentIds,
+  { at, maxRemovalRatio = MAX_REMOVAL_RATIO } = {},
+) {
+  const all = Object.values(existingTargets).flatMap((bucket) => [
+    ...bucket.responses,
+    ...bucket.reactions,
+  ]);
+
+  const newlyAbsent = all.filter((m) => !presentIds.has(m.id) && m.removed !== true);
+
+  if (newlyAbsent.length > 0) {
+    if (presentIds.size === 0) {
+      return { targets: existingTargets, removedCount: 0, skipped: true, reason: 'empty feed' };
+    }
+    if (all.length > 0 && newlyAbsent.length / all.length > maxRemovalRatio) {
+      return {
+        targets: existingTargets,
+        removedCount: 0,
+        skipped: true,
+        reason: `${newlyAbsent.length} of ${all.length} would be removed`,
+      };
+    }
+  }
+
+  const absentIds = new Set(newlyAbsent.map((m) => m.id));
+
+  const reshape = (mention) => {
+    if (absentIds.has(mention.id)) {
+      return { ...mention, removed: true, removedAt: at };
+    }
+    if (presentIds.has(mention.id) && mention.removed === true) {
+      // Back from the dead — webmention.io restored it, or the sender reposted.
+      const { removed, removedAt, ...rest } = mention;
+      return rest;
+    }
+    return mention;
+  };
+
+  const targets = Object.fromEntries(
+    Object.entries(existingTargets).map(([target, bucket]) => [
+      target,
+      {
+        responses: bucket.responses.map(reshape),
+        reactions: bucket.reactions.map(reshape),
+      },
+    ]),
+  );
+
+  return { targets, removedCount: absentIds.size, skipped: false };
+}
+
 // ---------------------------------------------------------------------------
 // I/O
 // ---------------------------------------------------------------------------
@@ -139,6 +216,10 @@ async function fetchAllMentions(token) {
     url.searchParams.set('token', token);
     url.searchParams.set('per-page', String(PER_PAGE));
     url.searchParams.set('page', String(page));
+    // Oldest-first. With the default newest-first ordering, a mention arriving
+    // mid-pagination shifts every later item down a slot and one gets skipped —
+    // which markRemoved would then read as a deletion.
+    url.searchParams.set('sort-dir', 'up');
 
     const response = await fetch(url);
     if (!response.ok) {
@@ -302,6 +383,7 @@ async function main() {
     process.exit(1);
   }
 
+  const now = new Date().toISOString();
   const existing = await readExistingCache();
   const existingCount = countMentions(existing.targets);
 
@@ -310,7 +392,19 @@ async function main() {
 
   const incoming = groupByTarget(raw);
   const avatars = await localizeAvatars(incoming, { dryRun });
-  const targets = mergeIntoCache(existing.targets, incoming);
+  const merged = mergeIntoCache(existing.targets, incoming);
+
+  // Anything in the archive but no longer in the feed has been deleted.
+  const presentIds = new Set(raw.map((m) => m['wm-id']));
+  const removal = markRemoved(merged, presentIds, { at: now });
+  if (removal.skipped) {
+    log(`refusing to mark removals (${removal.reason}) — leaving the archive as-is`);
+  } else if (removal.removedCount > 0) {
+    log(
+      `${removal.removedCount} mention(s) deleted at the source — marked removed, kept in the archive`,
+    );
+  }
+  const targets = removal.targets;
   const total = countMentions(targets);
 
   log(
@@ -325,7 +419,7 @@ async function main() {
 
   const payload = {
     // Written by scripts/sync-webmentions.mjs — see the header there.
-    syncedAt: new Date().toISOString(),
+    syncedAt: now,
     targets,
   };
 

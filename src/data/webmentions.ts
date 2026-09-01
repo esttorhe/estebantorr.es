@@ -30,6 +30,14 @@ export interface Mention {
   text?: string;
   /** The source's own title, when it has one (another blog post rather than a toot). */
   title?: string;
+  /**
+   * True once the mention has disappeared from webmention.io's feed — the
+   * sender deleted their post, or it was deleted from the dashboard. Kept in
+   * the archive as a record; never rendered.
+   */
+  removed?: boolean;
+  /** ISO timestamp of the sync that first saw it gone. */
+  removedAt?: string;
 }
 
 export interface TargetMentions {
@@ -89,10 +97,12 @@ export function mentionsFor(url: string | URL): PageMentions {
   const bucket = webmentions.targets[key];
   if (!bucket) return EMPTY;
 
-  // My own POSSE announcements and self-likes stay in the committed archive but
-  // never render. My own *replies* do render — they are the conversation. See
-  // isHiddenSelfResponse.
-  const shown = (mention: Mention) => !isHiddenSelfResponse(mention.author.url, mention.type);
+  // Two classes of mention live in the archive but never render:
+  //   - deleted at the source — retracting a reply must take it off the page
+  //   - my own POSSE announcements and self-likes (my *replies* do render;
+  //     they are the conversation). See isHiddenSelfResponse.
+  const shown = (mention: Mention) =>
+    mention.removed !== true && !isHiddenSelfResponse(mention.author.url, mention.type);
 
   const responses = bucket.responses.filter(shown).sort(byPublishedAscending);
   const reactions = bucket.reactions.filter(shown);
