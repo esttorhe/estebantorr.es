@@ -1,29 +1,700 @@
 {
-  "https://estebantorr.es/2016/01/review-2015/": {
-    "http://brewbot.io/": {
+  "https://estebantorr.es/2014/12/new-year-resolutions/": {
+    "https://github.com/krausefx/sigh": {
       "status": "no-endpoint",
       "attempts": 1,
-      "at": "2026-09-01T15:02:35.110Z"
+      "at": "2026-09-01T15:03:56.572Z"
     },
-    "http://logn.co/": {
+    "https://twitter.com/artsy": {
       "status": "no-endpoint",
       "attempts": 1,
-      "at": "2026-09-01T15:02:35.110Z"
+      "at": "2026-09-01T15:03:56.572Z"
     },
-    "https://github.com/RxSwiftCommunity/rxswiftcommunity.github.io": {
+    "https://twitter.com/ashfurrow": {
       "status": "no-endpoint",
       "attempts": 1,
-      "at": "2026-09-01T15:02:35.110Z"
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://twitter.com/dredayli": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://twitter.com/getbeergram": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://twitter.com/krausefx": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://twitter.com/orta": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/2014/12/show-adaptative-segue-error/": {
+    "http://www.openradar.me/19259764": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://developer.apple.com/library/ios/recipes/xcode_help-IB_storyboard/chapters/StoryboardSegue.html": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/esttorhe/ShowNotWorking_Radar": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/2015/06/hidden-error-variable/": {
+    "http://openradar.appspot.com/21396321": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://twitter.com/esttorhe": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://twitter.com/jckarter": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/2015/06/new-website/": {
+    "http://disqs.com/": {
+      "status": "failed",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "http://esttorhe.github.io/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "http://jekyllrb.com/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "http://lognllc.github.io/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "http://octopress.org/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/esttorhe/esttorhe.github.io": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/spf13/hugo": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://hexo.io/": {
+      "status": "failed",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/2015/06/swift-2-throws-tip/": {
+    "https://twitter.com/browgrammer/status/609841773284724737": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://twitter.com/rob_rix": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/2015/07/21-days-challenge/": {
+    "http://www.quora.com/Does-it-really-take-21-days-to-break-a-habit": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
     },
     "https://github.com/esttorhe/2015-Resolutions": {
       "status": "no-endpoint",
       "attempts": 1,
-      "at": "2026-09-01T15:02:35.110Z"
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/esttorhe/21DaysChallenge": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://www.facebook.com/MissAmandaCerny/photos/a.131955946897595.28409.100344450058745/868664193226763/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/2015/07/xcode-plugins/": {
+    "http://alcatraz.io/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "http://cocoadocs.org/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "http://www.kaleidoscopeapp.com/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://cocoaheadscr.herokuapp.com/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/AliSoftware/SwiftGen": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/CocoaLumberjack/CocoaLumberjack": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/FuzzyAutocomplete/FuzzyAutocompletePlugin": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/XVimProject/XVim": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/edwardaux/XcodeExplorer": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/facebook/ios-snapshot-test-case": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/kattrali/deriveddata-exterminator": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/kolinkrewinkel/Polychromatic": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/ksuther/KSImageNamed-Xcode": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/macoscope/CodePilot": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/neonichu/BBUDebuggerTuckAway": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/omz/ColorSense-for-Xcode": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/onevcat/VVDocumenter-Xcode": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/orta/Snapshots": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/pornel/ImageOptim": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/qfish/XAlign": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/robbiehanson/XcodeColors": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/stefanceriu/SCXcodeSwitchExpander": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/yeahdongcn/RSImageOptimPlugin": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/2015/08/semver-intermediate-versioning/": {
+    "http://semver.org/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://cocoapods.org/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://twitter.com/NeoNacho": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://twitter.com/mattt": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/2015/09/dyld-library-not-loaded/": {
+    "https://github.com/CocoaPods/CocoaPods/issues/3586": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/2015/09/how-to-ask-questions/": {
+    "https://twitter.com/KrsauseFx": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://twitter.com/orta": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/2015/10/nokogiri-el-capitan/": {
+    "https://twitter.com/esttorhe": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/2016/01/review-2015/": {
+    "http://brewbot.io/": {
+      "status": "no-endpoint",
+      "attempts": 2,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "http://cocoaheads.org/cr/SanJose/index.html": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "http://craftkollective.com/": {
+      "status": "failed",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "http://logn.co/": {
+      "status": "no-endpoint",
+      "attempts": 2,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "http://www.cocoapods.org/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://cloudflare.com/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/AliSoftware/SwiftGen": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/Moya/Moya": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/Palleas/NaughtyKeyboard": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/RxSwiftCommunity": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/RxSwiftCommunity/rxswiftcommunity.github.io": {
+      "status": "no-endpoint",
+      "attempts": 2,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/czechboy0/XcodeServerSDK": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/esttorhe/2015-Resolutions": {
+      "status": "no-endpoint",
+      "attempts": 2,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/esttorhe/SwiftSSH2": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/facebook/ios-snapshot-test-case": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/jpsim/DeckRocket": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
     },
     "https://slack.com/": {
       "status": "no-endpoint",
+      "attempts": 2,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/2016/06/ioscon-2016/": {
+    "https://skillsmatter.com/conferences/7598-ioscon-2016-the-conference-for-ios-and-swift-developers": {
+      "status": "no-endpoint",
       "attempts": 1,
-      "at": "2026-09-01T15:02:35.110Z"
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://skillsmatter.com/skillscasts/7863-mvvm-rxswift-and-datacontrollers": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://speakerdeck.com/esttorhe/mvvm-plus-rxswift-plus-datacontrollers": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://twitter.com/icanzilb": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://twitter.com/vasarhelyia": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/2016/06/xcode-8-source-editor-extensions/": {
+    "http://www.russbishop.net/xcode-extensions": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://developer.apple.com/app-extensions/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://developer.apple.com/videos/play/wwdc2016/414/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/esttorhe/Localizer/commit/3831a7": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/jseravalli": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/2016/12/wrapping-up-2016/": {
+    "https://brewbot.io/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/2017/09/disabling-animations-heuristics/": {
+    "https://github.com/RxSwiftCommunity/RxAnimated/blob/master/RxAnimated/Core/RxAnimated.swift#L95": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/RxSwiftCommunity/RxAnimated/commit/ac3e33": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://twitter.com/icanzilb": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://twitter.com/zats": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/2017/09/droidcon-berlin/": {
+    "http://b2b.ifa-berlin.com/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "http://blog.sqisland.com/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "http://droidcon.de/en/%40sveta_isakova": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "http://droidcon.de/en/program/schedule": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "http://droidcon.de/en/users/marco-cova#profile-speaker": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "http://www.messe-berlin.de/de/Veranstalter/UnsereLocations/CityCubeBerlin/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://developer.android.com/studio/build/multidex.html": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://developer.android.com/topic/libraries/architecture/room.html": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://developer.apple.com/documentation/foundation/blockoperation": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://docs.gradle.org/current/userguide/plugins.html": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://medium.com/@florina.muntenescu": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://medium.com/@ragdroid": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://twitter.com/jdortiz": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://twitter.com/xgouchet": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/2018/02/xcode-notifications-on-your-phone/": {
+    "https://github.com/dschep/ntfy": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/2020/05/career-change/": {
+    "https://en.wikipedia.org/wiki/Palm_Pre": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://golang.org/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://soundcloud.com/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://twitter.com/krzyzanowskim": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://twitter.com/undefined": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/2022/03/manager-weekly-newsletter/": {
+    "https://developers.soundcloud.com/blog/manager-weekly-newsletter-for-team-communication": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://obsidian.md/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://www.goodreads.com/book/show/23232941-soft-skills?ac=1&from_search=true&qid=CVhAT4F1tw&rank=1": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://www.goodreads.com/en/book/show/38821039-the-making-of-a-manager": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/2026/02/a-gsd-system-for-claude-code/": {
+    "https://github.com/Hyaxia/blogwatcher": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/esttorhe/blogwatcher-ui": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://github.com/glittercowboy/get-shit-done": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://karakeep.app/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://www.bluetip.ai/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://www.linkedin.com/posts/girish-s-16b4b91a6_claudecode-aiagents-devtools-activity-7416057263422988288-6X5m": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/2026/06/ai-maximises-tech-debt/": {
+    "https://www.bluetip.ai/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/til/neuromancer-the-movie/": {
+    "https://news.randsinrepose.com/things-you-probably-need/": {
+      "status": "ok",
+      "code": 202,
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://www.google.de/books/edition/William_Gibson_s_Neuromancer/imUREQAAQBAJ?hl=en&gbpv=0": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://www.youtube.com/watch?v=g79GPZSQHBk": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/til/obsidian-notebook-navigator-plugin/": {
+    "https://community.obsidian.md/plugins/notebook-navigator": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://www.youtube.com/watch?v=m2maDNtho7Y": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/til/superfile-cli/": {
+    "https://console.dev/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    },
+    "https://superfile.dev/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
+    }
+  },
+  "https://estebantorr.es/til/zellij-multiplexer/": {
+    "https://zellij.dev/": {
+      "status": "no-endpoint",
+      "attempts": 1,
+      "at": "2026-09-01T15:03:56.572Z"
     }
   }
 }
