@@ -1,8 +1,10 @@
 ---
 // ABOUTME: Individual TIL entry — /til/<slug>/. Hashtag-style tags, date, reading time, back-to-index link.
-// ABOUTME: No hero, no comments, no prev/next: these are short notes, not essays — chrome stays minimal.
+// ABOUTME: No hero, no prev/next: these are short notes, not essays — chrome stays minimal. Marked up as an h-entry; webmentions render only once some arrive.
 
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Webmentions from '../../components/article/Webmentions.astro';
+import AuthorHCard from '../../components/article/AuthorHCard.astro';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 
@@ -33,6 +35,9 @@ const dateFormat = new Intl.DateTimeFormat('en-GB', {
 });
 
 const tagString = entry.data.tags.map((t) => `#${t}`).join('');
+
+// Doubles as the webmention target key — see src/lib/webmentionTarget.ts.
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? 'https://estebantorr.es').toString();
 ---
 
 <BaseLayout
@@ -41,24 +46,35 @@ const tagString = entry.data.tags.map((t) => `#${t}`).join('');
   current="til"
   ogType="article"
 >
-  <article class="til-article">
+  <article class="til-article h-entry">
     <a class="til-article__back" href="/til/">← TIL</a>
 
     <header class="til-article__header reveal">
       <p class="til-article__meta">
         {tagString && <span class="til-article__tags tabular">{tagString}</span>}
-        <time datetime={date.toISOString()} class="til-article__date tabular">
+        <time datetime={date.toISOString()} class="til-article__date tabular dt-published">
           {dateFormat.format(date)}
         </time>
+        <data class="u-url" value={canonicalUrl}></data>
         <span aria-hidden="true" class="til-article__sep">·</span>
         <span class="til-article__reading tabular">{readingMinutes} min read</span>
       </p>
-      <h1 class="til-article__title">{entry.data.title}</h1>
+      <h1 class="til-article__title p-name">{entry.data.title}</h1>
+      <AuthorHCard />
     </header>
 
-    <div class="prose">
+    <div class="prose e-content">
       <Content />
     </div>
+
+    {
+      /*
+      invite={false}: a TIL is a short note, so the region stays out of the way
+      entirely until a mention actually lands rather than carrying the
+      how-to-respond explainer a full post does.
+    */
+    }
+    <Webmentions url={canonicalUrl} invite={false} />
   </article>
 </BaseLayout>
 

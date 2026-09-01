@@ -1,11 +1,12 @@
 ---
 // ABOUTME: Blog post template — Vollkorn serif prose body (styles in global.css), Bricolage display headings, dual-theme Shiki.
-// ABOUTME: Permalink shape preserves Hugo's /:year/:month/:title/. Lazy utteranc.es comments at the bottom.
+// ABOUTME: Permalink shape preserves Hugo's /:year/:month/:title/. Marked up as an h-entry so Bridgy can attribute replies; webmentions render at the bottom.
 
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import ArticleHero from '../../../components/article/ArticleHero.astro';
 import PostNav from '../../../components/article/PostNav.astro';
-import Comments from '../../../components/article/Comments.astro';
+import Webmentions from '../../../components/article/Webmentions.astro';
+import AuthorHCard from '../../../components/article/AuthorHCard.astro';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import { getImage } from 'astro:assets';
 import { resolveHero } from '../../../lib/heroResolver';
@@ -62,6 +63,11 @@ const heroResolution = resolveHero({
   featuredImageAlt: post.data.featured_image_alt,
 });
 
+// The canonical URL doubles as the webmention target key. normalizeTarget in
+// src/lib/webmentionTarget.ts collapses slash variants, so the trailing slash
+// here is not load-bearing.
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? 'https://estebantorr.es').toString();
+
 let socialImage: string | undefined;
 let socialImageAlt: string | undefined;
 if (heroResolution.kind === 'image') {
@@ -83,19 +89,36 @@ if (heroResolution.kind === 'image') {
   imageAlt={socialImageAlt}
   ogType="article"
 >
-  <article class="article">
+  {
+    /*
+    h-entry marks this page up for microformats2 parsers. Bridgy reads it to
+    attribute replies from Mastodon/Bluesky back to this post, and it is what
+    makes the post machine-readable to the rest of the IndieWeb. The classes are
+    purely additive — every visual rule keys off the BEM class next to them.
+  */
+  }
+  <article class="article h-entry">
     <header class="article__header reveal">
       <p class="article__meta">
-        <time datetime={date.toISOString()} class="article__date tabular">
+        <time datetime={date.toISOString()} class="article__date tabular dt-published">
           {dateFormat.format(date)}
         </time>
+        {
+          /*
+          The post's own permalink, for microformats2 parsers. <data> is the
+          spec's carrier for a u-* value that has no visible representation —
+          it renders nothing and adds no link for a screen reader to announce.
+        */
+        }
+        <data class="u-url" value={canonicalUrl}></data>
         <span aria-hidden="true" class="article__sep">·</span>
         <span class="article__category">{post.data.category}</span>
         <span aria-hidden="true" class="article__sep">·</span>
         <span class="article__reading tabular">{readingMinutes} min read</span>
       </p>
-      <h1 class="article__title">{post.data.title}</h1>
-      {post.data.description && <p class="article__lede">{post.data.description}</p>}
+      <h1 class="article__title p-name">{post.data.title}</h1>
+      <AuthorHCard />
+      {post.data.description && <p class="article__lede p-summary">{post.data.description}</p>}
     </header>
 
     {
@@ -104,12 +127,12 @@ if (heroResolution.kind === 'image') {
     }
     <ArticleHero post={post} priority />
 
-    <div class="prose">
+    <div class="prose e-content">
       <Content />
     </div>
 
     <PostNav next={next} previous={previous} />
-    <Comments />
+    <Webmentions url={canonicalUrl} />
   </article>
 </BaseLayout>
 

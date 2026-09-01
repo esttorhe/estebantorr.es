@@ -1,0 +1,563 @@
+---
+// ABOUTME: Renders the Responses region at the foot of a post — replies and mentions as h-cite cards, likes/reposts as a facepile with a mono tally.
+// ABOUTME: Data is inlined at build time from src/data/webmentions.json, so readers make no third-party request; the manual form is the only thing that talks to webmention.io.
+
+import { mentionsFor, type Mention } from '../../data/webmentions';
+
+interface Props {
+  /** Canonical URL of the page these mentions belong to. */
+  url: string;
+  /**
+   * Whether to show the "how to respond" explainer and the manual send form.
+   * On by default for blog posts; off for TIL entries, where the region should
+   * stay invisible until something actually arrives.
+   */
+  invite?: boolean;
+}
+
+const { url, invite = true } = Astro.props;
+
+const { responses, reactions, counts, total } = mentionsFor(url);
+
+// Nothing received and no invitation to extend — render nothing at all rather
+// than an empty state. This is the common case on most pages.
+const shouldRender = total > 0 || invite;
+
+// webmention.io's endpoint for this domain. Also declared as
+// <link rel="webmention"> in BaseLayout so senders can discover it.
+const endpoint = 'https://webmention.io/estebantorr.es/webmention';
+
+const dateFormat = new Intl.DateTimeFormat('en-GB', {
+  year: 'numeric',
+  month: 'short',
+  day: '2-digit',
+});
+
+function formatDate(iso: string | undefined): string | undefined {
+  if (!iso) return undefined;
+  const parsed = new Date(iso);
+  return Number.isNaN(parsed.getTime()) ? undefined : dateFormat.format(parsed);
+}
+
+function hostOf(target: string | undefined): string | undefined {
+  if (!target) return undefined;
+  try {
+    return new URL(target).host.replace(/^www\./, '');
+  } catch {
+    return undefined;
+  }
+}
+
+/** Fallback for a sender whose avatar was missing or failed to download. */
+function initial(name: string): string {
+  return [...name.trim()][0]?.toUpperCase() ?? '?';
+}
+
+function verbFor(mention: Mention): string {
+  switch (mention.type) {
+    case 'in-reply-to':
+      return 'replied';
+    case 'mention-of':
+      return 'mentioned this';
+    case 'like-of':
+      return 'liked this';
+    case 'repost-of':
+      return 'reposted this';
+    case 'bookmark-of':
+      return 'bookmarked this';
+    default:
+      return 'responded';
+  }
+}
+
+function pluralize(count: number, singular: string): string {
+  return `${count} ${singular}${count === 1 ? '' : 's'}`;
+}
+
+// Rendered in the mono meta style rather than as metric tiles — same
+// information, without the big-number row PRODUCT.md bans.
+const tally = [
+  counts.likes > 0 ? pluralize(counts.likes, 'like') : null,
+  counts.reposts > 0 ? pluralize(counts.reposts, 'repost') : null,
+  counts.bookmarks > 0 ? pluralize(counts.bookmarks, 'bookmark') : null,
+].filter(Boolean) as string[];
+---
+
+{
+  shouldRender && (
+    <section class="responses" aria-labelledby="responses-heading">
+      <header class="responses__header">
+        <h2 id="responses-heading" class="responses__title">
+          Responses
+        </h2>
+        {invite && (
+          <p class="responses__invite">
+            Wrote about this? Mention this page's URL on your own site, or reply on{' '}
+            <a href="https://mastodon.social/@esttorhe" rel="me">
+              mastodon
+            </a>{' '}
+            ·{' '}
+            <a href="https://bsky.app/profile/estebantorr.es" rel="me">
+              bluesky
+            </a>{' '}
+            — it shows up here.
+          </p>
+        )}
+      </header>
+
+      {reactions.length > 0 && (
+        <div class="responses__reactions">
+          <ul class="facepile" role="list">
+            {reactions.map((mention) => (
+              <li class="facepile__item">
+                <a
+                  class="facepile__link"
+                  href={mention.url ?? mention.author.url}
+                  rel="nofollow ugc noopener"
+                  aria-label={`${mention.author.name} ${verbFor(mention)}`}
+                >
+                  {mention.author.photo ? (
+                    <img
+                      class="facepile__avatar"
+                      src={mention.author.photo}
+                      alt=""
+                      width="28"
+                      height="28"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <span class="facepile__avatar facepile__avatar--initial" aria-hidden="true">
+                      {initial(mention.author.name)}
+                    </span>
+                  )}
+                </a>
+              </li>
+            ))}
+          </ul>
+          {tally.length > 0 && <p class="responses__tally tabular">{tally.join(' · ')}</p>}
+        </div>
+      )}
+
+      {responses.length > 0 && (
+        <ol class="responses__list" role="list">
+          {responses.map((mention) => {
+            const published = formatDate(mention.published);
+            const source = hostOf(mention.url);
+            return (
+              <li class="mention h-cite">
+                <a
+                  class="mention__author p-author h-card"
+                  href={mention.author.url ?? mention.url}
+                  rel="nofollow ugc noopener"
+                >
+                  {mention.author.photo ? (
+                    <img
+                      class="mention__avatar u-photo"
+                      src={mention.author.photo}
+                      alt=""
+                      width="36"
+                      height="36"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <span class="mention__avatar mention__avatar--initial" aria-hidden="true">
+                      {initial(mention.author.name)}
+                    </span>
+                  )}
+                  <span class="mention__name p-name">{mention.author.name}</span>
+                </a>
+
+                <div class="mention__body">
+                  {mention.title && (
+                    <p class="mention__source-title">
+                      <a href={mention.url} rel="nofollow ugc noopener">
+                        {mention.title}
+                      </a>
+                    </p>
+                  )}
+                  {mention.text && <p class="mention__text p-content">{mention.text}</p>}
+                  <p class="mention__meta">
+                    <span class="mention__verb">{verbFor(mention)}</span>
+                    {published && (
+                      <>
+                        <span aria-hidden="true" class="mention__sep">
+                          ·
+                        </span>
+                        <time class="dt-published tabular" datetime={mention.published}>
+                          {published}
+                        </time>
+                      </>
+                    )}
+                    {mention.url && source && (
+                      <>
+                        <span aria-hidden="true" class="mention__sep">
+                          ·
+                        </span>
+                        <a class="u-url" href={mention.url} rel="nofollow ugc noopener">
+                          {source}
+                        </a>
+                      </>
+                    )}
+                  </p>
+                </div>
+              </li>
+            );
+          })}
+        </ol>
+      )}
+
+      {invite && (
+        <details class="responses__manual">
+          <summary class="responses__summary">Send a webmention by hand</summary>
+          <div class="responses__manual-body">
+            <p class="responses__manual-note">
+              For when you've written a reply but your site doesn't send webmentions yet. Submitting
+              hands off to webmention.io, which will confirm it there.
+            </p>
+            {/*
+              A plain form POST of source + target is exactly what the Webmention
+              spec asks for, so this needs no JavaScript. The tradeoff is that
+              submitting navigates away — hence the note above.
+            */}
+            <form class="responses__form" action={endpoint} method="post">
+              <label class="responses__label" for="webmention-source">
+                URL of your reply
+              </label>
+              <div class="responses__field">
+                <input
+                  class="responses__input"
+                  id="webmention-source"
+                  type="url"
+                  name="source"
+                  required
+                  placeholder="https://your-site.example/your-reply/"
+                />
+                <button class="responses__submit" type="submit">
+                  Send
+                </button>
+              </div>
+              <input type="hidden" name="target" value={url} />
+            </form>
+          </div>
+        </details>
+      )}
+    </section>
+  )
+}
+
+<style>
+  .responses {
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--rule);
+    max-width: var(--measure);
+  }
+
+  .responses__title {
+    font-family: var(--font-display);
+    font-size: var(--text-h3);
+    font-weight: 600;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  .responses__invite,
+  .responses__tally,
+  .responses__manual-note,
+  .mention__meta,
+  .responses__summary,
+  .responses__label {
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    color: var(--ink-muted);
+  }
+
+  .responses__invite {
+    margin: var(--space-xs) 0 var(--space-md);
+    text-wrap: pretty;
+  }
+
+  .responses__invite a,
+  .responses__manual-note a {
+    color: var(--ink-muted);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklab, var(--accent) 45%, transparent);
+    text-underline-offset: 0.2em;
+  }
+
+  .responses__invite a:hover,
+  .responses__invite a:focus-visible,
+  .responses__manual-note a:hover,
+  .responses__manual-note a:focus-visible {
+    color: var(--accent-ink);
+  }
+
+  /* ---- Facepile: likes / reposts / bookmarks ---- */
+
+  .responses__reactions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+  }
+
+  .facepile {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Overlap the avatars slightly so a handful reads as a group, not a row of
+     disconnected chips. */
+  .facepile__item + .facepile__item {
+    margin-left: -0.5rem;
+  }
+
+  .facepile__link {
+    display: block;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: transform var(--duration-fast) var(--ease-out-quart);
+  }
+
+  .facepile__link:hover,
+  .facepile__link:focus-visible {
+    transform: translateY(-2px);
+    /* Lift the hovered face above its neighbours. */
+    position: relative;
+    z-index: 1;
+  }
+
+  .facepile__avatar {
+    display: block;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--surface);
+    box-shadow: 0 0 0 2px var(--bg);
+  }
+
+  .responses__tally {
+    margin: 0;
+  }
+
+  /* ---- Replies and mentions ---- */
+
+  .responses__list {
+    list-style: none;
+    margin: 0 0 var(--space-lg);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .mention {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-sm);
+    align-items: start;
+  }
+
+  .mention__author {
+    display: contents;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .mention__avatar {
+    display: block;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--surface);
+    grid-row: 1 / span 2;
+  }
+
+  /* Placed after BOTH .facepile__avatar and .mention__avatar: same specificity,
+     so source order decides, and these have to win the `display` declaration to
+     centre the letter. */
+  .facepile__avatar--initial,
+  .mention__avatar--initial {
+    display: grid;
+    place-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1;
+    color: var(--ink-muted);
+    border: 1px solid var(--rule);
+  }
+
+  .mention__name {
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    color: var(--ink);
+    align-self: center;
+  }
+
+  .mention__author:hover .mention__name,
+  .mention__author:focus-visible .mention__name {
+    color: var(--accent-ink);
+  }
+
+  .mention__body {
+    grid-column: 2;
+  }
+
+  .mention__source-title {
+    margin: 0 0 var(--space-2xs);
+    font-family: var(--font-display);
+    font-size: var(--text-body);
+    font-weight: 600;
+  }
+
+  .mention__source-title a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .mention__source-title a:hover,
+  .mention__source-title a:focus-visible {
+    color: var(--accent-ink);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .mention__text {
+    margin: 0 0 var(--space-2xs);
+    font-family: var(--font-prose);
+    font-size: var(--text-prose);
+    line-height: 1.5;
+    color: var(--ink);
+    text-wrap: pretty;
+    /* Long replies clamp rather than dominate the page; the permalink below
+       reaches the full text. The mention itself is stored in full. */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 10;
+    overflow: hidden;
+  }
+
+  .mention__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5ch;
+    margin: 0;
+  }
+
+  .mention__sep {
+    opacity: 0.55;
+  }
+
+  .mention__meta a {
+    color: var(--ink-muted);
+    text-decoration: underline;
+    text-decoration-color: color-mix(in oklab, var(--accent) 45%, transparent);
+    text-underline-offset: 0.2em;
+  }
+
+  .mention__meta a:hover,
+  .mention__meta a:focus-visible {
+    color: var(--accent-ink);
+  }
+
+  /* ---- Manual send form ---- */
+
+  .responses__manual {
+    margin-top: var(--space-md);
+  }
+
+  .responses__summary {
+    cursor: pointer;
+    width: fit-content;
+  }
+
+  .responses__summary:hover,
+  .responses__summary:focus-visible {
+    color: var(--accent-ink);
+  }
+
+  .responses__manual-body {
+    margin-top: var(--space-sm);
+  }
+
+  .responses__manual-note {
+    margin: 0 0 var(--space-sm);
+    text-wrap: pretty;
+  }
+
+  .responses__label {
+    display: block;
+    margin-bottom: var(--space-2xs);
+  }
+
+  .responses__field {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+  }
+
+  .responses__input {
+    flex: 1 1 18ch;
+    min-width: 0;
+    padding: 0.5rem 0.65rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-sm);
+  }
+
+  .responses__input::placeholder {
+    color: var(--ink-muted);
+    opacity: 0.7;
+  }
+
+  .responses__input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+
+  .responses__submit {
+    padding: 0.5rem 0.9rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition:
+      color var(--duration-fast) var(--ease-out-quart),
+      border-color var(--duration-fast) var(--ease-out-quart);
+  }
+
+  .responses__submit:hover,
+  .responses__submit:focus-visible {
+    color: var(--accent-ink);
+    border-color: var(--accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .facepile__link,
+    .responses__submit {
+      transition: none;
+    }
+
+    .facepile__link:hover,
+    .facepile__link:focus-visible {
+      transform: none;
+    }
+  }
+</style>
