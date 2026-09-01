@@ -1,0 +1,28 @@
+---
+// ABOUTME: The p-author h-card for an h-entry — metadata only, renders nothing visible.
+// ABOUTME: Without it an h-entry is authorless, and microformats2 consumers have to fall back to fetching the homepage's representative h-card (see Footer.astro).
+
+const site = (Astro.site ?? new URL('https://estebantorr.es')).toString();
+---
+
+{
+  /*
+  <data> is the microformats2 carrier for a property with no visible
+  representation, so this adds no text, no link, and nothing for a screen
+  reader to announce. The post header deliberately has no visible byline — on a
+  personal site the author is the whole premise — but parsers still need to be
+  told who wrote it.
+*/
+}
+<div class="p-author h-card author-hcard">
+  <data class="p-name" value="Esteban Torres"></data>
+  <data class="u-url u-uid" value={site}></data>
+</div>
+
+<style>
+  /* display:none is safe here: microformats2 parses the DOM, not the render
+     tree, so hidden metadata is still read. */
+  .author-hcard {
+    display: none;
+  }
+</style>

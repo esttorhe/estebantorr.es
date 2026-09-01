@@ -1,12 +1,13 @@
 ---
 // ABOUTME: Site footer — mono dot-separated socials + copyright.
-// ABOUTME: Deliberately quiet; the writing carries the page, not the chrome.
+// ABOUTME: Deliberately quiet; the writing carries the page, not the chrome. Doubles as the site's representative h-card — the rel=me socials and avatar were already here, the h-card classes just name them for microformats2 parsers.
 
 import { Image } from 'astro:assets';
 import Sigil from '../marks/Sigil.astro';
 import mePhoto from '../../assets/me.jpg';
 
 const year = new Date().getFullYear();
+const siteUrl = (Astro.site ?? new URL('https://estebantorr.es')).toString();
 
 const socials = [
   { label: 'github', href: 'https://github.com/esttorhe', rel: 'me' },
@@ -17,7 +18,17 @@ const socials = [
 ] as const;
 ---
 
-<footer class="site-footer">
+{
+  /*
+  h-card + the rel=me links below make this the representative h-card for
+  estebantorr.es. That is what lets IndieAuth (how you sign in to webmention.io)
+  and other microformats2 consumers resolve "who is this domain" — see
+  src/components/article/AuthorHCard.astro for the per-post author.
+*/
+}
+<footer class="site-footer h-card">
+  <data class="u-uid u-url" value={siteUrl}></data>
+
   <nav class="site-footer__socials" aria-label="Elsewhere on the web">
     <ul>
       {
@@ -41,6 +52,7 @@ const socials = [
     <span class="site-footer__copyright">
       <a class="site-footer__avatar" href="/about/" aria-label="About Esteban Torres">
         <Image
+          class="u-photo"
           src={mePhoto}
           alt=""
           widths={[44, 88]}
@@ -50,7 +62,7 @@ const socials = [
         />
       </a>
       © {year}
-      <a href="/about/">Esteban Torres</a>
+      <a class="p-name" href="/about/">Esteban Torres</a>
     </span>
     <span class="site-footer__location" aria-label="Berlin via San José">
       <span aria-hidden="true">Berlin</span>
