@@ -1,6 +1,23 @@
 {
-  "syncedAt": "2026-09-01T11:58:59.563Z",
+  "syncedAt": "2026-09-01T13:46:31.364Z",
   "targets": {
+    "https://estebantorr.es/2026/02/a-gsd-system-for-claude-code": {
+      "responses": [
+        {
+          "id": 2027838,
+          "type": "in-reply-to",
+          "url": "https://mastodon.social/@nemeciii/117195945042230949",
+          "published": "2026-09-01T13:10:04+00:00",
+          "author": {
+            "name": "Matti Järvinen",
+            "url": "https://mastodon.social/@nemeciii",
+            "photo": "/assets/images/webmentions/mastodon-social-e45bc779cc1d.jpg"
+          },
+          "text": "@esttorhe hey btw. Taches vanished and the community took over. It's open-gsd now.\n\nI'm really not sure what and why this happened but the discord holds the key to the drama."
+        }
+      ],
+      "reactions": []
+    },
     "https://estebantorr.es/til/reduce-not-time-but-complexity": {
       "responses": [
         {
