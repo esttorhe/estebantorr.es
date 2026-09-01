@@ -28,6 +28,15 @@ export const MAX_ATTEMPTS = 3;
 /** Politeness gap between sends, in ms. */
 const SEND_DELAY_MS = 500;
 
+/**
+ * Per-request timeout, in ms.
+ *
+ * Without one a dead host hangs the whole run — the backlog points at plenty of
+ * link rot, plus 23 twitter.com URLs that no longer answer unauthenticated
+ * requests. A timeout is recorded as a failure and retried on a later run.
+ */
+const REQUEST_TIMEOUT_MS = 10_000;
+
 function log(msg) {
   process.stdout.write(`[send-webmentions] ${msg}\n`);
 }
@@ -221,6 +230,7 @@ async function discoverEndpoint(target) {
     method: 'GET',
     headers: { 'User-Agent': USER_AGENT },
     redirect: 'follow',
+    signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
   });
 
   // The response URL is the base for relative endpoints — it accounts for any
@@ -245,6 +255,7 @@ async function sendWebmention(endpoint, source, target) {
     },
     body: new URLSearchParams({ source, target }).toString(),
     redirect: 'follow',
+    signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
   });
   return response;
 }
