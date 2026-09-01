@@ -417,8 +417,25 @@ async function main() {
     return;
   }
 
+  // Leave the file completely alone when the mentions have not changed.
+  //
+  // `syncedAt` used to be stamped on every run, which meant a sync that found
+  // nothing new still produced a one-line diff — and therefore a commit, and a
+  // full deploy. Harmless daily; with the webhook firing per mention it is a
+  // stream of empty commits. Both mergeIntoCache and mergeMentions sort their
+  // output, so serializing is a sound equality check.
+  // A skipped removal needs no special case: markRemoved returns the archive
+  // untouched, so this comparison already decides not to write.
+  const unchanged = JSON.stringify(targets) === JSON.stringify(existing.targets);
+
+  if (unchanged) {
+    log('no change — leaving the data file untouched so nothing is committed');
+    return;
+  }
+
   const payload = {
     // Written by scripts/sync-webmentions.mjs — see the header there.
+    // Only advances when the mentions themselves change; see `unchanged` above.
     syncedAt: now,
     targets,
   };
