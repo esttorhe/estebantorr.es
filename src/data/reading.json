@@ -1,14 +1,23 @@
 {
   "currentlyReading": [
     {
+      "title": "Incidents Around the House",
+      "author": "Josh Malerman",
+      "cover": "/assets/images/reading/202607220001-incidents-around-the-house.jpg",
+      "format": "audiobook",
+      "started": "2026-08-31"
+    }
+  ],
+  "finished": [
+    {
       "title": "How Minds Change",
       "author": "David McRaney",
       "cover": "/assets/images/reading/202608261540-how-minds-change.jpg",
       "format": "book",
-      "started": "2026-08-26"
-    }
-  ],
-  "finished": [
+      "finished": "2026-08-31",
+      "rating": 6.5,
+      "review": "Very interesting book. Unfortunately I listened to it with half a mind and I missed a bunch of great nuggets of information. Definitely will be re-reading/listening again in the future."
+    },
     {
       "title": "Everybody Wants to Rule the World Except Me",
       "author": "Django Wexler",
