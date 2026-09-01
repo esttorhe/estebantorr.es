@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-09-01T13:46:31.364Z",
+  "syncedAt": "2026-09-01T13:58:38.384Z",
   "targets": {
     "https://estebantorr.es/2026/02/a-gsd-system-for-claude-code": {
       "responses": [
@@ -14,6 +14,42 @@
             "photo": "/assets/images/webmentions/mastodon-social-e45bc779cc1d.jpg"
           },
           "text": "@esttorhe hey btw. Taches vanished and the community took over. It's open-gsd now.\n\nI'm really not sure what and why this happened but the discord holds the key to the drama."
+        },
+        {
+          "id": 2027856,
+          "type": "in-reply-to",
+          "url": "https://mastodon.social/@nemeciii/116013925431039693",
+          "published": "2026-02-04T19:06:56+00:00",
+          "author": {
+            "name": "Matti Järvinen",
+            "url": "https://mastodon.social/@nemeciii",
+            "photo": "/assets/images/webmentions/mastodon-social-e45bc779cc1d.jpg"
+          },
+          "text": "@esttorhe supports This supports my experience with GSD.\n\nThe tool is good but eats truck loads of tokens. Then again, do you have truck loads of time, I don't, so I use GSD.\n\nI can easily generate complex systems with Claude Pro only to hit 5 h limit. Then I can spend a lot of time reviewing and verofying what was made before proceeding to the next research plannong step.\n\nI still wonder is how to empower a team of developers doing client work at this speed without risking quality."
+        },
+        {
+          "id": 2027857,
+          "type": "in-reply-to",
+          "url": "https://mastodon.social/@esttorhe/116013987389674530",
+          "published": "2026-02-04T19:22:41+00:00",
+          "author": {
+            "name": "Esteban Torres",
+            "url": "https://mastodon.social/@esttorhe",
+            "photo": "/assets/images/webmentions/mastodon-social-af1e4b8e9792.png"
+          },
+          "text": "@nemeciii yeah, same. Haven't had teams work with this approach. \n\nNot suggesting a solution, but wondering if having a \"product manager\" (Claude account user) that generates the roadmap and plans and makes sure that the spec is up to requirements; and then they pass it down to an engineer (another Claude account) that will execute on the plan and validate the execution would be a feasible approach to get fast deliveries and maintaining quality"
+        },
+        {
+          "id": 2027858,
+          "type": "in-reply-to",
+          "url": "https://mastodon.social/@nemeciii/116014034162267273",
+          "published": "2026-02-04T19:34:35+00:00",
+          "author": {
+            "name": "Matti Järvinen",
+            "url": "https://mastodon.social/@nemeciii",
+            "photo": "/assets/images/webmentions/mastodon-social-e45bc779cc1d.jpg"
+          },
+          "text": "@esttorhe dividing work by separate parts of the system might also work. \n\nFor example this human developer works on reporter features, the other with client side features another with external integrations...\n\nA fully event sourced CQRS system might be a good fit. Features depending on existing projections are quite separate and easily extendable in comparison of a sprawling monolithic application."
         }
       ],
       "reactions": []
