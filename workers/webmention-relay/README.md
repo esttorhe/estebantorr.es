@@ -25,7 +25,16 @@ request can at worst cause a redundant sync.
 
 ## Setup
 
-Run from this directory.
+Run everything below **from this directory** — `bunx` is provided by the
+mise-managed bun in `.mise.toml`, so it is only on `PATH` inside the repo:
+
+```sh
+cd workers/webmention-relay
+```
+
+(`bun x wrangler ...` is equivalent if `bunx` is unavailable. wrangler is not a
+project dependency — it is fetched on demand here, and CI uses
+`cloudflare/wrangler-action` instead.)
 
 1. **Generate a shared secret** (any string up to 50 characters — that is
    webmention.io's field limit):
