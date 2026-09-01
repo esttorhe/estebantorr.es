@@ -76,10 +76,14 @@ jobs:
           else
             git commit -m 'chore(webmentions): record sent webmentions'
 
-            # Same race as the sync workflow: main can move between checkout
-            # and push. Losing it here would discard the record of webmentions
-            # that were actually delivered, so the next run would send them
-            # again. Rebase and retry.
+            # Same race as the sync workflow, but the fix has to differ. The
+            # sync can reset and re-derive because it is idempotent; the sender
+            # is not — discarding local ledger entries would re-notify targets
+            # already delivered. So rebase, which can conflict if a concurrent
+            # run rewrote the ledger. Tolerable here: this workflow is weekly or
+            # manual and serialised by its concurrency group, so an overlap is
+            # unlikely, and a conflict fails loudly for manual resolution rather
+            # than silently re-sending.
             pushed=false
             for attempt in 1 2 3; do
               if git push; then pushed=true; break; fi

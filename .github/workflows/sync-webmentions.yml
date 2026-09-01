@@ -53,43 +53,55 @@ jobs:
           install: true
           cache: true
 
-      - name: Sync webmentions
-        if: env.WEBMENTION_IO_TOKEN != ''
-        run: bun run webmentions:sync
-
-      # Commits both the data file and any newly downloaded sender avatars.
-      # The `git diff --quiet` guard means a sync that found nothing new is a
-      # no-op rather than an empty commit.
-      - name: Commit new mentions
+      # Sync and commit are one step so a lost push race can re-derive rather
+      # than rebase. Rebasing was tried and does not work: two concurrent syncs
+      # both rewrite webmentions.json, so replaying one commit onto the other
+      # always conflicts ("could not apply ... chore(webmentions): sync new
+      # mentions"). Re-running the sync on the new head cannot conflict, because
+      # the sync merges the committed cache with the whole feed and is therefore
+      # idempotent.
+      #
+      # main moves under this job routinely: a human push, the send workflow's
+      # ledger commit, or a sibling sync from the same webhook burst — a batch
+      # of retries on Bridgy fires one dispatch per response.
+      - name: Sync and commit new mentions
         id: commit
         if: env.WEBMENTION_IO_TOKEN != ''
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add src/data/webmentions.json public/assets/images/webmentions
-          if git diff --staged --quiet; then
-            echo 'No new webmentions.'
-            echo 'committed=false' >> "$GITHUB_OUTPUT"
-          else
-            git commit -m 'chore(webmentions): sync new mentions'
 
-            # main can move between checkout and push — a human push, the send
-            # workflow's ledger commit, or a queued sibling sync. A plain push
-            # loses the race, fails the run, and discards the mentions this run
-            # just fetched. Rebase and retry instead; the only local change is
-            # webmentions.json plus new avatars, so a rebase is always safe.
-            pushed=false
-            for attempt in 1 2 3; do
-              if git push; then pushed=true; break; fi
-              echo "push rejected (attempt ${attempt}/3) — rebasing onto origin/main"
-              git pull --rebase --autostash origin main
-            done
+          committed=false
+          for attempt in 1 2 3; do
+            git fetch --quiet origin main
+            git reset --quiet --hard origin/main
 
-            if [ "$pushed" != 'true' ]; then
-              echo '::error::could not push the synced mentions after 3 attempts'
-              exit 1
+            bun run webmentions:sync
+
+            # `git diff --quiet` means a sync that found nothing new is a no-op
+            # rather than an empty commit — and therefore triggers no deploy.
+            git add src/data/webmentions.json public/assets/images/webmentions
+            if git diff --staged --quiet; then
+              echo 'No new webmentions.'
+              break
             fi
-            echo 'committed=true' >> "$GITHUB_OUTPUT"
+
+            git commit --quiet -m 'chore(webmentions): sync new mentions'
+            if git push --quiet; then
+              committed=true
+              break
+            fi
+            echo "push rejected (attempt ${attempt}/3) — re-deriving on the new head"
+          done
+
+          echo "committed=${committed}" >> "$GITHUB_OUTPUT"
+
+          # A warning rather than an error: nothing is lost permanently. The
+          # mentions are still on webmention.io, and the next webhook or the
+          # daily cron re-fetches them. Failing red here would be noise for a
+          # race that self-heals.
+          if [ "$committed" != 'true' ] && ! git diff --quiet origin/main; then
+            echo '::warning::could not push after 3 attempts — the next sync will pick these up'
           fi
 
       # A push authenticated with GITHUB_TOKEN does NOT trigger other
