@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-09-01T14:59:33.469Z",
+  "syncedAt": "2026-09-01T15:24:37.482Z",
   "targets": {
     "https://estebantorr.es/2026/02/a-gsd-system-for-claude-code": {
       "responses": [
@@ -90,6 +90,17 @@
             "name": "Matt Massicotte",
             "url": "https://mastodon.social/@mattiem",
             "photo": "/assets/images/webmentions/mastodon-social-1613ea007c82.jpg"
+          }
+        },
+        {
+          "id": 2027901,
+          "type": "like-of",
+          "url": "https://mastodon.social/@esttorhe/117195206570944732#favorited-by-418802",
+          "published": "2026-09-01T15:24:18Z",
+          "author": {
+            "name": "Gilad Ronat",
+            "url": "https://mastodon.social/@giladronat",
+            "photo": "/assets/images/webmentions/mastodon-social-664801eed804.png"
           }
         }
       ]
