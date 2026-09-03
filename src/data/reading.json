@@ -1,14 +1,15 @@
 {
-  "currentlyReading": [
+  "currentlyReading": [],
+  "finished": [
     {
       "title": "Incidents Around the House",
       "author": "Josh Malerman",
       "cover": "/assets/images/reading/202607220001-incidents-around-the-house.jpg",
       "format": "audiobook",
-      "started": "2026-08-31"
-    }
-  ],
-  "finished": [
+      "finished": "2026-09-03",
+      "rating": 7,
+      "review": "Not super mega scary but it has its moments. I liked the ending, some things were expected but not badly done which was good. I enjoyed it more than expected. Looking forward to watching the movie."
+    },
     {
       "title": "How Minds Change",
       "author": "David McRaney",
