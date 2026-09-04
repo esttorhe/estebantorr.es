@@ -1,5 +1,13 @@
 {
-  "currentlyReading": [],
+  "currentlyReading": [
+    {
+      "title": "Crossings",
+      "author": "Alex Landragin",
+      "cover": "/assets/images/reading/202508150000-crossings.jpg",
+      "format": "book",
+      "started": "2026-09-04"
+    }
+  ],
   "finished": [
     {
       "title": "Incidents Around the House",
