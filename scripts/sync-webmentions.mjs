@@ -111,14 +111,37 @@ export function shapeMention(raw) {
   return shaped;
 }
 
+// What actually makes two entries the same mention. Bridgy re-sends when a
+// delivery is retried and webmention.io files each attempt under its own wm-id,
+// so the id identifies the delivery, not the mention — the source URL does.
+// Type is part of the key because a like and a repost of one post are different
+// mentions, and the URL alone is not enough to tell them apart.
+//
+// Falling back to the id when there is no URL keeps distinct anonymous senders
+// from collapsing into a single card.
+function mentionIdentity(mention) {
+  return mention.url ? `${mention.type}\n${mention.url}` : `id:${mention.id}`;
+}
+
 // Union of the committed cache and a fresh fetch, deduped by wm-id with the
-// incoming copy winning (senders edit their posts). Sorted by id so a sync that
-// found nothing new produces an empty diff instead of a reshuffled file.
+// incoming copy winning (senders edit their posts), then collapsed by identity
+// so a re-delivered mention renders once rather than once per delivery. Sorted
+// by id so a sync that found nothing new produces an empty diff instead of a
+// reshuffled file.
 export function mergeMentions(existing = [], incoming = []) {
   const byId = new Map();
   for (const mention of existing) byId.set(mention.id, mention);
   for (const mention of incoming) byId.set(mention.id, mention);
-  return [...byId.values()].sort((a, b) => a.id - b.id);
+
+  const byIdentity = new Map();
+  for (const mention of byId.values()) {
+    const key = mentionIdentity(mention);
+    const seen = byIdentity.get(key);
+    // Highest wm-id wins: the newest delivery carries the newest edit.
+    if (!seen || mention.id > seen.id) byIdentity.set(key, mention);
+  }
+
+  return [...byIdentity.values()].sort((a, b) => a.id - b.id);
 }
 
 export function groupByTarget(rawMentions) {

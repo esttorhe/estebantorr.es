@@ -519,3 +519,94 @@ test('every attempt asks for a fresh connection rather than reusing the pool', a
     expect(call.init?.headers?.connection).toBe('close');
   }
 });
+
+// ---------------------------------------------------------------------------
+// re-delivered mentions
+// ---------------------------------------------------------------------------
+
+// Bridgy re-sends a mention when a delivery is retried, and webmention.io files
+// each delivery under its own wm-id. Deduping on id alone therefore lets a
+// single reply render as three identical cards, which is what happened to the
+// webmentions post during the webmention.io outage.
+
+const reply1 = {
+  id: 2029428,
+  type: 'in-reply-to',
+  url: 'https://mastodon.social/@esttorhe/117219077409822141',
+  published: '2026-09-05T10:00:00Z',
+  author: { name: 'Esteban Torres', url: 'https://mastodon.social/@esttorhe' },
+  text: "I couldn't stay away from the fun ^^",
+};
+
+test('the same source url delivered under several wm-ids renders once', () => {
+  const merged = mergeMentions(
+    [reply1],
+    [
+      { ...reply1, id: 2029536 },
+      { ...reply1, id: 2029651 },
+    ],
+  );
+  expect(merged.length).toBe(1);
+});
+
+// Senders edit their posts, so the freshest delivery carries the freshest text.
+test('the newest delivery of a re-sent mention is the one kept', () => {
+  const merged = mergeMentions([reply1], [{ ...reply1, id: 2029651, text: 'edited afterwards' }]);
+  expect(merged[0].id).toBe(2029651);
+  expect(merged[0].text).toBe('edited afterwards');
+});
+
+// Two people liking the same post share a base URL and differ only in the
+// fragment webmention.io appends — collapsing on the post URL would erase one.
+test('likes from different people are not collapsed together', () => {
+  const base = 'https://mastodon.social/@esttorhe/117219077409822141';
+  const merged = mergeMentions(
+    [],
+    [
+      {
+        id: 1,
+        type: 'like-of',
+        url: `${base}#favorited-by-109279204427464085`,
+        author: { name: 'Yves' },
+      },
+      { id: 2, type: 'like-of', url: `${base}#favorited-by-418802`, author: { name: 'Gilad' } },
+    ],
+  );
+  expect(merged.length).toBe(2);
+});
+
+test('a like and a repost of the same post stay separate', () => {
+  const url = 'https://mastodon.social/@esttorhe/117219077409822141';
+  const merged = mergeMentions(
+    [],
+    [
+      { id: 1, type: 'like-of', url, author: { name: 'Yves' } },
+      { id: 2, type: 'repost-of', url, author: { name: 'Yves' } },
+    ],
+  );
+  expect(merged.length).toBe(2);
+});
+
+// Without a url there is nothing to compare but the id, and collapsing on a
+// missing field would merge unrelated senders into one card.
+test('mentions with no url are kept apart', () => {
+  const merged = mergeMentions(
+    [],
+    [
+      { id: 1, type: 'mention-of', author: { name: 'Someone' } },
+      { id: 2, type: 'mention-of', author: { name: 'Someone else' } },
+    ],
+  );
+  expect(merged.length).toBe(2);
+});
+
+test('distinct replies from the same author are both kept', () => {
+  const merged = mergeMentions(
+    [],
+    [
+      reply1,
+      { ...reply1, id: 2029652, url: 'https://mastodon.social/@esttorhe/117220145745984801' },
+    ],
+  );
+  expect(merged.length).toBe(2);
+});
