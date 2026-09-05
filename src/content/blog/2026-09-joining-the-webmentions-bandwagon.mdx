@@ -1,0 +1,40 @@
+---
+title: 'Joining the Webmentions bandwagon'
+date: 2026-09-04T05:23:00Z
+tags:
+  - blog
+  - comments
+  - network
+  - social network
+category: Tech
+description: 'Making sense of digital social interactions'
+featured_image_alt: 'Sloth with tattoed arm, jeans and boots riding a bandwagon full of speech bubbles'
+---
+
+## Joining the Webmentions bandwagon
+
+I have ALWAYS struggled with the comments section in my website. Never felt like traction was there properly but also didn't want to close the door on potential social engagement.
+
+Every now and again someone would follow through and add some comments but mostly things were happening in social media, back in the day before the place was taken over by Elmo, `Twitter` was where the real discussions happened, you posted something and then the thread of replies would live in there instead of the blogpost.
+
+I tried different approaches, I tried hooking my website to `Github` issues on its own repo, where each comment ended up opening up an issue for that post and the replies where replies to the issue, that kind of worked but not in any meaningful way.
+
+Very recently, after migrating my blog again and giving it a new coat of paint I decided to integrate with [utterances](https://utteranc.es/), not bad, not great, it was ok. But still something was missing.
+
+Funny enough, this week I stumbled upon [Yve's post about webmentions](https://indieweb.social/@yvg/117189999314598631) drawing inspiration from [Jan's own post about webmentions](https://janmonschke.com/adding-webmentions-to-your-static-blog/) and I was nerd-snipped.
+
+During the week I added a task to play with it during the weekend, but obviously I couldn't wait for the weekend… because who would!?
+
+So I took time in between work and eating to check it out. As a concept is great, as a central infrastructure running by the grace of some very nice individuals in the community, kind of scary (for example, at the time of me writing this, 05.09.2026 16:09 CEST webmention.io is in a semi-broken state were some pods are not responding and some do, is a load balancer lottery wether you land on a good one). I would love for this to take off and have a semi-decentralised way to keep up with demand and hopefully push adoption.
+
+Below is a screenshot of how webmentions look on my blog post [A GSD System for Claude Code](/2026/02/a-gsd-system-for-claude-code/)
+
+![Webmentions showing social interactions on a blogpost](/assets/images/post/2026/09/joining-the-webmentions-bandwagon/webmentions.jpg)
+
+Jan's blogpost does a very nice job at explaining how it works and how everything interconnects and you could even consider it a nice "how to wire webmentions into your website", so I won't go into details, the only thing that I would mention is that it needs 2 services in the middle of you and the social interactions reaching your website.
+
+In layman's terms, your website is "listening to webmentions" and it is also "announcing webmentions" whenever you mention an article/website, which covers a very small part of the internet, which also misses where most of the discussions happen, social media. And that's where the other service comes into play, Bridgy, you connect your social accounts and becomes the service in the middle checkint the interactions and announcing them to the relevant website(s). 
+
+The beauty of this setup is now that interactions happening in social networks will (hopefully) appear directly in the blog without having to make the authors post here; also the content stays linked but it can live wherever the conversation happens.
+
+Here's to more open internet.
