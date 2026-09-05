@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-09-05T19:57:13.570Z",
+  "syncedAt": "2026-09-05T19:58:57.563Z",
   "targets": {
     "https://estebantorr.es/2026/02/a-gsd-system-for-claude-code": {
       "responses": [
@@ -103,6 +103,30 @@
             "photo": "/assets/images/webmentions/mastodon-social-af1e4b8e9792.png"
           },
           "text": "@yvg @janmon I couldn't stay away from the fun ^^ https://estebantorr.es/2026/09/joining-the-webmentions-bandwagon/\nJoining the Webmentions bandwagon — The mind of Esteban"
+        },
+        {
+          "id": 2029651,
+          "type": "in-reply-to",
+          "url": "https://mastodon.social/@esttorhe/117219077409822141",
+          "published": "2026-09-05T15:12:56+00:00",
+          "author": {
+            "name": "Esteban Torres",
+            "url": "https://mastodon.social/@esttorhe",
+            "photo": "/assets/images/webmentions/mastodon-social-af1e4b8e9792.png"
+          },
+          "text": "@yvg @janmon I couldn't stay away from the fun ^^ https://estebantorr.es/2026/09/joining-the-webmentions-bandwagon/\nJoining the Webmentions bandwagon — The mind of Esteban"
+        },
+        {
+          "id": 2029652,
+          "type": "in-reply-to",
+          "url": "https://mastodon.social/@esttorhe/117220145745984801",
+          "published": "2026-09-05T19:44:37+00:00",
+          "author": {
+            "name": "Esteban Torres",
+            "url": "https://mastodon.social/@esttorhe",
+            "photo": "/assets/images/webmentions/mastodon-social-af1e4b8e9792.png"
+          },
+          "text": "@yvg @esttorhe @janmon I did pretty much the same for the avatars. \nI hear you, my website was on GitHub up until a few months ago. Moved to cloudflare pages recently (I know I should host but is simple, it works and I'm lazy)"
         }
       ],
       "reactions": [
