@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-09-05T18:22:56.013Z",
+  "syncedAt": "2026-09-05T19:05:04.337Z",
   "targets": {
     "https://estebantorr.es/2026/02/a-gsd-system-for-claude-code": {
       "responses": [
@@ -50,6 +50,18 @@
             "photo": "/assets/images/webmentions/mastodon-social-e45bc779cc1d.jpg"
           },
           "text": "@esttorhe dividing work by separate parts of the system might also work. \n\nFor example this human developer works on reporter features, the other with client side features another with external integrations...\n\nA fully event sourced CQRS system might be a good fit. Features depending on existing projections are quite separate and easily extendable in comparison of a sprawling monolithic application."
+        },
+        {
+          "id": 2029463,
+          "type": "in-reply-to",
+          "url": "https://mastodon.social/@esttorhe/117196124944558610",
+          "published": "2026-09-01T13:55:49+00:00",
+          "author": {
+            "name": "Esteban Torres",
+            "url": "https://mastodon.social/@esttorhe",
+            "photo": "/assets/images/webmentions/mastodon-social-af1e4b8e9792.png"
+          },
+          "text": "@nemeciii ohhhhhhhhh!!! I need to jump over Discord then!"
         }
       ],
       "reactions": []
@@ -79,6 +91,17 @@
             "name": "Yves Van Goethem :firefox:",
             "url": "https://indieweb.social/@yvg",
             "photo": "/assets/images/webmentions/indieweb-social-30a8dc955e45.jpg"
+          }
+        },
+        {
+          "id": 2029462,
+          "type": "like-of",
+          "url": "https://mastodon.social/@esttorhe/117219074742533122#favorited-by-418802",
+          "published": "2026-09-05T19:04:52Z",
+          "author": {
+            "name": "Gilad Ronat",
+            "url": "https://mastodon.social/@giladronat",
+            "photo": "/assets/images/webmentions/mastodon-social-664801eed804.png"
           }
         }
       ]
