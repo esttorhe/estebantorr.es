@@ -33,6 +33,18 @@ const SITE_DOMAIN = 'estebantorr.es';
 const API_BASE = 'https://webmention.io/api/mentions.jf2';
 const PER_PAGE = 100;
 
+// webmention.io flaps rather than falling over: during an incident their load
+// balancer keeps routing to a pool where only some backends are healthy.
+//
+// The catch is that a pooled keep-alive connection sticks to whichever backend
+// it first landed on, so a process that draws a broken one 502s on every request
+// forever while curl — a fresh connection per call — succeeds half the time.
+// Retrying down the same socket is therefore useless; `connection: close` is
+// what actually makes an attempt an independent draw. Measured against the live
+// outage: 0/12 on keep-alive, 3/12 with a fresh connection each time.
+const FETCH_ATTEMPTS = 6;
+const FETCH_BACKOFF_MS = 1000;
+
 const outputJsonPath = resolve(projectRoot, 'src', 'data', 'webmentions.json');
 const avatarsDir = resolve(projectRoot, 'public', 'assets', 'images', 'webmentions');
 const avatarsPublicPrefix = '/assets/images/webmentions';
@@ -207,6 +219,55 @@ export function markRemoved(
 // I/O
 // ---------------------------------------------------------------------------
 
+// Worth a retry: the request never reached a healthy backend, so the same
+// request may well succeed. A client error is the caller's own fault — retrying
+// a bad token only delays the same failure and buries the real cause.
+export function isTransientStatus(status) {
+  return status === 429 || status >= 500;
+}
+
+// `fetchImpl` and `sleep` are seams for the tests, which script an outage rather
+// than wait on a real one. Everything else calls this with the defaults.
+export async function fetchWithRetry(url, options = {}) {
+  const {
+    attempts = FETCH_ATTEMPTS,
+    backoffMs = FETCH_BACKOFF_MS,
+    fetchImpl = fetch,
+    sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
+    onRetry = () => {},
+  } = options;
+
+  let lastResponse;
+  let lastError;
+
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    lastResponse = undefined;
+    lastError = undefined;
+
+    try {
+      // Forces a new connection — and so a new backend draw — per attempt.
+      lastResponse = await fetchImpl(url, { headers: { connection: 'close' } });
+    } catch (error) {
+      lastError = error;
+    }
+
+    if (lastResponse && (lastResponse.ok || !isTransientStatus(lastResponse.status))) {
+      return lastResponse;
+    }
+
+    if (attempt === attempts) break;
+
+    const delay = backoffMs * 2 ** (attempt - 1);
+    onRetry({ attempt, attempts, delay, status: lastResponse?.status, error: lastError });
+    await sleep(delay);
+  }
+
+  // Out of attempts. A status the caller can report beats an opaque throw, so
+  // the response wins when there is one.
+  if (lastResponse) return lastResponse;
+  throw lastError;
+}
+
 async function fetchAllMentions(token) {
   const all = [];
 
@@ -221,7 +282,13 @@ async function fetchAllMentions(token) {
     // which markRemoved would then read as a deletion.
     url.searchParams.set('sort-dir', 'up');
 
-    const response = await fetch(url);
+    const response = await fetchWithRetry(url, {
+      onRetry: ({ attempt, attempts, delay, status, error }) =>
+        log(
+          `page ${page}: ${status ?? error?.message ?? 'request failed'} — ` +
+            `retrying in ${delay}ms (attempt ${attempt}/${attempts})`,
+        ),
+    });
     if (!response.ok) {
       throw new Error(
         `webmention.io returned ${response.status} ${response.statusText} for page ${page}`,

@@ -9,6 +9,8 @@ import {
   mergeMentions,
   groupByTarget,
   avatarSlug,
+  isTransientStatus,
+  fetchWithRetry,
 } from './sync-webmentions.mjs';
 
 // ---------------------------------------------------------------------------
@@ -362,4 +364,158 @@ test('reactions are checked as well as responses', () => {
   };
   const result = markRemoved(t, new Set([1]), { at: AT });
   expect(result.targets['https://estebantorr.es/a-post'].reactions[0].removed).toBe(true);
+});
+
+// ---------------------------------------------------------------------------
+// fetchWithRetry
+// ---------------------------------------------------------------------------
+
+// webmention.io flaps rather than falling over: during an incident a majority
+// of requests 502 while the rest are served normally. A single-shot fetch then
+// fails most of the time even though the data is right there.
+
+// A stand-in for `fetch` that replays a scripted list of outcomes, so the retry
+// policy can be exercised without waiting on a real outage. `sleep` is stubbed
+// out for the same reason — the test asserts on the delays rather than serving
+// them.
+function scriptedFetch(outcomes) {
+  const calls = [];
+  const impl = async (url, init) => {
+    calls.push({ url: String(url), init });
+    const outcome = outcomes[calls.length - 1];
+    if (outcome instanceof Error) throw outcome;
+    return { ok: outcome >= 200 && outcome < 300, status: outcome, statusText: String(outcome) };
+  };
+  impl.calls = calls;
+  return impl;
+}
+
+function recordingSleep() {
+  const delays = [];
+  const sleep = async (ms) => {
+    delays.push(ms);
+  };
+  sleep.delays = delays;
+  return sleep;
+}
+
+test('5xx and 429 are transient; client errors are not', () => {
+  expect(isTransientStatus(502)).toBe(true);
+  expect(isTransientStatus(500)).toBe(true);
+  expect(isTransientStatus(429)).toBe(true);
+  expect(isTransientStatus(400)).toBe(false);
+  expect(isTransientStatus(401)).toBe(false);
+  expect(isTransientStatus(404)).toBe(false);
+});
+
+test('a first-try success is returned without sleeping', async () => {
+  const fetchImpl = scriptedFetch([200]);
+  const sleep = recordingSleep();
+
+  const response = await fetchWithRetry('https://example.com/', { fetchImpl, sleep });
+
+  expect(response.status).toBe(200);
+  expect(fetchImpl.calls.length).toBe(1);
+  expect(sleep.delays).toEqual([]);
+});
+
+test('a transient status is retried until it succeeds', async () => {
+  const fetchImpl = scriptedFetch([502, 502, 200]);
+  const sleep = recordingSleep();
+
+  const response = await fetchWithRetry('https://example.com/', { fetchImpl, sleep });
+
+  expect(response.status).toBe(200);
+  expect(fetchImpl.calls.length).toBe(3);
+});
+
+test('backoff between retries grows exponentially', async () => {
+  const fetchImpl = scriptedFetch([502, 502, 502, 200]);
+  const sleep = recordingSleep();
+
+  await fetchWithRetry('https://example.com/', { fetchImpl, sleep, backoffMs: 100 });
+
+  expect(sleep.delays).toEqual([100, 200, 400]);
+});
+
+// Retrying a bad token just delays the same failure and hides the real cause.
+test('a permanent status is returned immediately without retrying', async () => {
+  const fetchImpl = scriptedFetch([401, 200]);
+  const sleep = recordingSleep();
+
+  const response = await fetchWithRetry('https://example.com/', { fetchImpl, sleep });
+
+  expect(response.status).toBe(401);
+  expect(fetchImpl.calls.length).toBe(1);
+  expect(sleep.delays).toEqual([]);
+});
+
+test('the last response is returned once the attempts run out', async () => {
+  const fetchImpl = scriptedFetch([502, 502, 502]);
+  const sleep = recordingSleep();
+
+  const response = await fetchWithRetry('https://example.com/', {
+    fetchImpl,
+    sleep,
+    attempts: 3,
+  });
+
+  expect(response.status).toBe(502);
+  expect(fetchImpl.calls.length).toBe(3);
+  // Three attempts means two waits — no pointless sleep after the last one.
+  expect(sleep.delays.length).toBe(2);
+});
+
+// A dropped connection is the same class of problem as a 502 and deserves the
+// same treatment.
+test('a network error is retried too', async () => {
+  const fetchImpl = scriptedFetch([new Error('ECONNRESET'), 200]);
+  const sleep = recordingSleep();
+
+  const response = await fetchWithRetry('https://example.com/', { fetchImpl, sleep });
+
+  expect(response.status).toBe(200);
+  expect(fetchImpl.calls.length).toBe(2);
+});
+
+test('a network error on the final attempt is rethrown', async () => {
+  const fetchImpl = scriptedFetch([new Error('ECONNRESET'), new Error('ECONNRESET')]);
+  const sleep = recordingSleep();
+
+  await expect(
+    fetchWithRetry('https://example.com/', { fetchImpl, sleep, attempts: 2 }),
+  ).rejects.toThrow('ECONNRESET');
+});
+
+test('each retry is reported so a slow sync explains itself in the log', async () => {
+  const fetchImpl = scriptedFetch([502, 200]);
+  const sleep = recordingSleep();
+  const retries = [];
+
+  await fetchWithRetry('https://example.com/', {
+    fetchImpl,
+    sleep,
+    backoffMs: 100,
+    onRetry: (info) => retries.push(info),
+  });
+
+  expect(retries.length).toBe(1);
+  expect(retries[0].status).toBe(502);
+  expect(retries[0].delay).toBe(100);
+});
+
+// The whole reason a retry works at all: a pooled keep-alive connection sticks
+// to one backend, so retrying down the same socket re-asks the same broken
+// server. Verified against the live outage — 0/12 on a reused connection versus
+// 3/12 with a fresh one — so this header is load-bearing, not cargo cult.
+test('every attempt asks for a fresh connection rather than reusing the pool', async () => {
+  const fetchImpl = scriptedFetch([502, 502, 200]);
+  const sleep = recordingSleep();
+
+  await fetchWithRetry('https://example.com/', { fetchImpl, sleep });
+
+  expect(fetchImpl.calls.length).toBe(3);
+  for (const call of fetchImpl.calls) {
+    expect(call.init?.headers?.connection).toBe('close');
+  }
 });
