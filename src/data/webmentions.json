@@ -81,16 +81,16 @@
           "text": "@yvg @janmon I couldn't stay away from the fun ^^ https://estebantorr.es/2026/09/joining-the-webmentions-bandwagon/\nJoining the Webmentions bandwagon — The mind of Esteban"
         },
         {
-          "id": 2029536,
+          "id": 2029524,
           "type": "in-reply-to",
-          "url": "https://mastodon.social/@esttorhe/117219077409822141",
-          "published": "2026-09-05T15:12:56+00:00",
+          "url": "https://indieweb.social/@yvg/117220108533049251",
+          "published": "2026-09-05T19:35:09+00:00",
           "author": {
-            "name": "Esteban Torres",
-            "url": "https://mastodon.social/@esttorhe",
-            "photo": "/assets/images/webmentions/mastodon-social-af1e4b8e9792.png"
+            "name": "Yves Van Goethem :firefox:",
+            "url": "https://indieweb.social/@yvg",
+            "photo": "/assets/images/webmentions/indieweb-social-30a8dc955e45.jpg"
           },
-          "text": "@yvg @janmon I couldn't stay away from the fun ^^ https://estebantorr.es/2026/09/joining-the-webmentions-bandwagon/\nJoining the Webmentions bandwagon — The mind of Esteban"
+          "text": "@esttorhe @janmon Nice!! Btw I didn't replicate exactly what Jan did. Two differences:\n1. I copy avatars instead of linking to them. Perhaps it's a bit of a radical read of GDPR, but I don't want to send IPs to dozens of machines that aren't related to my website.\n2. Because my website currently runs as a github page (yea I know I need to get away from github), I didn't want Pipedream to hold a token to write to my repo. Instead, a cron pulls every 24h, hence the delay :)"
         }
       ],
       "reactions": [
