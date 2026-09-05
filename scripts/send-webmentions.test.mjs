@@ -10,6 +10,8 @@ import {
   shouldSend,
   recordResult,
   MAX_ATTEMPTS,
+  MAX_TRANSIENT_ATTEMPTS,
+  isTransientFailure,
 } from './send-webmentions.mjs';
 
 const OWN_HOST = 'estebantorr.es';
@@ -187,13 +189,13 @@ test('a delivered pair is never sent again', () => {
   expect(shouldSend(ledger, S, T)).toBe(false);
 });
 
-test('a failed pair is retried until the attempt cap', () => {
+test('a permanently failing pair is retried until the attempt cap', () => {
   let ledger = {};
   for (let i = 1; i < MAX_ATTEMPTS; i += 1) {
-    ledger = recordResult(ledger, S, T, { status: 'failed', code: 500 });
+    ledger = recordResult(ledger, S, T, { status: 'failed', code: 404 });
     expect(shouldSend(ledger, S, T)).toBe(true);
   }
-  ledger = recordResult(ledger, S, T, { status: 'failed', code: 500 });
+  ledger = recordResult(ledger, S, T, { status: 'failed', code: 404 });
   expect(shouldSend(ledger, S, T)).toBe(false);
 });
 
@@ -208,15 +210,15 @@ test('a no-endpoint pair is retried but also capped', () => {
 });
 
 test('attempts accumulate rather than reset', () => {
-  let ledger = recordResult({}, S, T, { status: 'failed', code: 500 });
-  ledger = recordResult(ledger, S, T, { status: 'failed', code: 500 });
+  let ledger = recordResult({}, S, T, { status: 'failed', code: 404 });
+  ledger = recordResult(ledger, S, T, { status: 'failed', code: 404 });
   expect(ledger[S][T].attempts).toBe(2);
 });
 
 // Different targets under the same source must not share a record.
 test('targets are tracked independently under a source', () => {
   let ledger = recordResult({}, S, T, { status: 'ok', code: 202 });
-  ledger = recordResult(ledger, S, 'https://other.example/', { status: 'failed', code: 500 });
+  ledger = recordResult(ledger, S, 'https://other.example/', { status: 'failed', code: 404 });
   expect(shouldSend(ledger, S, T)).toBe(false);
   expect(shouldSend(ledger, S, 'https://other.example/')).toBe(true);
 });
@@ -226,4 +228,63 @@ test('recordResult does not mutate the ledger it is given', () => {
   const after = recordResult(before, S, T, { status: 'ok', code: 202 });
   expect(before).toEqual({});
   expect(after[S][T].status).toBe('ok');
+});
+
+// ---------------------------------------------------------------------------
+// transient vs permanent failures
+// ---------------------------------------------------------------------------
+
+// The attempt cap exists to stop re-probing sites that will never support
+// webmentions. A 502 says nothing about whether the target supports them — it
+// says the receiver is having a bad day — so spending the same budget on it
+// means an outage lasting MAX_ATTEMPTS runs abandons the pair for good.
+
+test('server errors, rate limiting and network errors are transient', () => {
+  expect(isTransientFailure({ status: 'failed', code: 502 })).toBe(true);
+  expect(isTransientFailure({ status: 'failed', code: 503 })).toBe(true);
+  expect(isTransientFailure({ status: 'failed', code: 429 })).toBe(true);
+  expect(isTransientFailure({ status: 'failed' })).toBe(true);
+});
+
+test('client errors and non-failures are not transient', () => {
+  expect(isTransientFailure({ status: 'failed', code: 404 })).toBe(false);
+  expect(isTransientFailure({ status: 'failed', code: 400 })).toBe(false);
+  expect(isTransientFailure({ status: 'no-endpoint' })).toBe(false);
+  expect(isTransientFailure({ status: 'ok', code: 202 })).toBe(false);
+});
+
+test('a transient failure does not spend the permanent attempt budget', () => {
+  let ledger = {};
+  for (let i = 0; i < MAX_ATTEMPTS + 2; i += 1) {
+    ledger = recordResult(ledger, S, T, { status: 'failed', code: 502 });
+  }
+  expect(ledger[S][T].attempts).toBe(0);
+  expect(shouldSend(ledger, S, T)).toBe(true);
+});
+
+// Without a backstop an unreachable host would be re-probed on every run
+// forever, which is the cost the attempt cap was introduced to avoid.
+test('transient failures still stop eventually', () => {
+  let ledger = {};
+  for (let i = 1; i < MAX_TRANSIENT_ATTEMPTS; i += 1) {
+    ledger = recordResult(ledger, S, T, { status: 'failed', code: 502 });
+    expect(shouldSend(ledger, S, T)).toBe(true);
+  }
+  ledger = recordResult(ledger, S, T, { status: 'failed', code: 502 });
+  expect(shouldSend(ledger, S, T)).toBe(false);
+});
+
+// An outage that clears must not leave the pair closer to being abandoned.
+test('a transient failure followed by a permanent one spends only one attempt', () => {
+  let ledger = recordResult({}, S, T, { status: 'failed', code: 502 });
+  ledger = recordResult(ledger, S, T, { status: 'failed', code: 404 });
+  expect(ledger[S][T].attempts).toBe(1);
+  expect(ledger[S][T].transientAttempts).toBe(1);
+});
+
+// The ledger is committed, so entries that never saw a transient failure must
+// keep their existing shape rather than gaining a zero field and churning the diff.
+test('a pair with no transient failures carries no transientAttempts field', () => {
+  const ledger = recordResult({}, S, T, { status: 'failed', code: 404 });
+  expect('transientAttempts' in ledger[S][T]).toBe(false);
 });

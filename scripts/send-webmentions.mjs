@@ -25,6 +25,12 @@ const USER_AGENT = `estebantorr.es-webmention-sender (+https://${SITE_HOST}/)`;
 /** How many times a failing or endpoint-less target is retried before giving up. */
 export const MAX_ATTEMPTS = 3;
 
+// A separate, more generous budget for failures that say nothing about whether
+// the target supports webmentions. Without it a receiver outage lasting
+// MAX_ATTEMPTS runs would abandon every pair pointed at it for good; without a
+// cap at all, an unreachable host would be re-probed on every run forever.
+export const MAX_TRANSIENT_ATTEMPTS = 10;
+
 /** Politeness gap between sends, in ms. */
 const SEND_DELAY_MS = 500;
 
@@ -178,12 +184,29 @@ export function shouldSend(ledger, source, target) {
   const record = ledger?.[source]?.[target];
   if (!record) return true;
   if (record.status === 'ok') return false;
+  if ((record.transientAttempts ?? 0) >= MAX_TRANSIENT_ATTEMPTS) return false;
   return (record.attempts ?? 0) < MAX_ATTEMPTS;
+}
+
+/**
+ * Whether a result reflects the receiver having a bad day rather than a verdict
+ * on the target. A 5xx, a 429 or a dropped connection may all succeed next run;
+ * a 404 or a missing endpoint is the target telling us something durable.
+ */
+export function isTransientFailure(result) {
+  if (result?.status !== 'failed') return false;
+  // No code means the request never got an HTTP reply — a timeout or a refused
+  // connection, both of which are worth another look later.
+  if (result.code === undefined) return true;
+  return result.code === 429 || result.code >= 500;
 }
 
 /** Returns a new ledger with this attempt recorded; never mutates the input. */
 export function recordResult(ledger, source, target, result) {
   const previous = ledger?.[source]?.[target];
+  const transient = isTransientFailure(result);
+  const transientAttempts = (previous?.transientAttempts ?? 0) + (transient ? 1 : 0);
+
   return {
     ...ledger,
     [source]: {
@@ -191,7 +214,10 @@ export function recordResult(ledger, source, target, result) {
       [target]: {
         status: result.status,
         ...(result.code === undefined ? {} : { code: result.code }),
-        attempts: (previous?.attempts ?? 0) + 1,
+        attempts: (previous?.attempts ?? 0) + (transient ? 0 : 1),
+        // Kept off the record entirely until it is non-zero: the ledger is
+        // committed, so adding a zero field to every entry would churn the diff.
+        ...(transientAttempts === 0 ? {} : { transientAttempts }),
         at: result.at,
       },
     },
