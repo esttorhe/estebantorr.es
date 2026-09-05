@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-09-01T15:24:37.482Z",
+  "syncedAt": "2026-09-05T17:35:00.347Z",
   "targets": {
     "https://estebantorr.es/2026/02/a-gsd-system-for-claude-code": {
       "responses": [
@@ -53,6 +53,22 @@
         }
       ],
       "reactions": []
+    },
+    "https://estebantorr.es/2026/09/joining-the-webmentions-bandwagon": {
+      "responses": [],
+      "reactions": [
+        {
+          "id": 2029414,
+          "type": "like-of",
+          "url": "https://mastodon.social/@esttorhe/117219077409822141#favorited-by-109279204427464085",
+          "published": "2026-09-05T17:34:46Z",
+          "author": {
+            "name": "Yves Van Goethem :firefox:",
+            "url": "https://indieweb.social/@yvg",
+            "photo": "/assets/images/webmentions/indieweb-social-30a8dc955e45.jpg"
+          }
+        }
+      ]
     },
     "https://estebantorr.es/til/reduce-not-time-but-complexity": {
       "responses": [
