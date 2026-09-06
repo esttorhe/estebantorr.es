@@ -222,7 +222,10 @@ export function threadRootsFor(bucket) {
 
     for (const identity of OWN_IDENTITIES) {
       if (!url.startsWith(`${identity}/`)) continue;
-      if (/^\d+$/.test(url.slice(identity.length + 1))) roots.add(url);
+      // A Mastodon status is the identity plus a numeric id; a Bluesky post is
+      // the identity plus `post/<record key>`.
+      const rest = url.slice(identity.length + 1);
+      if (/^\d+$/.test(rest) || blueskyPostRefFromUrl(url)) roots.add(url);
     }
   }
 
@@ -481,6 +484,140 @@ export function repliesFromContext(body) {
   };
 }
 
+// ---------------------------------------------------------------------------
+// Bluesky
+// ---------------------------------------------------------------------------
+
+// Bluesky has the same shape of problem and the same fix: the thread is public,
+// so read it rather than waiting for a webmention that only ever resolves one
+// level up.
+
+// The API's own ceiling — it rejects anything larger. Far past any blog thread,
+// so a read that reaches it is the signal that something is unusual.
+export const BLUESKY_DEPTH = 1000;
+
+// A bsky.app post URL, in either the handle or the DID form.
+//
+// The two forms are deliberately *not* folded together for dedupe. Doing that
+// would mean keying on the record key alone, and AT Protocol scopes those per
+// repository — the spec guarantees `(did, collection, rkey)` is unique, not
+// `(did, rkey)` — so two repos sharing a key would silently overwrite each
+// other. Bridgy writes the DID form and so does shapeBlueskyReply, so the two
+// already agree; if a handle-form copy ever did arrive it would show as a
+// visible duplicate, which is the better failure of the two.
+export function blueskyPostRefFromUrl(url) {
+  const match = /^https:\/\/bsky\.app\/profile\/([^/]+)\/post\/([A-Za-z0-9._~-]+)$/.exec(url ?? '');
+  return match ? { actor: match[1], rkey: match[2] } : null;
+}
+
+// One reply from a thread. Bridgy writes the post URL in DID form and the author
+// URL in handle form; both are matched exactly, because the post URL is what
+// dedupe compares and the author URL is what the avatar filename derives from.
+export function shapeBlueskyReply(view) {
+  const post = view?.post ?? {};
+  const author = post.author ?? {};
+  const rkey = String(post.uri ?? '')
+    .split('/')
+    .pop();
+
+  const shaped = {
+    // The whole at:// URI, not the bare record key. mergeMentions buckets by id
+    // before identity dedupe runs, and record keys are repo-scoped — two repos
+    // sharing one would collide there and lose a reply before the URL ever got
+    // compared.
+    id: post.uri,
+    type: 'in-reply-to',
+    url: `https://bsky.app/profile/${author.did}/post/${rkey}`,
+    published: post.record?.createdAt || post.indexedAt,
+    author: {
+      name:
+        (typeof author.displayName === 'string' && author.displayName.trim()) ||
+        author.handle ||
+        'Someone',
+      url: author.handle ? `https://bsky.app/profile/${author.handle}` : undefined,
+      photo: author.avatar,
+    },
+    source: THREAD_SOURCE,
+  };
+
+  const text = typeof post.record?.text === 'string' ? post.record.text.trim() : '';
+  if (text) shaped.text = text;
+
+  // Self-labels are Bluesky's content warning. Folded rather than dropped, the
+  // same as a Mastodon spoiler.
+  const labels = Array.isArray(post.labels)
+    ? post.labels.map((label) => label?.val).filter(Boolean)
+    : [];
+  if (labels.length > 0) shaped.warning = labels.join(', ');
+
+  return shaped;
+}
+
+// The AppView answers a missing post with 400 and an error body of NotFound
+// rather than a 404 — and answers an unresolvable handle exactly the same way.
+// A DID never changes, so NotFound against one really does mean the post is
+// gone; against a handle it may only mean the handle moved, which is no reason
+// to retire anything.
+export function isBlueskyPostGone(actor, body) {
+  if (!String(actor).startsWith('did:')) return false;
+  try {
+    return JSON.parse(body)?.error === 'NotFound';
+  } catch {
+    return false;
+  }
+}
+
+const THREAD_VIEW_POST = 'app.bsky.feed.defs#threadViewPost';
+
+// The API nests replies; the archive is flat. Blocked and deleted posts come
+// back as markers carrying no content, and are skipped rather than shaped.
+export function blueskyRepliesFromThread(thread) {
+  if (!thread || thread.$type !== THREAD_VIEW_POST || !thread.post) {
+    return { replies: [], ok: false, depth: 0, malformed: true };
+  }
+
+  const replies = [];
+  let deepest = 0;
+  // A blocked or deleted reply comes back as a marker with no child list, so
+  // anything underneath it is now invisible to us. Those descendants may well
+  // still be live, and we already hold some of them — so the read counts as
+  // incomplete and the sweep stands down rather than retiring them.
+  let hidden = 0;
+
+  let unreadable = false;
+
+  const walk = (node, depth) => {
+    // A 200 carrying a replies field that is not a list is a response we do not
+    // understand — not an absence of replies.
+    if (node.replies !== undefined && !Array.isArray(node.replies)) {
+      unreadable = true;
+      return;
+    }
+
+    for (const child of node.replies ?? []) {
+      if (child?.$type !== THREAD_VIEW_POST || !child.post) {
+        hidden += 1;
+        continue;
+      }
+      replies.push(shapeBlueskyReply(child));
+      if (depth > deepest) deepest = depth;
+      walk(child, depth + 1);
+    }
+  };
+
+  walk(thread, 1);
+
+  if (unreadable) return { replies: [], ok: false, depth: 0, hidden: 0, malformed: true };
+
+  return {
+    replies,
+    ok: deepest < BLUESKY_DEPTH && hidden === 0,
+    depth: deepest,
+    hidden,
+    malformed: false,
+  };
+}
+
 // A failed read means one of two very different things. Only a definitive
 // not-found — 404, or 410 for a tombstoned status — says the thread is gone and
 // its replies should be retired with it. Everything else says merely that we
@@ -551,10 +688,83 @@ export function isConcealed(status) {
   return typeof status?.spoiler_text === 'string' && status.spoiler_text.trim() !== '';
 }
 
-// Mastodon serves a status's whole thread publicly, and unauthenticated callers
-// only ever see public posts — so followers-only replies stay off the site
-// without any filtering on our side.
+// Sends each root to the network that can answer for it.
 async function readThread(rootUrl) {
+  if (statusRefFromUrl(rootUrl)) return readMastodonThread(rootUrl);
+  if (blueskyPostRefFromUrl(rootUrl)) return readBlueskyThread(rootUrl);
+  return { replies: [], ok: false };
+}
+
+// The public AppView answers for any public post without a token, and accepts
+// either a handle or a DID in the at:// URI.
+async function readBlueskyThread(rootUrl) {
+  const ref = blueskyPostRefFromUrl(rootUrl);
+  if (!ref) return { replies: [], ok: false };
+
+  const url =
+    `https://public.api.bsky.app/xrpc/app.bsky.feed.getPostThread` +
+    `?uri=${encodeURIComponent(`at://${ref.actor}/app.bsky.feed.post/${ref.rkey}`)}` +
+    `&depth=${BLUESKY_DEPTH}`;
+
+  let response;
+  try {
+    response = await fetchWithRetry(url, {
+      onRetry: ({ attempt, attempts, delay, status, error }) =>
+        log(
+          `bluesky ${ref.rkey}: ${status ?? error?.message ?? 'request failed'} — ` +
+            `retrying in ${delay}ms (attempt ${attempt}/${attempts})`,
+        ),
+    });
+  } catch (error) {
+    log(`bluesky ${ref.rkey}: ${error.message} — leaving its replies as they are`);
+    return { replies: [], ok: false };
+  }
+
+  if (!response.ok) {
+    // A gone thread is read from the body rather than the status line here.
+    let gone = isThreadGone(response.status);
+    if (response.status === 400) {
+      const detail = await response.text().catch(() => '');
+      gone = isBlueskyPostGone(ref.actor, detail);
+    }
+    log(
+      `bluesky ${ref.rkey}: HTTP ${response.status} — ` +
+        (gone ? 'the thread is gone, retiring its replies' : 'leaving its replies as they are'),
+    );
+    return { replies: [], ok: gone };
+  }
+
+  let body;
+  try {
+    body = await response.json();
+  } catch (error) {
+    log(
+      `bluesky ${ref.rkey}: unreadable response (${error.message}) — leaving its replies as they are`,
+    );
+    return { replies: [], ok: false };
+  }
+
+  const result = blueskyRepliesFromThread(body?.thread);
+
+  if (result.malformed) {
+    log(
+      `bluesky ${ref.rkey}: no readable thread in the response — leaving its replies as they are`,
+    );
+    return { replies: [], ok: false };
+  }
+  if (!result.ok) {
+    log(
+      `bluesky ${ref.rkey}: ${result.hidden} blocked or deleted branch(es), depth ${result.depth} — ` +
+        `part of the thread is out of view, so keeping what it returned and retiring nothing`,
+    );
+  }
+
+  return { replies: result.replies, ok: result.ok };
+}
+
+// Mastodon serves a status's whole thread publicly. Unauthenticated callers also
+// see unlisted posts, which repliesFromContext filters out.
+async function readMastodonThread(rootUrl) {
   const ref = statusRefFromUrl(rootUrl);
   if (!ref) return { replies: [], ok: false };
 
@@ -858,7 +1068,7 @@ async function main() {
   const merged = mergeIntoCache(existing.targets, incoming);
 
   // Bridgy only resolves targets one level up the thread, so a reply to a reply
-  // is never delivered. Reading the threads picks those up.
+  // is never delivered. Reading the Mastodon and Bluesky threads picks those up.
   const threads = await applyThreadReplies(merged, { at: now, dryRun });
   if (threads.threadsRead > 0) {
     log(

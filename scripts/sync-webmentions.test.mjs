@@ -24,6 +24,10 @@ import {
   threadDepth,
   THREAD_DEPTH_LIMIT,
   repliesFromContext,
+  blueskyPostRefFromUrl,
+  shapeBlueskyReply,
+  blueskyRepliesFromThread,
+  isBlueskyPostGone,
 } from './sync-webmentions.mjs';
 
 // ---------------------------------------------------------------------------
@@ -1057,4 +1061,223 @@ test('unlisted replies are dropped while the rest come through', () => {
   });
   expect(result.replies.length).toBe(1);
   expect(result.withheld).toBe(1);
+});
+
+// ---------------------------------------------------------------------------
+// Bluesky threads
+// ---------------------------------------------------------------------------
+
+// Same push-vs-pull problem as Mastodon, same fix: read the thread instead of
+// waiting for a webmention that resolves targets only one level up.
+
+test('a bluesky post url is recognised in either form', () => {
+  expect(blueskyPostRefFromUrl('https://bsky.app/profile/did:plc:abc/post/3jubdeb2r4d2f')).toEqual({
+    actor: 'did:plc:abc',
+    rkey: '3jubdeb2r4d2f',
+  });
+  expect(
+    blueskyPostRefFromUrl('https://bsky.app/profile/estebantorr.es/post/3jubdeb2r4d2f'),
+  ).toEqual({ actor: 'estebantorr.es', rkey: '3jubdeb2r4d2f' });
+  expect(blueskyPostRefFromUrl('https://bsky.app/profile/estebantorr.es')).toBe(null);
+  expect(blueskyPostRefFromUrl('https://mastodon.social/@esttorhe/1')).toBe(null);
+});
+
+// Two posts in different repositories can share a record key: the AT Protocol
+// spec guarantees `(did, collection, rkey)` is unique, not `(did, rkey)`. So
+// dedupe keys on the whole URL, and two posts that merely share a key stay
+// apart rather than silently overwriting one another.
+test('posts in different repos sharing a record key stay apart', () => {
+  // Shaped by the real function rather than hand-written, so the ids are
+  // whatever it actually assigns — an earlier version of this test supplied
+  // distinct ids by hand and so never exercised the collision it claimed to.
+  const shared = '3jubdeb2r4d2f';
+  const from = (did, handle) =>
+    shapeBlueskyReply({
+      ...bskyView,
+      post: {
+        ...bskyView.post,
+        uri: `at://${did}/app.bsky.feed.post/${shared}`,
+        author: { ...bskyView.post.author, did, handle },
+      },
+    });
+
+  const one = from('did:plc:abc', 'one.bsky.social');
+  const two = from('did:plc:xyz', 'two.bsky.social');
+
+  expect(one.id).not.toBe(two.id);
+  expect(mergeMentions([], [one, two]).length).toBe(2);
+});
+
+// A 200 whose replies field is not a list is a response we do not understand.
+// Iterating it would throw and take the whole sync down with it.
+test('a non-list replies field is an unreadable thread, not an empty one', () => {
+  const result = blueskyRepliesFromThread({ ...bskyView, replies: 'nope' });
+  expect(result.ok).toBe(false);
+  expect(result.malformed).toBe(true);
+  expect(result.replies).toEqual([]);
+});
+
+// Bridgy names the reactor in the fragment, exactly as it does on Mastodon, so
+// collapsing on the post alone would merge two people's likes into one.
+test('two likes of one bluesky post stay apart', () => {
+  const base = 'https://bsky.app/profile/did:plc:abc/post/3jubdeb2r4d2f';
+  const merged = mergeMentions(
+    [],
+    [
+      { id: 1, type: 'like-of', url: `${base}#liked-by-alice` },
+      { id: 2, type: 'like-of', url: `${base}#liked-by-bob` },
+    ],
+  );
+  expect(merged.length).toBe(2);
+});
+
+const bskyView = {
+  $type: 'app.bsky.feed.defs#threadViewPost',
+  post: {
+    uri: 'at://did:plc:np7lpni7p6y47cukedtjopte/app.bsky.feed.post/3jubwad3nue2v',
+    cid: 'bafyrei',
+    indexedAt: '2023-04-26T15:39:44.173Z',
+    labels: [],
+    author: {
+      did: 'did:plc:np7lpni7p6y47cukedtjopte',
+      handle: 'leopic.bsky.social',
+      displayName: 'Leo Picado',
+      avatar: 'https://cdn.bsky.app/img/avatar/plain/did:plc:np7/x@jpeg',
+    },
+    record: { text: 'That’s nightmare fuel right there', createdAt: '2023-04-26T15:39:44.173Z' },
+  },
+};
+
+test('a bluesky reply is shaped like every other mention', () => {
+  const m = shapeBlueskyReply(bskyView);
+  expect(m.type).toBe('in-reply-to');
+  expect(m.text).toBe('That’s nightmare fuel right there');
+  expect(m.published).toBe('2023-04-26T15:39:44.173Z');
+  expect(m.author.name).toBe('Leo Picado');
+  expect(isThreadSourced(m)).toBe(true);
+});
+
+// Bridgy writes the post URL in DID form and the author URL in handle form.
+// Matching both matters: the post URL is what dedupe compares, and the author
+// URL is what the avatar filename is derived from, so a mismatch would
+// re-download an avatar that is already committed.
+test('a bluesky reply uses the same url forms Bridgy does', () => {
+  const m = shapeBlueskyReply(bskyView);
+  expect(m.url).toBe(
+    'https://bsky.app/profile/did:plc:np7lpni7p6y47cukedtjopte/post/3jubwad3nue2v',
+  );
+  expect(m.author.url).toBe('https://bsky.app/profile/leopic.bsky.social');
+});
+
+test('an account with no display name falls back to its handle', () => {
+  const m = shapeBlueskyReply({
+    ...bskyView,
+    post: { ...bskyView.post, author: { ...bskyView.post.author, displayName: '' } },
+  });
+  expect(m.author.name).toBe('leopic.bsky.social');
+});
+
+// Self-labels are Bluesky's content warning. Folded, not dropped — same as a
+// Mastodon spoiler.
+test('a labelled bluesky reply carries a warning', () => {
+  const m = shapeBlueskyReply({
+    ...bskyView,
+    post: { ...bskyView.post, labels: [{ val: 'graphic-media' }, { val: 'nudity' }] },
+  });
+  expect(m.warning).toBe('graphic-media, nudity');
+});
+
+test('an unlabelled bluesky reply carries no warning', () => {
+  expect('warning' in shapeBlueskyReply(bskyView)).toBe(false);
+});
+
+// The API nests replies; the archive is flat.
+test('nested bluesky replies are flattened', () => {
+  const nested = {
+    ...bskyView,
+    replies: [
+      {
+        ...bskyView,
+        post: { ...bskyView.post, uri: 'at://did:plc:x/app.bsky.feed.post/aaa' },
+        replies: [
+          { ...bskyView, post: { ...bskyView.post, uri: 'at://did:plc:y/app.bsky.feed.post/bbb' } },
+        ],
+      },
+    ],
+  };
+  const result = blueskyRepliesFromThread(nested);
+  expect(result.replies.map((r) => r.id)).toEqual([
+    'at://did:plc:x/app.bsky.feed.post/aaa',
+    'at://did:plc:y/app.bsky.feed.post/bbb',
+  ]);
+  expect(result.ok).toBe(true);
+});
+
+// Blocked and deleted posts come back as markers with no content to render.
+test('blocked and missing posts are skipped rather than shaped', () => {
+  const withGaps = {
+    ...bskyView,
+    replies: [
+      { $type: 'app.bsky.feed.defs#blockedPost', uri: 'at://x/app.bsky.feed.post/blocked' },
+      { $type: 'app.bsky.feed.defs#notFoundPost', uri: 'at://x/app.bsky.feed.post/gone' },
+      { ...bskyView, post: { ...bskyView.post, uri: 'at://did:plc:x/app.bsky.feed.post/ccc' } },
+    ],
+  };
+  const result = blueskyRepliesFromThread(withGaps);
+  expect(result.replies.map((r) => r.id)).toEqual(['at://did:plc:x/app.bsky.feed.post/ccc']);
+});
+
+// A thread we could not parse is not an empty thread — same rule as Mastodon.
+test('an unusable bluesky payload is not an empty thread', () => {
+  expect(blueskyRepliesFromThread(null).ok).toBe(false);
+  expect(blueskyRepliesFromThread({ $type: 'app.bsky.feed.defs#notFoundPost' }).ok).toBe(false);
+  expect(blueskyRepliesFromThread({}).ok).toBe(false);
+});
+
+test('a bluesky thread with no replies is complete', () => {
+  const result = blueskyRepliesFromThread(bskyView);
+  expect(result.ok).toBe(true);
+  expect(result.replies).toEqual([]);
+});
+
+// The AppView answers a missing post with 400 and an error body of NotFound
+// rather than a 404 — but it answers an unresolvable *handle* exactly the same
+// way. A DID never changes, so NotFound against one really does mean the post is
+// gone; against a handle it may only mean the handle moved.
+test('a gone bluesky post is told apart from a moved handle', () => {
+  expect(isBlueskyPostGone('did:plc:abc', '{"error":"NotFound","message":"Post not found"}')).toBe(
+    true,
+  );
+  expect(isBlueskyPostGone('someone.bsky.social', '{"error":"NotFound"}')).toBe(false);
+  expect(isBlueskyPostGone('did:plc:abc', '{"error":"InvalidRequest"}')).toBe(false);
+  expect(isBlueskyPostGone('did:plc:abc', 'not json at all')).toBe(false);
+});
+
+// A blocked or deleted reply hides whatever was beneath it. Those descendants
+// may still be live, and some are already in the archive — so a read that hits
+// one is incomplete and must not license the removal sweep.
+test('a blocked branch makes the read incomplete', () => {
+  const withBlocked = {
+    ...bskyView,
+    replies: [
+      { $type: 'app.bsky.feed.defs#blockedPost', uri: 'at://x/app.bsky.feed.post/blocked' },
+      { ...bskyView, post: { ...bskyView.post, uri: 'at://did:plc:x/app.bsky.feed.post/ddd' } },
+    ],
+  };
+  const result = blueskyRepliesFromThread(withBlocked);
+  expect(result.replies.map((r) => r.id)).toEqual(['at://did:plc:x/app.bsky.feed.post/ddd']);
+  expect(result.hidden).toBe(1);
+  expect(result.ok).toBe(false);
+});
+
+test('a thread with nothing hidden is a complete read', () => {
+  const clean = {
+    ...bskyView,
+    replies: [
+      { ...bskyView, post: { ...bskyView.post, uri: 'at://did:plc:x/app.bsky.feed.post/eee' } },
+    ],
+  };
+  const result = blueskyRepliesFromThread(clean);
+  expect(result.hidden).toBe(0);
+  expect(result.ok).toBe(true);
 });
