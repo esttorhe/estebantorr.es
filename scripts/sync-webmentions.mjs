@@ -22,7 +22,7 @@ import { createHash } from 'node:crypto';
 // Shared with the site so the two can never disagree about what counts as the
 // same page. Run this script with bun (see package.json) — it transpiles the
 // .ts import natively.
-import { normalizeTarget, classifyProperty } from '../src/lib/webmentionTarget.ts';
+import { normalizeTarget, classifyProperty, OWN_IDENTITIES } from '../src/lib/webmentionTarget.ts';
 
 export { normalizeTarget, classifyProperty };
 
@@ -123,6 +123,32 @@ function mentionIdentity(mention) {
   return mention.url ? `${mention.type}\n${mention.url}` : `id:${mention.id}`;
 }
 
+// Which of two copies of the same mention to keep. A delivered webmention beats
+// one read from a thread: it carries webmention.io's normalized author data and
+// a self-hosted avatar, where the thread copy has only what the API returned —
+// and Mastodon's snowflake ids dwarf wm-ids, so an id comparison alone would
+// always pick the poorer copy. Otherwise the newest delivery wins, since
+// senders edit their posts.
+function winsOver(candidate, incumbent) {
+  if (isThreadSourced(candidate) !== isThreadSourced(incumbent)) {
+    return isThreadSourced(incumbent);
+  }
+  return compareIds(candidate.id, incumbent.id) > 0;
+}
+
+// wm-ids are numbers, Mastodon snowflakes are strings too large to be numbers.
+// BigInt orders both exactly; anything unparseable falls back to string order so
+// a malformed id cannot throw mid-sync.
+function compareIds(a, b) {
+  try {
+    const left = BigInt(a);
+    const right = BigInt(b);
+    return left < right ? -1 : left > right ? 1 : 0;
+  } catch {
+    return String(a) < String(b) ? -1 : String(a) > String(b) ? 1 : 0;
+  }
+}
+
 // Union of the committed cache and a fresh fetch, deduped by wm-id with the
 // incoming copy winning (senders edit their posts), then collapsed by identity
 // so a re-delivered mention renders once rather than once per delivery. Sorted
@@ -137,11 +163,10 @@ export function mergeMentions(existing = [], incoming = []) {
   for (const mention of byId.values()) {
     const key = mentionIdentity(mention);
     const seen = byIdentity.get(key);
-    // Highest wm-id wins: the newest delivery carries the newest edit.
-    if (!seen || mention.id > seen.id) byIdentity.set(key, mention);
+    if (!seen || winsOver(mention, seen)) byIdentity.set(key, mention);
   }
 
-  return [...byIdentity.values()].sort((a, b) => a.id - b.id);
+  return [...byIdentity.values()].sort((a, b) => compareIds(a.id, b.id));
 }
 
 export function groupByTarget(rawMentions) {
@@ -159,6 +184,144 @@ export function groupByTarget(rawMentions) {
   }
 
   return grouped;
+}
+
+// ---------------------------------------------------------------------------
+// Thread replies
+// ---------------------------------------------------------------------------
+//
+// Webmentions are pushed, and Bridgy resolves targets from the post being
+// replied to — one level up, not the thread root. A reply to a reply therefore
+// finds no link to the site and is never delivered. Reading the thread from the
+// instance is a pull, so depth stops mattering.
+
+const THREAD_SOURCE = 'thread';
+
+// Marks the mentions that were read rather than delivered. They need their own
+// handling in the removal sweeps, since they are by definition never in
+// webmention.io's feed.
+export function isThreadSourced(mention) {
+  return mention?.source === THREAD_SOURCE;
+}
+
+// The heads of the threads worth reading for one target: the site owner's own
+// posts that already appear in the archive. Announcing a post on Mastodon is
+// therefore the entire configuration — nothing to keep in sync by hand.
+export function threadRootsFor(bucket) {
+  const roots = new Set();
+
+  for (const mention of [...(bucket?.responses ?? []), ...(bucket?.reactions ?? [])]) {
+    // A retired root is no longer about this page — the announcement was
+    // deleted, or edited to drop the link — so its thread stops being read.
+    // Replies already imported stay; new ones would be landing on the wrong page.
+    if (mention?.removed === true) continue;
+
+    // Reactions carry a #favorited-by fragment naming the reactor; the status
+    // itself is what we want.
+    const url = (mention?.url ?? '').split('#')[0];
+
+    for (const identity of OWN_IDENTITIES) {
+      if (!url.startsWith(`${identity}/`)) continue;
+      if (/^\d+$/.test(url.slice(identity.length + 1))) roots.add(url);
+    }
+  }
+
+  return [...roots].sort();
+}
+
+// Splits a Mastodon status URL into what the API needs. Returns null for
+// anything that is not one, which is most of what the archive holds.
+export function statusRefFromUrl(url) {
+  const match = /^https:\/\/([^/]+)\/@[^/]+\/(\d+)$/.exec(url ?? '');
+  return match ? { host: match[1], id: match[2] } : null;
+}
+
+const HTML_ENTITIES = {
+  amp: '&',
+  lt: '<',
+  gt: '>',
+  quot: '"',
+  apos: "'",
+  nbsp: ' ',
+  '#39': "'",
+};
+
+// The API hands back HTML; the archive stores plain text, the way webmention.io
+// does, so both sources render identically.
+function htmlToText(html) {
+  return String(html ?? '')
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<\/p>\s*<p[^>]*>/gi, '\n\n')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&(#\d+|#x[0-9a-f]+|[a-z]+);/gi, (whole, name) => {
+      const key = name.toLowerCase();
+      if (key in HTML_ENTITIES) return HTML_ENTITIES[key];
+      if (key.startsWith('#x')) return String.fromCodePoint(parseInt(key.slice(2), 16));
+      if (key.startsWith('#')) return String.fromCodePoint(Number(key.slice(1)));
+      return whole;
+    })
+    .trim();
+}
+
+// One status from a thread, in the same shape as a delivered mention so the
+// merge and the UI cannot tell them apart.
+export function shapeThreadReply(status) {
+  const account = status?.account ?? {};
+  const name =
+    (typeof account.display_name === 'string' && account.display_name.trim()) ||
+    account.acct ||
+    hostOf(status?.url) ||
+    'Someone';
+
+  const shaped = {
+    // Mastodon's snowflake, kept as the string the API returned: these run past
+    // Number.MAX_SAFE_INTEGER, so coercing would round adjacent ids onto the
+    // same value and let one reply overwrite another.
+    id: String(status?.id),
+    type: 'in-reply-to',
+    url: status?.url,
+    published: status?.created_at,
+    author: { name, url: account.url, photo: account.avatar },
+    source: THREAD_SOURCE,
+  };
+
+  const text = htmlToText(status?.content);
+  if (text) shaped.text = text;
+  // Absent rather than empty: the archive is committed, and a blank field on
+  // every uncovered reply would be noise in the diff.
+  if (isConcealed(status)) shaped.warning = status.spoiler_text.trim();
+
+  return shaped;
+}
+
+// Folds freshly read replies into one target's buckets, and retires the ones
+// that have since disappeared from the thread.
+//
+// `ok` says whether the thread was actually read. On a failed fetch the existing
+// replies are left exactly as they are — treating a network blip as a deletion
+// is the same mistake markRemoved guards against for the feed.
+export function mergeThreadReplies(bucket, replies, { at, ok = true } = {}) {
+  const responses = mergeMentions(bucket?.responses ?? [], replies);
+  if (!ok) return { ...bucket, responses };
+
+  const present = new Set(replies.map((reply) => reply.url));
+
+  return {
+    ...bucket,
+    responses: responses.map((mention) => {
+      // A reply that also arrived as a webmention is the feed's to manage.
+      if (!isThreadSourced(mention)) return mention;
+
+      if (!present.has(mention.url)) {
+        return mention.removed === true ? mention : { ...mention, removed: true, removedAt: at };
+      }
+
+      if (mention.removed !== true) return mention;
+      // Back in the thread — the author undeleted it, or the instance was down.
+      const { removed, removedAt, ...rest } = mention;
+      return rest;
+    }),
+  };
 }
 
 /**
@@ -190,10 +353,12 @@ export function markRemoved(
   presentIds,
   { at, maxRemovalRatio = MAX_REMOVAL_RATIO } = {},
 ) {
-  const all = Object.values(existingTargets).flatMap((bucket) => [
-    ...bucket.responses,
-    ...bucket.reactions,
-  ]);
+  // Replies read from a thread are never in webmention.io's feed, so this sweep
+  // would retire every one of them. mergeThreadReplies retires those instead,
+  // against the thread it actually read.
+  const all = Object.values(existingTargets)
+    .flatMap((bucket) => [...bucket.responses, ...bucket.reactions])
+    .filter((mention) => !isThreadSourced(mention));
 
   const newlyAbsent = all.filter((m) => !presentIds.has(m.id) && m.removed !== true);
 
@@ -289,6 +454,214 @@ export async function fetchWithRetry(url, options = {}) {
   // the response wins when there is one.
   if (lastResponse) return lastResponse;
   throw lastError;
+}
+
+// Turns a context payload into replies, and reports whether we saw the whole
+// thread. `ok` gates only the removal sweep — replies that did come back are
+// real whether or not the read was complete.
+export function repliesFromContext(body) {
+  // A body without a descendants array is not an empty thread, it is a response
+  // we do not understand. Calling it empty would retire every reply we hold.
+  if (!body || !Array.isArray(body.descendants)) {
+    return { replies: [], ok: false, withheld: 0, count: 0, depth: 0, malformed: true };
+  }
+
+  const { descendants } = body;
+  const listed = descendants.filter(isPubliclyListed);
+  const depth = threadDepth(descendants);
+  const truncated = isThreadTruncated(descendants.length) || depth >= THREAD_DEPTH_LIMIT;
+
+  return {
+    replies: listed.map(shapeThreadReply),
+    ok: !truncated,
+    withheld: descendants.length - listed.length,
+    count: descendants.length,
+    depth,
+    malformed: false,
+  };
+}
+
+// A failed read means one of two very different things. Only a definitive
+// not-found — 404, or 410 for a tombstoned status — says the thread is gone and
+// its replies should be retired with it. Everything else says merely that we
+// could not look: a 5xx or dropped connection is a blip, and a 401 or 403 is an
+// instance requiring auth or blocking the runner (indieweb.social answers 401 to
+// unauthenticated reads). Retiring on any of those would be the
+// blip-as-deletion mistake markRemoved exists to avoid.
+export function isThreadGone(status) {
+  return status === 404 || status === 410;
+}
+
+// Mastodon caps an unauthenticated context read at 40 ancestors and 60
+// descendants, depth 20, and the endpoint is not paginated — there is no second
+// page to ask for. A thread that comes back sitting on the cap has almost
+// certainly been cut short, so the replies past it are unseen rather than
+// deleted and the sweep has to stand down.
+// Unauthenticated context reads return unlisted statuses as well as public
+// ones. Unlisted means "do not list or index me" rather than "private", and
+// copying one onto a public page — and into a public git repo — would override
+// exactly that. An instance that omits the field gets the cautious reading.
+export function isPubliclyListed(status) {
+  return status?.visibility === 'public';
+}
+
+export const THREAD_DESCENDANTS_LIMIT = 60;
+
+// Mastodon also cuts an unauthenticated read at depth 20, independently of the
+// descendant cap, so a long narrow chain is truncated while the count stays well
+// under it. Depth 1 is a direct reply to the root.
+export const THREAD_DEPTH_LIMIT = 20;
+
+export function threadDepth(descendants) {
+  const parentOf = new Map(
+    descendants.map((status) => [
+      String(status.id),
+      status.in_reply_to_id == null ? null : String(status.in_reply_to_id),
+    ]),
+  );
+
+  let deepest = 0;
+
+  for (const status of descendants) {
+    let depth = 1;
+    let parent = parentOf.get(String(status.id));
+
+    // Walking stops at the root, which is not itself a descendant. The bound
+    // also stops a cycle from hanging the sync on malformed data.
+    while (parent != null && parentOf.has(parent) && depth <= THREAD_DEPTH_LIMIT) {
+      depth += 1;
+      parent = parentOf.get(parent);
+    }
+
+    if (depth > deepest) deepest = depth;
+  }
+
+  return deepest;
+}
+
+export function isThreadTruncated(descendantCount) {
+  return descendantCount >= THREAD_DESCENDANTS_LIMIT;
+}
+
+// A content warning is the author saying they do not want the body read
+// unfolded. The reply is still worth having — dropping it would lose part of the
+// conversation — so it is imported with its warning attached and the page folds
+// the body behind it.
+export function isConcealed(status) {
+  return typeof status?.spoiler_text === 'string' && status.spoiler_text.trim() !== '';
+}
+
+// Mastodon serves a status's whole thread publicly, and unauthenticated callers
+// only ever see public posts — so followers-only replies stay off the site
+// without any filtering on our side.
+async function readThread(rootUrl) {
+  const ref = statusRefFromUrl(rootUrl);
+  if (!ref) return { replies: [], ok: false };
+
+  const url = `https://${ref.host}/api/v1/statuses/${ref.id}/context`;
+
+  let response;
+  try {
+    response = await fetchWithRetry(url, {
+      onRetry: ({ attempt, attempts, delay, status, error }) =>
+        log(
+          `thread ${ref.id}: ${status ?? error?.message ?? 'request failed'} — ` +
+            `retrying in ${delay}ms (attempt ${attempt}/${attempts})`,
+        ),
+    });
+  } catch (error) {
+    log(`thread ${ref.id}: ${error.message} — leaving its replies as they are`);
+    return { replies: [], ok: false };
+  }
+
+  if (!response.ok) {
+    const gone = isThreadGone(response.status);
+    log(
+      `thread ${ref.id}: HTTP ${response.status} — ` +
+        (gone ? 'the thread is gone, retiring its replies' : 'leaving its replies as they are'),
+    );
+    return { replies: [], ok: gone };
+  }
+
+  let body;
+  try {
+    body = await response.json();
+  } catch (error) {
+    // A 200 carrying something that is not JSON — an interstitial, a proxy
+    // error page. Not a thread, and not a reason to abort the whole sync.
+    log(
+      `thread ${ref.id}: unreadable response (${error.message}) — leaving its replies as they are`,
+    );
+    return { replies: [], ok: false };
+  }
+
+  const result = repliesFromContext(body);
+
+  if (result.malformed) {
+    log(`thread ${ref.id}: response had no descendants list — leaving its replies as they are`);
+    return { replies: [], ok: false };
+  }
+  if (result.withheld > 0) {
+    log(`thread ${ref.id}: skipping ${result.withheld} reply(ies) that are not public`);
+  }
+  if (!result.ok) {
+    log(
+      `thread ${ref.id}: ${result.count} replies at depth ${result.depth} — on Mastodon's cap, ` +
+        `so the thread is likely cut short; keeping what it returned and not retiring the tail`,
+    );
+  }
+
+  return { replies: result.replies, ok: result.ok };
+}
+
+function countBucket(bucket) {
+  return (bucket?.responses?.length ?? 0) + (bucket?.reactions?.length ?? 0);
+}
+
+// Reads the thread behind every target that has one and folds the replies in.
+async function applyThreadReplies(targets, { at, dryRun }) {
+  const readByTarget = {};
+  const okByTarget = {};
+
+  for (const [target, bucket] of Object.entries(targets)) {
+    const roots = threadRootsFor(bucket);
+    if (roots.length === 0) continue;
+
+    const replies = [];
+    // One unreadable root is enough to hold back the sweep for this target: a
+    // partial view of the thread would look like the missing replies were
+    // deleted.
+    let ok = true;
+
+    for (const root of roots) {
+      const result = await readThread(root);
+      // Even a partial read returns real replies — an incomplete view only
+      // means we must not conclude anything about what is missing.
+      replies.push(...result.replies);
+      if (!result.ok) ok = false;
+    }
+
+    readByTarget[target] = { responses: replies, reactions: [] };
+    okByTarget[target] = ok;
+  }
+
+  // Same treatment as delivered mentions: the avatar is copied locally rather
+  // than hotlinked from whichever instance the replier is on.
+  const avatars = await localizeAvatars(readByTarget, { dryRun });
+
+  const out = { ...targets };
+  let added = 0;
+
+  for (const [target, bucket] of Object.entries(readByTarget)) {
+    const before = countBucket(out[target]);
+    out[target] = mergeThreadReplies(out[target], bucket.responses, {
+      at,
+      ok: okByTarget[target],
+    });
+    added += countBucket(out[target]) - before;
+  }
+
+  return { targets: out, avatars, added, threadsRead: Object.keys(readByTarget).length };
 }
 
 async function fetchAllMentions(token) {
@@ -484,9 +857,19 @@ async function main() {
   const avatars = await localizeAvatars(incoming, { dryRun });
   const merged = mergeIntoCache(existing.targets, incoming);
 
+  // Bridgy only resolves targets one level up the thread, so a reply to a reply
+  // is never delivered. Reading the threads picks those up.
+  const threads = await applyThreadReplies(merged, { at: now, dryRun });
+  if (threads.threadsRead > 0) {
+    log(
+      `read ${threads.threadsRead} thread(s) — ${threads.added} reply(ies) not delivered as webmentions, ` +
+        `${threads.avatars.downloaded} avatar(s) downloaded, ${threads.avatars.failed} failed`,
+    );
+  }
+
   // Anything in the archive but no longer in the feed has been deleted.
   const presentIds = new Set(raw.map((m) => m['wm-id']));
-  const removal = markRemoved(merged, presentIds, { at: now });
+  const removal = markRemoved(threads.targets, presentIds, { at: now });
   if (removal.skipped) {
     log(`refusing to mark removals (${removal.reason}) — leaving the archive as-is`);
   } else if (removal.removedCount > 0) {

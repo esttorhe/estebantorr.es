@@ -192,7 +192,23 @@ const tally = [
                       </a>
                     </p>
                   )}
-                  {mention.text && <p class="mention__text p-content">{mention.text}</p>}
+                  {mention.text &&
+                    (mention.warning ? (
+                      /* The author put this behind a content warning, so it
+                         opens closed and the reader decides. */
+                      <details class="mention__cw">
+                        <summary class="mention__cw-summary">{mention.warning}</summary>
+                        {/* The body sits in a wrapper because .mention__text
+                            sets `display` for line-clamping, and a `display` on
+                            a direct child of a closed <details> escapes the
+                            hidden state — the text would show while folded. */}
+                        <div class="mention__cw-body">
+                          <p class="mention__text p-content">{mention.text}</p>
+                        </div>
+                      </details>
+                    ) : (
+                      <p class="mention__text p-content">{mention.text}</p>
+                    ))}
                   <p class="mention__meta">
                     <span class="mention__verb">{verbFor(mention)}</span>
                     {published && (
@@ -465,6 +481,45 @@ const tally = [
     color: var(--accent-ink);
     text-decoration: underline;
     text-underline-offset: 0.2em;
+  }
+
+  .mention__cw {
+    margin: 0 0 var(--space-2xs);
+  }
+
+  .mention__cw-summary {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    padding: 0.15em 0.6em;
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--ink-muted);
+    cursor: pointer;
+    transition: color var(--duration-fast) var(--ease-out-quart);
+  }
+
+  .mention__cw-summary::before {
+    content: 'cw';
+    padding-right: var(--space-2xs);
+    border-right: 1px solid var(--rule);
+    color: var(--accent-ink);
+  }
+
+  .mention__cw-summary:hover,
+  .mention__cw-summary:focus-visible {
+    color: var(--ink);
+  }
+
+  .mention__cw[open] .mention__cw-summary {
+    margin-bottom: var(--space-2xs);
+  }
+
+  /* The body is clamped like any other reply once unfolded. */
+  .mention__cw-body .mention__text {
+    margin-bottom: 0;
   }
 
   .mention__text {

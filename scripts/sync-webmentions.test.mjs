@@ -11,6 +11,19 @@ import {
   avatarSlug,
   isTransientStatus,
   fetchWithRetry,
+  isThreadSourced,
+  threadRootsFor,
+  statusRefFromUrl,
+  shapeThreadReply,
+  mergeThreadReplies,
+  isThreadGone,
+  isThreadTruncated,
+  THREAD_DESCENDANTS_LIMIT,
+  isConcealed,
+  isPubliclyListed,
+  threadDepth,
+  THREAD_DEPTH_LIMIT,
+  repliesFromContext,
 } from './sync-webmentions.mjs';
 
 // ---------------------------------------------------------------------------
@@ -609,4 +622,439 @@ test('distinct replies from the same author are both kept', () => {
     ],
   );
   expect(merged.length).toBe(2);
+});
+
+// ---------------------------------------------------------------------------
+// thread replies
+// ---------------------------------------------------------------------------
+
+// Webmentions are pushed: a reply only reaches the site if the sender's software
+// decides to send one. Bridgy resolves targets from the post being replied to,
+// one level up — so a reply to a reply finds no link to the site and never
+// arrives. Reading the thread instead is a pull, and depth stops mattering.
+
+test('a mention read from a thread is distinguishable from a delivered one', () => {
+  expect(isThreadSourced({ id: 1, source: 'thread' })).toBe(true);
+  expect(isThreadSourced({ id: 1 })).toBe(false);
+  expect(isThreadSourced(undefined)).toBe(false);
+});
+
+// Announcing a post on Mastodon is the whole configuration: the announcement
+// shows up in the archive as a mention, and its URL is the head of the thread.
+test('thread roots are the site owner’s own status urls in a target', () => {
+  const roots = threadRootsFor({
+    responses: [
+      { id: 1, url: 'https://mastodon.social/@esttorhe/117219077409822141' },
+      { id: 2, url: 'https://indieweb.social/@yvg/117220108533049251' },
+    ],
+    reactions: [
+      { id: 3, url: 'https://mastodon.social/@esttorhe/117219077409822141#favorited-by-1' },
+    ],
+  });
+  expect(roots).toEqual(['https://mastodon.social/@esttorhe/117219077409822141']);
+});
+
+test('a target with no own status has no thread to read', () => {
+  expect(
+    threadRootsFor({ responses: [{ id: 1, url: 'https://example.com/post' }], reactions: [] }),
+  ).toEqual([]);
+});
+
+test('a status url resolves to the instance and id needed to fetch it', () => {
+  expect(statusRefFromUrl('https://mastodon.social/@esttorhe/117219077409822141')).toEqual({
+    host: 'mastodon.social',
+    id: '117219077409822141',
+  });
+  expect(statusRefFromUrl('https://estebantorr.es/2026/09/a-post/')).toBe(null);
+  expect(statusRefFromUrl(undefined)).toBe(null);
+});
+
+const janStatus = {
+  id: '117222360834519501',
+  url: 'https://social.lol/@janmon/117222360834519501',
+  created_at: '2026-09-06T05:07:57.000Z',
+  content: '<p><span>@yvg</span> @esttorhe yeah, I should revisit<br />some parts &amp; pieces</p>',
+  account: {
+    acct: 'janmon@social.lol',
+    display_name: 'Jan',
+    url: 'https://social.lol/@janmon',
+    avatar: 'https://files.social.lol/avatar.jpg',
+  },
+};
+
+test('a thread reply is shaped like every other mention', () => {
+  const m = shapeThreadReply(janStatus);
+  expect(m.type).toBe('in-reply-to');
+  expect(m.url).toBe('https://social.lol/@janmon/117222360834519501');
+  expect(m.published).toBe('2026-09-06T05:07:57.000Z');
+  expect(m.author.name).toBe('Jan');
+  expect(m.author.url).toBe('https://social.lol/@janmon');
+  expect(isThreadSourced(m)).toBe(true);
+});
+
+// The API hands back HTML; the archive stores plain text like webmention.io does.
+test('reply markup becomes plain text with entities decoded', () => {
+  expect(shapeThreadReply(janStatus).text).toBe(
+    '@yvg @esttorhe yeah, I should revisit\nsome parts & pieces',
+  );
+});
+
+test('paragraph breaks in a reply are preserved', () => {
+  const m = shapeThreadReply({ ...janStatus, content: '<p>first</p><p>second</p>' });
+  expect(m.text).toBe('first\n\nsecond');
+});
+
+test('an account with no display name falls back to its handle', () => {
+  const m = shapeThreadReply({
+    ...janStatus,
+    account: { ...janStatus.account, display_name: '' },
+  });
+  expect(m.author.name).toBe('janmon@social.lol');
+});
+
+// webmention.io's copy carries normalized author data and a self-hosted avatar;
+// the thread copy has only what the API returned. So when the same reply arrives
+// both ways the delivered one wins, whichever id happens to be larger.
+test('a delivered webmention beats the thread copy of the same reply', () => {
+  const url = 'https://indieweb.social/@yvg/117220108533049251';
+  const delivered = {
+    id: 2029524,
+    type: 'in-reply-to',
+    url,
+    author: { name: 'Yves', photo: '/local.jpg' },
+  };
+  const fromThread = {
+    id: 117220108533049251,
+    type: 'in-reply-to',
+    url,
+    source: 'thread',
+    author: { name: 'Yves' },
+  };
+
+  expect(mergeMentions([delivered], [fromThread])[0].author.photo).toBe('/local.jpg');
+  expect(mergeMentions([fromThread], [delivered])[0].author.photo).toBe('/local.jpg');
+});
+
+// markRemoved sweeps anything missing from webmention.io's feed. Thread replies
+// are never in that feed, so without an exemption every one of them would be
+// marked removed on the very next sync.
+test('thread replies survive the webmention removal sweep', () => {
+  const targets = {
+    'https://estebantorr.es/p': {
+      responses: [
+        { id: 1, type: 'in-reply-to', url: 'https://a.example/1' },
+        { id: 2, type: 'in-reply-to', url: 'https://b.example/2', source: 'thread' },
+      ],
+      reactions: [],
+    },
+  };
+  const result = markRemoved(targets, new Set([1]), { at: 'now' });
+  const [delivered, fromThread] = result.targets['https://estebantorr.es/p'].responses;
+  expect(delivered.removed).toBeUndefined();
+  expect(fromThread.removed).toBeUndefined();
+  expect(result.removedCount).toBe(0);
+});
+
+const threadReply = {
+  id: 117222360834519501,
+  type: 'in-reply-to',
+  url: 'https://social.lol/@janmon/117222360834519501',
+  source: 'thread',
+  author: { name: 'Jan' },
+};
+
+test('a freshly read thread reply is added to the target', () => {
+  const bucket = mergeThreadReplies({ responses: [], reactions: [] }, [threadReply], { at: 'now' });
+  expect(bucket.responses.length).toBe(1);
+  expect(bucket.responses[0].url).toBe(threadReply.url);
+});
+
+test('a thread reply deleted upstream is marked removed rather than dropped', () => {
+  const bucket = mergeThreadReplies({ responses: [threadReply], reactions: [] }, [], { at: 'now' });
+  expect(bucket.responses.length).toBe(1);
+  expect(bucket.responses[0].removed).toBe(true);
+  expect(bucket.responses[0].removedAt).toBe('now');
+});
+
+// A network blip is not a deletion — the same mistake markRemoved guards against.
+test('a thread that could not be read leaves its replies untouched', () => {
+  const bucket = mergeThreadReplies({ responses: [threadReply], reactions: [] }, [], {
+    at: 'now',
+    ok: false,
+  });
+  expect(bucket.responses[0].removed).toBeUndefined();
+});
+
+test('a thread reply that reappears is un-removed', () => {
+  const gone = { ...threadReply, removed: true, removedAt: 'earlier' };
+  const bucket = mergeThreadReplies({ responses: [gone], reactions: [] }, [threadReply], {
+    at: 'now',
+  });
+  expect(bucket.responses[0].removed).toBeUndefined();
+  expect(bucket.responses[0].removedAt).toBeUndefined();
+});
+
+test('a delivered mention is not touched by the thread sweep', () => {
+  const delivered = { id: 7, type: 'in-reply-to', url: 'https://a.example/1' };
+  const bucket = mergeThreadReplies({ responses: [delivered], reactions: [] }, [], { at: 'now' });
+  expect(bucket.responses[0].removed).toBeUndefined();
+});
+
+// ---------------------------------------------------------------------------
+// review follow-ups
+// ---------------------------------------------------------------------------
+
+// Mastodon snowflakes run past Number.MAX_SAFE_INTEGER: Number('117222360834519501')
+// is 117222360834519500, and the very next id rounds to the same value. Coercing
+// them would let one reply silently overwrite another in the id-keyed map.
+test('a status id is kept exactly as the api returned it', () => {
+  const m = shapeThreadReply({ ...janStatus, id: '117222360834519501' });
+  expect(m.id).toBe('117222360834519501');
+  expect(String(m.id)).toBe('117222360834519501');
+});
+
+test('two replies with adjacent ids both survive the merge', () => {
+  const a = shapeThreadReply({
+    ...janStatus,
+    id: '117222360834519501',
+    url: 'https://social.lol/@a/1',
+  });
+  const b = shapeThreadReply({
+    ...janStatus,
+    id: '117222360834519502',
+    url: 'https://social.lol/@b/2',
+  });
+  expect(mergeMentions([], [a, b]).length).toBe(2);
+});
+
+// Sorting keeps the diff stable, so it has to cope with both kinds of id.
+test('mixed wm-ids and status ids sort deterministically', () => {
+  const wm = { id: 2029524, type: 'in-reply-to', url: 'https://a.example/1' };
+  const t1 = {
+    id: '117222360834519501',
+    type: 'in-reply-to',
+    url: 'https://b.example/2',
+    source: 'thread',
+  };
+  const t2 = {
+    id: '117222360834519499',
+    type: 'in-reply-to',
+    url: 'https://c.example/3',
+    source: 'thread',
+  };
+
+  const once = mergeMentions([], [wm, t1, t2]).map((m) => String(m.id));
+  const again = mergeMentions([], [t2, wm, t1]).map((m) => String(m.id));
+  expect(once).toEqual(again);
+  expect(once).toEqual(['2029524', '117222360834519499', '117222360834519501']);
+});
+
+test('the newer of two thread copies still wins', () => {
+  const url = 'https://social.lol/@janmon/1';
+  const older = {
+    id: '117222360834519501',
+    type: 'in-reply-to',
+    url,
+    source: 'thread',
+    text: 'first',
+  };
+  const newer = {
+    id: '117222360834519502',
+    type: 'in-reply-to',
+    url,
+    source: 'thread',
+    text: 'edited',
+  };
+  expect(mergeMentions([older], [newer])[0].text).toBe('edited');
+  expect(mergeMentions([newer], [older])[0].text).toBe('edited');
+});
+
+// A deleted or newly-private root answers 404, which is Mastodon saying the
+// thread is gone — its replies should be retired. A 502 says nothing of the
+// kind, and retiring on one would be the blip-as-deletion mistake again.
+test('only a definitive not-found means the thread is gone', () => {
+  expect(isThreadGone(404)).toBe(true);
+  expect(isThreadGone(410)).toBe(true);
+  // An instance that requires auth, or blocks the runner, is saying "you may
+  // not look" — not "this was deleted". indieweb.social answers 401 to
+  // unauthenticated ActivityPub reads, so this is not hypothetical.
+  expect(isThreadGone(401)).toBe(false);
+  expect(isThreadGone(403)).toBe(false);
+  expect(isThreadGone(418)).toBe(false);
+  expect(isThreadGone(502)).toBe(false);
+  expect(isThreadGone(429)).toBe(false);
+  expect(isThreadGone(undefined)).toBe(false);
+});
+
+// Mastodon caps an unauthenticated context read at 60 descendants and depth 20
+// (documented, and not paginated — there is no second page to ask for). A thread
+// that comes back at the cap has almost certainly been cut short, and the
+// replies past it are missing rather than deleted.
+test('a thread read at the descendant cap counts as truncated', () => {
+  expect(isThreadTruncated(0)).toBe(false);
+  expect(isThreadTruncated(59)).toBe(false);
+  expect(isThreadTruncated(THREAD_DESCENDANTS_LIMIT)).toBe(true);
+  expect(isThreadTruncated(THREAD_DESCENDANTS_LIMIT + 5)).toBe(true);
+});
+
+// The guard has to reach mergeThreadReplies as ok:false, or a big thread would
+// have its tail retired on every sync.
+test('a truncated read leaves the replies it could not see alone', () => {
+  const unseen = {
+    id: '117222360834519501',
+    type: 'in-reply-to',
+    url: 'https://social.lol/@janmon/1',
+    source: 'thread',
+    author: { name: 'Jan' },
+  };
+  const bucket = mergeThreadReplies({ responses: [unseen], reactions: [] }, [], {
+    at: 'now',
+    ok: !isThreadTruncated(THREAD_DESCENDANTS_LIMIT),
+  });
+  expect(bucket.responses[0].removed).toBeUndefined();
+});
+
+// A content warning is the author saying they do not want the body read
+// unfolded. The reply is kept — dropping it would lose the conversation — but
+// the warning travels with it so the page can fold the body and let the reader
+// choose, which is what the warning asks for.
+test('a reply behind a content warning is recognised', () => {
+  expect(isConcealed({ spoiler_text: 'spoilers for the finale' })).toBe(true);
+  expect(isConcealed({ spoiler_text: '' })).toBe(false);
+  expect(isConcealed({ spoiler_text: '   ' })).toBe(false);
+  expect(isConcealed({})).toBe(false);
+  expect(isConcealed(undefined)).toBe(false);
+});
+
+// Unauthenticated context reads return unlisted statuses as well as public
+// ones — unlisted means "do not list or index me", not "private". Copying one
+// onto a public page, and into a public git repo, overrides exactly the choice
+// its author made.
+test('only public replies are eligible to be imported', () => {
+  expect(isPubliclyListed({ visibility: 'public' })).toBe(true);
+  expect(isPubliclyListed({ visibility: 'unlisted' })).toBe(false);
+  expect(isPubliclyListed({ visibility: 'private' })).toBe(false);
+  expect(isPubliclyListed({ visibility: 'direct' })).toBe(false);
+  // An instance that omits the field gets the cautious reading, not the
+  // permissive one.
+  expect(isPubliclyListed({})).toBe(false);
+  expect(isPubliclyListed(undefined)).toBe(false);
+});
+
+// Mastodon also cuts an unauthenticated read at depth 20, independently of the
+// 60-descendant cap — so a long narrow chain is truncated while the count stays
+// well under the cap.
+test('thread depth is measured from the root', () => {
+  const flat = [
+    { id: '2', in_reply_to_id: '1' },
+    { id: '3', in_reply_to_id: '1' },
+  ];
+  expect(threadDepth(flat)).toBe(1);
+
+  const chain = [
+    { id: '2', in_reply_to_id: '1' },
+    { id: '3', in_reply_to_id: '2' },
+    { id: '4', in_reply_to_id: '3' },
+  ];
+  expect(threadDepth(chain)).toBe(3);
+  expect(threadDepth([])).toBe(0);
+});
+
+test('a chain reaching the depth cutoff counts as an incomplete read', () => {
+  const chain = [];
+  for (let i = 2; i <= THREAD_DEPTH_LIMIT + 1; i += 1) {
+    chain.push({ id: String(i), in_reply_to_id: String(i - 1) });
+  }
+  expect(chain.length).toBeLessThan(THREAD_DESCENDANTS_LIMIT);
+  expect(isThreadTruncated(chain.length)).toBe(false);
+  expect(threadDepth(chain)).toBeGreaterThanOrEqual(THREAD_DEPTH_LIMIT);
+});
+
+test('a content warning travels with the reply rather than dropping it', () => {
+  const m = shapeThreadReply({ ...janStatus, spoiler_text: 'spoilers for the finale' });
+  expect(m.warning).toBe('spoilers for the finale');
+  expect(m.text).toBe('@yvg @esttorhe yeah, I should revisit\nsome parts & pieces');
+});
+
+// Absent rather than empty: the archive is committed, and a blank field on every
+// uncovered reply is noise in the diff.
+test('a reply with no content warning carries no warning field', () => {
+  expect('warning' in shapeThreadReply(janStatus)).toBe(false);
+  expect('warning' in shapeThreadReply({ ...janStatus, spoiler_text: '   ' })).toBe(false);
+});
+
+// A root that has been retired — the announcement deleted, or edited to drop the
+// link — must stop pulling in replies. It stays in the archive as a record, but
+// its thread is no longer about this page, and new replies to it would otherwise
+// keep landing here.
+test('a retired root stops being read', () => {
+  const bucket = {
+    responses: [
+      {
+        id: 1,
+        url: 'https://mastodon.social/@esttorhe/117219077409822141',
+        removed: true,
+        removedAt: 'earlier',
+      },
+    ],
+    reactions: [],
+  };
+  expect(threadRootsFor(bucket)).toEqual([]);
+});
+
+test('a live root alongside a retired one is still read', () => {
+  const bucket = {
+    responses: [
+      { id: 1, url: 'https://mastodon.social/@esttorhe/111', removed: true },
+      { id: 2, url: 'https://mastodon.social/@esttorhe/222' },
+    ],
+    reactions: [],
+  };
+  expect(threadRootsFor(bucket)).toEqual(['https://mastodon.social/@esttorhe/222']);
+});
+
+// Hitting a cap means "we did not see all of it", not "we saw none of it": the
+// replies that did come back are still real and still belong on the page. `ok`
+// only decides whether the removal sweep may run.
+test('a capped thread still yields the replies it did return', () => {
+  const descendants = [];
+  for (let i = 1; i <= THREAD_DESCENDANTS_LIMIT; i += 1) {
+    descendants.push({
+      id: String(1000 + i),
+      url: `https://social.lol/@someone/${i}`,
+      visibility: 'public',
+      created_at: '2026-09-06T00:00:00.000Z',
+      content: `<p>reply ${i}</p>`,
+      account: { acct: 'someone@social.lol', display_name: 'Someone' },
+    });
+  }
+  const result = repliesFromContext({ descendants });
+  expect(result.replies.length).toBe(THREAD_DESCENDANTS_LIMIT);
+  expect(result.ok).toBe(false);
+});
+
+// A body we do not understand is not an empty thread. Treating it as one would
+// retire every reply already in the archive.
+test('a context payload with no descendants array is not an empty thread', () => {
+  expect(repliesFromContext({}).ok).toBe(false);
+  expect(repliesFromContext(null).ok).toBe(false);
+  expect(repliesFromContext({ descendants: 'nope' }).ok).toBe(false);
+  expect(repliesFromContext({}).replies).toEqual([]);
+});
+
+test('a genuinely empty thread is complete, so its replies can be retired', () => {
+  const result = repliesFromContext({ descendants: [] });
+  expect(result.ok).toBe(true);
+  expect(result.replies).toEqual([]);
+});
+
+test('unlisted replies are dropped while the rest come through', () => {
+  const result = repliesFromContext({
+    descendants: [
+      { ...janStatus, visibility: 'public' },
+      { ...janStatus, id: '2', url: 'https://social.lol/@x/2', visibility: 'unlisted' },
+    ],
+  });
+  expect(result.replies.length).toBe(1);
+  expect(result.withheld).toBe(1);
 });

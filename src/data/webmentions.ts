@@ -19,8 +19,12 @@ export interface MentionAuthor {
 }
 
 export interface Mention {
-  /** webmention.io's `wm-id`. Stable, and what dedupe keys on. */
-  id: number;
+  /**
+   * webmention.io's `wm-id` for a delivered mention, or Mastodon's status id —
+   * kept as a string — for one read from a thread, since snowflakes run past
+   * Number.MAX_SAFE_INTEGER. Stable either way; dedupe keys on type + url.
+   */
+  id: number | string;
   type: MentionProperty;
   /** The source page — the reply, the post that linked here, the like. */
   url?: string;
@@ -29,6 +33,11 @@ export interface Mention {
   author: MentionAuthor;
   /** Plain-text body. Absent on likes and reposts, which carry no content. */
   text?: string;
+  /**
+   * The author's content warning, when they set one. The body is kept but is
+   * rendered folded behind this, which is what the warning asks for.
+   */
+  warning?: string;
   /** The source's own title, when it has one (another blog post rather than a toot). */
   title?: string;
   /**
