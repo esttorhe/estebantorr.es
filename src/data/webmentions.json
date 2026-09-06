@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-09-06T05:07:59.274Z",
+  "syncedAt": "2026-09-06T11:31:44.717Z",
   "targets": {
     "https://estebantorr.es/2026/02/a-gsd-system-for-claude-code": {
       "responses": [
@@ -103,6 +103,19 @@
             "photo": "/assets/images/webmentions/mastodon-social-af1e4b8e9792.png"
           },
           "text": "@yvg @esttorhe @janmon I did pretty much the same for the avatars. \nI hear you, my website was on GitHub up until a few months ago. Moved to cloudflare pages recently (I know I should host but is simple, it works and I'm lazy)"
+        },
+        {
+          "id": "117222360865528560",
+          "type": "in-reply-to",
+          "url": "https://social.lol/@janmon/117222360834519501",
+          "published": "2026-09-06T05:07:57.000Z",
+          "author": {
+            "name": "Jan",
+            "url": "https://social.lol/@janmon",
+            "photo": "/assets/images/webmentions/social-lol-ac91c4e23eb0.jpg"
+          },
+          "source": "thread",
+          "text": "@yvg @esttorhe yeah, I should revisit some parts of the architecture"
         }
       ],
       "reactions": [
