@@ -28,4 +28,5 @@ pnpm-debug.log*
 # Agent / impeccable tooling (local, not source)
 .claude/
 .claude-visual/
+.playwright-mcp/
 .github/skills/
