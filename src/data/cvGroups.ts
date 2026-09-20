@@ -24,10 +24,17 @@ export interface CvGroup {
  */
 export const cvGroups: CvGroup[] = [
   {
-    title: 'Zenjob · Berlin',
-    dateRange: 'May 2023 → present',
+    title: 'Peec AI · Berlin',
+    dateRange: 'Aug 2026 → present',
     narrative:
-      'Joined as Engineering Manager for Platform & DevOps, where I led delivery of an API Gateway and APM service and improved CI/CD pipeline stability by over 50%. Promoted to Head of Engineering for the Supply vertical (3 EMs, 30+ engineers) bridging a company-wide React Native migration. Now Head of Platform Engineering supporting 60+ product engineers across the company, owning infrastructure, observability, developer tooling, and the org-wide rollout of AI-assisted development.',
+      'Leading the platform team that lays the foundations every other team builds on, powering AI search analytics for marketing teams.',
+    roleKeys: ['Peec AI|Engineering Manager'],
+  },
+  {
+    title: 'Zenjob · Berlin',
+    dateRange: 'May 2023 → Aug 2026',
+    narrative:
+      'Joined as Engineering Manager for Platform & DevOps, where I led delivery of an API Gateway and APM service and improved CI/CD pipeline stability by over 50%. Promoted to Head of Engineering for the Supply vertical (3 EMs, 30+ engineers) bridging a company-wide React Native migration. Finished as Head of Platform Engineering supporting 60+ product engineers across the company, owning infrastructure, observability, developer tooling, and the org-wide rollout of AI-assisted development.',
     roleKeys: [
       'Zenjob|Head of Platform Engineering',
       'Zenjob|Head of Engineering (Supply Vertical)',
