@@ -74,8 +74,8 @@
     "http://disqs.com/": {
       "status": "failed",
       "attempts": 1,
-      "transientAttempts": 2,
-      "at": "2026-09-14T10:32:25.218Z"
+      "transientAttempts": 3,
+      "at": "2026-09-21T10:37:03.260Z"
     },
     "http://esttorhe.github.io/": {
       "status": "no-endpoint",
@@ -326,8 +326,8 @@
     "http://craftkollective.com/": {
       "status": "failed",
       "attempts": 1,
-      "transientAttempts": 2,
-      "at": "2026-09-14T10:32:25.218Z"
+      "transientAttempts": 3,
+      "at": "2026-09-21T10:37:03.260Z"
     },
     "http://logn.co/": {
       "status": "no-endpoint",
@@ -653,8 +653,8 @@
   "https://estebantorr.es/2026/09/joining-the-webmentions-bandwagon/": {
     "https://indieweb.social/@yvg/117189999314598631": {
       "status": "no-endpoint",
-      "attempts": 2,
-      "at": "2026-09-14T10:32:25.218Z"
+      "attempts": 3,
+      "at": "2026-09-21T10:37:03.260Z"
     },
     "https://janmonschke.com/adding-webmentions-to-your-static-blog/": {
       "status": "ok",
@@ -664,8 +664,8 @@
     },
     "https://utteranc.es/": {
       "status": "no-endpoint",
-      "attempts": 2,
-      "at": "2026-09-14T10:32:25.218Z"
+      "attempts": 3,
+      "at": "2026-09-21T10:37:03.260Z"
     }
   },
   "https://estebantorr.es/til/neuromancer-the-movie/": {
