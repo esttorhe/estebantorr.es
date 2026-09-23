@@ -1,14 +1,34 @@
 {
   "currentlyReading": [
     {
+      "title": "Unsouled",
+      "author": "Will Wight",
+      "cover": "/assets/images/reading/202606230000-unsouled.jpg",
+      "format": "audiobook",
+      "series": "Cradle",
+      "seriesNumber": 1,
+      "started": "2026-09-23"
+    }
+  ],
+  "finished": [
+    {
+      "title": "The River has roots",
+      "author": "Amal El-Mohtar",
+      "cover": "/assets/images/reading/202609220719-the-river-has-roots.jpg",
+      "format": "book",
+      "finished": "2026-09-22",
+      "rating": 3,
+      "review": "Low low 3 at best. Unfortunately the songs and the idea are quite nice. But the development feels more like a short story than a book. Like a fable or a story one can go over in a quick sitting. Some characters are quite flat and some very flat."
+    },
+    {
       "title": "Crossings",
       "author": "Alex Landragin",
       "cover": "/assets/images/reading/202508150000-crossings.jpg",
       "format": "book",
-      "started": "2026-09-04"
-    }
-  ],
-  "finished": [
+      "finished": "2026-09-21",
+      "rating": 6,
+      "review": "Read it twice. Tried the baroness order but it got mangled at some point due to the chapter org in the audiobook. Didn't really think it changed much. Might need to try again properly and see if it's actually a \"different story\""
+    },
     {
       "title": "Incidents Around the House",
       "author": "Josh Malerman",
