@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-09-06T11:31:44.717Z",
+  "syncedAt": "2026-09-27T09:45:48.916Z",
   "targets": {
     "https://estebantorr.es/2026/02/a-gsd-system-for-claude-code": {
       "responses": [
@@ -164,6 +164,23 @@
           }
         }
       ]
+    },
+    "https://estebantorr.es/til/multica-ai-agent-organiser": {
+      "responses": [
+        {
+          "id": 2036130,
+          "type": "mention-of",
+          "url": "https://bsky.app/profile/did:plc:d3j753j2jsi5lk7pr7ho4ven/post/3mwijbqhnlb2i",
+          "published": "2026-09-27T09:33:05+00:00",
+          "author": {
+            "name": "Esteban Torres",
+            "url": "https://bsky.app/profile/estebantorr.es",
+            "photo": "/assets/images/webmentions/bsky-app-abd906da10dd.jpg"
+          },
+          "text": "Multica.ai agent organiser (https://estebantorr.es/til/multica-ai-agent-organiser/)"
+        }
+      ],
+      "reactions": []
     },
     "https://estebantorr.es/til/reduce-not-time-but-complexity": {
       "responses": [
