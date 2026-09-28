@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-09-27T09:45:48.916Z",
+  "syncedAt": "2026-09-28T00:27:48.346Z",
   "targets": {
     "https://estebantorr.es/2026/02/a-gsd-system-for-claude-code": {
       "responses": [
@@ -180,7 +180,19 @@
           "text": "Multica.ai agent organiser (https://estebantorr.es/til/multica-ai-agent-organiser/)"
         }
       ],
-      "reactions": []
+      "reactions": [
+        {
+          "id": 2036276,
+          "type": "like-of",
+          "url": "https://mastodon.social/@esttorhe/117342357762825610#favorited-by-393717",
+          "published": "2026-09-28T00:27:30Z",
+          "author": {
+            "name": "Eugen Pirogoff",
+            "url": "https://chaos.social/@eugenpirogoff",
+            "photo": "/assets/images/webmentions/chaos-social-badb5b147252.jpg"
+          }
+        }
+      ]
     },
     "https://estebantorr.es/til/reduce-not-time-but-complexity": {
       "responses": [
