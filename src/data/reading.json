@@ -1,14 +1,23 @@
 {
   "currentlyReading": [
     {
+      "title": "Soulsmith",
+      "author": "Will Wight",
+      "cover": "/assets/images/reading/202610081524-soulsmith.jpg",
+      "format": "book",
+      "started": "2026-10-08"
+    }
+  ],
+  "finished": [
+    {
       "title": "Silo 1",
       "author": "Hugh Howey",
       "cover": "/assets/images/reading/202609281611-silo-1.jpg",
       "format": "book",
-      "started": "2026-09-28"
-    }
-  ],
-  "finished": [
+      "finished": "2026-10-08",
+      "rating": 7,
+      "review": "Didn't caught me as much as I thought at the beginning. I liked that the book is guiding the reader in different directions until you finally settle on the \"main character\". Overall quite interesting. A lot of parts you can see them coming, but there are twists that are still quite interesting, particularly the closing of the book."
+    },
     {
       "title": "Unsouled",
       "author": "Will Wight",
