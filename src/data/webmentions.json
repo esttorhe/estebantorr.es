@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-09-28T00:27:48.346Z",
+  "syncedAt": "2026-10-09T11:23:59.963Z",
   "targets": {
     "https://estebantorr.es/2026/02/a-gsd-system-for-claude-code": {
       "responses": [
@@ -165,6 +165,36 @@
         }
       ]
     },
+    "https://estebantorr.es/blog/2026/2026-02-03-a-gsd-system-for-claude-code": {
+      "responses": [
+        {
+          "id": "at://did:plc:6noxz5bcity3irfeujg5vts7/app.bsky.feed.post/3mxefqw7ghk2t",
+          "type": "in-reply-to",
+          "url": "https://bsky.app/profile/did:plc:6noxz5bcity3irfeujg5vts7/post/3mxefqw7ghk2t",
+          "published": "2026-10-08T11:56:57.834Z",
+          "author": {
+            "name": "Zahra Richard",
+            "url": "https://bsky.app/profile/zahrarichard.bsky.social",
+            "photo": "/assets/images/webmentions/bsky-app-01669d368572.webp"
+          },
+          "source": "thread",
+          "text": "Love this! Congrats Esteban 🙌"
+        }
+      ],
+      "reactions": [
+        {
+          "id": 2038544,
+          "type": "like-of",
+          "url": "https://bsky.app/profile/estebantorr.es/post/3me2rgkqosm2u#liked_by_did:plc:6noxz5bcity3irfeujg5vts7",
+          "published": "2026-10-08T13:12:04Z",
+          "author": {
+            "name": "Zahra Richard",
+            "url": "https://bsky.app/profile/zahrarichard.bsky.social",
+            "photo": "/assets/images/webmentions/bsky-app-01669d368572.webp"
+          }
+        }
+      ]
+    },
     "https://estebantorr.es/til/multica-ai-agent-organiser": {
       "responses": [
         {
@@ -207,6 +237,19 @@
             "photo": "/assets/images/webmentions/bsky-app-abd906da10dd.jpg"
           },
           "text": "Reduce not time but complexity (https://estebantorr.es/til/reduce-not-time-but-complexity/)"
+        },
+        {
+          "id": "at://did:plc:6noxz5bcity3irfeujg5vts7/app.bsky.feed.post/3mxefr6ajdc2m",
+          "type": "in-reply-to",
+          "url": "https://bsky.app/profile/did:plc:6noxz5bcity3irfeujg5vts7/post/3mxefr6ajdc2m",
+          "published": "2026-10-08T11:57:06.259Z",
+          "author": {
+            "name": "Zahra Richard",
+            "url": "https://bsky.app/profile/zahrarichard.bsky.social",
+            "photo": "/assets/images/webmentions/bsky-app-01669d368572.webp"
+          },
+          "source": "thread",
+          "text": "Great post! Congrats Esteban 🙌"
         }
       ],
       "reactions": [
@@ -241,6 +284,17 @@
             "name": "Gilad Ronat",
             "url": "https://mastodon.social/@giladronat",
             "photo": "/assets/images/webmentions/mastodon-social-664801eed804.png"
+          }
+        },
+        {
+          "id": 2038543,
+          "type": "like-of",
+          "url": "https://bsky.app/profile/estebantorr.es/post/3muhefefwr623#liked_by_did:plc:6noxz5bcity3irfeujg5vts7",
+          "published": "2026-10-08T13:12:03Z",
+          "author": {
+            "name": "Zahra Richard",
+            "url": "https://bsky.app/profile/zahrarichard.bsky.social",
+            "photo": "/assets/images/webmentions/bsky-app-01669d368572.webp"
           }
         }
       ]
