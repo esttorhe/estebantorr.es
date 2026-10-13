@@ -1,14 +1,23 @@
 {
   "currentlyReading": [
     {
+      "title": "Black Flame",
+      "author": "Will Wight",
+      "cover": "/assets/images/reading/202610131039-black-flame.jpg",
+      "format": "book",
+      "started": "2026-10-13"
+    }
+  ],
+  "finished": [
+    {
       "title": "Soulsmith",
       "author": "Will Wight",
       "cover": "/assets/images/reading/202610081524-soulsmith.jpg",
       "format": "book",
-      "started": "2026-10-08"
-    }
-  ],
-  "finished": [
+      "finished": "2026-10-13",
+      "rating": 7,
+      "review": "While the books is not a masterpiece, it is definitely a captivating saga that will keep you entertained. It is not boring. Quite enjoyable so far."
+    },
     {
       "title": "Silo 1",
       "author": "Hugh Howey",
