@@ -1,14 +1,23 @@
 {
   "currentlyReading": [
     {
+      "title": "Skysworn",
+      "author": "Will Wight",
+      "cover": "/assets/images/reading/202610201002-skysworn.jpg",
+      "format": "book",
+      "started": "2026-10-20"
+    }
+  ],
+  "finished": [
+    {
       "title": "Black Flame",
       "author": "Will Wight",
       "cover": "/assets/images/reading/202610131039-black-flame.jpg",
       "format": "book",
-      "started": "2026-10-13"
-    }
-  ],
-  "finished": [
+      "finished": "2026-10-20",
+      "rating": 7,
+      "review": "It keeps the pace with the other books. Slowly untangling the mess. Not super surprising in terms of \"plot twists\" but still quite entertaining."
+    },
     {
       "title": "Soulsmith",
       "author": "Will Wight",
