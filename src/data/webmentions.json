@@ -1,5 +1,5 @@
 {
-  "syncedAt": "2026-10-09T11:23:59.963Z",
+  "syncedAt": "2026-10-22T09:29:23.066Z",
   "targets": {
     "https://estebantorr.es/2026/02/a-gsd-system-for-claude-code": {
       "responses": [
@@ -178,7 +178,9 @@
             "photo": "/assets/images/webmentions/bsky-app-01669d368572.webp"
           },
           "source": "thread",
-          "text": "Love this! Congrats Esteban 🙌"
+          "text": "Love this! Congrats Esteban 🙌",
+          "removed": true,
+          "removedAt": "2026-10-22T09:29:23.066Z"
         }
       ],
       "reactions": [
@@ -249,7 +251,9 @@
             "photo": "/assets/images/webmentions/bsky-app-01669d368572.webp"
           },
           "source": "thread",
-          "text": "Great post! Congrats Esteban 🙌"
+          "text": "Great post! Congrats Esteban 🙌",
+          "removed": true,
+          "removedAt": "2026-10-22T09:29:23.066Z"
         }
       ],
       "reactions": [
