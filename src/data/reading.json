@@ -1,14 +1,25 @@
 {
   "currentlyReading": [
     {
+      "title": "Ghostwater",
+      "author": "Will Wight",
+      "cover": "/assets/images/reading/202610221117-ghostwater.jpg",
+      "format": "book",
+      "series": "Cradle",
+      "seriesNumber": 5,
+      "started": "2026-10-21"
+    }
+  ],
+  "finished": [
+    {
       "title": "Skysworn",
       "author": "Will Wight",
       "cover": "/assets/images/reading/202610201002-skysworn.jpg",
       "format": "book",
-      "started": "2026-10-20"
-    }
-  ],
-  "finished": [
+      "finished": "2026-10-21",
+      "rating": 7.5,
+      "review": "Continues with the pace. This book felt particularly small but definitely interesting. It is starting to go a bit \"overboard\" really fast. I'm still enjoying the story, but I think we are about to reach intergalactic levels of power that could potentially make it a wee bit silly."
+    },
     {
       "title": "Black Flame",
       "author": "Will Wight",
