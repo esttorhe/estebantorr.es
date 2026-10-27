@@ -1,16 +1,25 @@
 {
   "currentlyReading": [
     {
+      "title": "Underlord",
+      "author": "Will Wight",
+      "cover": "/assets/images/reading/202610271534-underlord.jpg",
+      "format": "book",
+      "started": "2026-10-25"
+    }
+  ],
+  "finished": [
+    {
       "title": "Ghostwater",
       "author": "Will Wight",
       "cover": "/assets/images/reading/202610221117-ghostwater.jpg",
       "format": "book",
       "series": "Cradle",
       "seriesNumber": 5,
-      "started": "2026-10-21"
-    }
-  ],
-  "finished": [
+      "finished": "2026-10-25",
+      "rating": 7,
+      "review": "Keeping up the pace. Not particularly excited about the \"police arc\" that seems to be the new direction. Other than that this was quite an interesting book. Lots of growth (forced and pushed but understandable i guess)"
+    },
     {
       "title": "Skysworn",
       "author": "Will Wight",
