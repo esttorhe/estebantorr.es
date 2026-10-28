@@ -6,16 +6,18 @@
       "cover": "/assets/images/reading/202610281510-uncrowned.jpg",
       "format": "book",
       "started": "2026-10-28"
-    },
+    }
+  ],
+  "finished": [
     {
       "title": "Underlord",
       "author": "Will Wight",
       "cover": "/assets/images/reading/202610271534-underlord.jpg",
       "format": "book",
-      "started": "2026-10-25"
-    }
-  ],
-  "finished": [
+      "finished": "2026-10-28",
+      "rating": 7.5,
+      "review": "This one was less direct. still not many twists and turns but the pace is good. Added some more weight to the decisions and situations. Enjoying the series quite a lot, although I feel like books are getting shorter and shorter (or I am just consuming them at a very fast pace)"
+    },
     {
       "title": "Ghostwater",
       "author": "Will Wight",
