@@ -1,14 +1,23 @@
 {
   "currentlyReading": [
     {
+      "title": "Wintersteel",
+      "author": "Will Wight",
+      "cover": "/assets/images/reading/202611022016-wintersteel.jpg",
+      "format": "book",
+      "started": "2026-11-02"
+    }
+  ],
+  "finished": [
+    {
       "title": "Uncrowned",
       "author": "Will Wight",
       "cover": "/assets/images/reading/202610281510-uncrowned.jpg",
       "format": "book",
-      "started": "2026-10-28"
-    }
-  ],
-  "finished": [
+      "finished": "2026-11-02",
+      "rating": 7,
+      "review": "The more parts are introduced from the \"current\" timeframe the least I enjoy that. I think they are getting in the way of the other story. I hope they tie nicely as we progress. But so far it feels more like they are competing rather than complementing each other"
+    },
     {
       "title": "Underlord",
       "author": "Will Wight",
