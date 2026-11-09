@@ -2,6 +2,13 @@
   "currentlyReading": [],
   "finished": [
     {
+      "title": "Bloodline",
+      "author": "Will Wight",
+      "cover": "/assets/images/reading/202611090852-bloodline.jpg",
+      "format": "book",
+      "started": "2026-11-09"
+    },
+    {
       "title": "Wintersteel",
       "author": "Will Wight",
       "cover": "/assets/images/reading/202611022016-wintersteel.jpg",
@@ -9,13 +16,6 @@
       "finished": "2026-11-09",
       "rating": 7.5,
       "review": "Even though this was based on a more formulaic topic, I enjoyed it way more than the previous one. Great split in growths. Love to see the characters grow in their own branches and independently of one another."
-    },
-    {
-      "title": "Bloodline",
-      "author": "Will Wight",
-      "cover": "/assets/images/reading/202611090852-bloodline.jpg",
-      "format": "book",
-      "finished": "2026-11-09"
     },
     {
       "title": "Uncrowned",
