@@ -1,13 +1,14 @@
 {
-  "currentlyReading": [],
-  "finished": [
+  "currentlyReading": [
     {
       "title": "Bloodline",
       "author": "Will Wight",
       "cover": "/assets/images/reading/202611090852-bloodline.jpg",
       "format": "book",
       "started": "2026-11-09"
-    },
+    }
+  ],
+  "finished": [
     {
       "title": "Wintersteel",
       "author": "Will Wight",
