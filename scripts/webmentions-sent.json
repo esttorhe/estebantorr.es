@@ -74,8 +74,8 @@
     "http://disqs.com/": {
       "status": "failed",
       "attempts": 1,
-      "transientAttempts": 9,
-      "at": "2026-11-02T13:23:42.147Z"
+      "transientAttempts": 10,
+      "at": "2026-11-09T13:47:56.085Z"
     },
     "http://esttorhe.github.io/": {
       "status": "no-endpoint",
@@ -326,8 +326,8 @@
     "http://craftkollective.com/": {
       "status": "failed",
       "attempts": 1,
-      "transientAttempts": 9,
-      "at": "2026-11-02T13:23:42.147Z"
+      "transientAttempts": 10,
+      "at": "2026-11-09T13:47:56.085Z"
     },
     "http://logn.co/": {
       "status": "no-endpoint",
