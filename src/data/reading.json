@@ -1,14 +1,23 @@
 {
   "currentlyReading": [
     {
+      "title": "Reaper",
+      "author": "Will Wight",
+      "cover": "/assets/images/reading/202611112145-reaper.jpg",
+      "format": "book",
+      "started": "2026-11-11"
+    }
+  ],
+  "finished": [
+    {
       "title": "Bloodline",
       "author": "Will Wight",
       "cover": "/assets/images/reading/202611090852-bloodline.jpg",
       "format": "book",
-      "started": "2026-11-09"
-    }
-  ],
-  "finished": [
+      "finished": "2026-11-11",
+      "rating": 7.5,
+      "review": "Story picked up a nice pace during this book. Felt less of a traditional step / levelling story in the list of never ending growth and instead focused on a culmination of a goal (without being the end of the saga) and without being predictable. Very nice pace and direction. Finally the 2 stories are starting to converge without clashing for the readers attention."
+    },
     {
       "title": "Wintersteel",
       "author": "Will Wight",
