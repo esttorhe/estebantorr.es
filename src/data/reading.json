@@ -1,14 +1,23 @@
 {
   "currentlyReading": [
     {
+      "title": "Dreadgod",
+      "author": "Will Wight",
+      "cover": "/assets/images/reading/202611172023-dreadgod.jpg",
+      "format": "book",
+      "started": "2026-11-17"
+    }
+  ],
+  "finished": [
+    {
       "title": "Reaper",
       "author": "Will Wight",
       "cover": "/assets/images/reading/202611112145-reaper.jpg",
       "format": "book",
-      "started": "2026-11-11"
-    }
-  ],
-  "finished": [
+      "finished": "2026-11-17",
+      "rating": 8,
+      "review": "Picking up pace. Plot twist (that we're not so surprising) materialised in a great way I'm happy things are progressing so well but also sad because that means we are approaching the end of the saga"
+    },
     {
       "title": "Bloodline",
       "author": "Will Wight",
