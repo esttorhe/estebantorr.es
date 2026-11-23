@@ -5,6 +5,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Webmentions from '../../components/article/Webmentions.astro';
 import AuthorHCard from '../../components/article/AuthorHCard.astro';
+import JsonLd from '../../components/seo/JsonLd.astro';
+import { blogPosting } from '../../lib/jsonLd';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 
@@ -38,6 +40,14 @@ const tagString = entry.data.tags.map((t) => `#${t}`).join('');
 
 // Doubles as the webmention target key — see src/lib/webmentionTarget.ts.
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? 'https://estebantorr.es').toString();
+
+const structuredData = blogPosting(Astro.site ?? new URL('https://estebantorr.es'), {
+  url: canonicalUrl,
+  headline: entry.data.title,
+  description: entry.data.description,
+  datePublished: date,
+  keywords: entry.data.tags,
+});
 ---
 
 <BaseLayout
@@ -46,6 +56,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? 'https://estebant
   current="til"
   ogType="article"
 >
+  <JsonLd slot="head" data={structuredData} />
   <article class="til-article h-entry">
     <a class="til-article__back" href="/til/">← TIL</a>
 

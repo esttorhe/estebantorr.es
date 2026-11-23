@@ -7,6 +7,8 @@ import ArticleHero from '../../../components/article/ArticleHero.astro';
 import PostNav from '../../../components/article/PostNav.astro';
 import Webmentions from '../../../components/article/Webmentions.astro';
 import AuthorHCard from '../../../components/article/AuthorHCard.astro';
+import JsonLd from '../../../components/seo/JsonLd.astro';
+import { blogPosting } from '../../../lib/jsonLd';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import { getImage } from 'astro:assets';
 import { resolveHero } from '../../../lib/heroResolver';
@@ -79,6 +81,15 @@ if (heroResolution.kind === 'image') {
   socialImage = new URL(rendered.src, Astro.site ?? 'https://estebantorr.es').toString();
   socialImageAlt = heroResolution.alt;
 }
+
+const structuredData = blogPosting(Astro.site ?? new URL('https://estebantorr.es'), {
+  url: canonicalUrl,
+  headline: post.data.title,
+  description: post.data.description,
+  datePublished: date,
+  image: socialImage,
+  keywords: post.data.tags,
+});
 ---
 
 <BaseLayout
@@ -89,6 +100,7 @@ if (heroResolution.kind === 'image') {
   imageAlt={socialImageAlt}
   ogType="article"
 >
+  <JsonLd slot="head" data={structuredData} />
   {
     /*
     h-entry marks this page up for microformats2 parsers. Bridgy reads it to

@@ -1,0 +1,14 @@
+---
+// ABOUTME: Emits one <script type="application/ld+json"> block for schema.org structured data.
+// ABOUTME: Builders live in src/lib/jsonLd.ts; serializeJsonLd escapes `<` so content can't break out of the tag.
+
+import { serializeJsonLd } from '../../lib/jsonLd';
+
+interface Props {
+  data: unknown;
+}
+
+const { data } = Astro.props;
+---
+
+<script is:inline type="application/ld+json" set:html={serializeJsonLd(data)} />

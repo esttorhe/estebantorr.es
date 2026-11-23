@@ -5,6 +5,9 @@
 import '../styles/global.css';
 import Header from '../components/site/Header.astro';
 import Footer from '../components/site/Footer.astro';
+import JsonLd from '../components/seo/JsonLd.astro';
+import { siteGraph } from '../lib/jsonLd';
+import mePhoto from '../assets/me.jpg';
 
 interface Props {
   title?: string;
@@ -34,6 +37,11 @@ const {
 const siteName = 'The mind of Esteban';
 const fullTitle = title ? (bareTitle ? title : `${title} — ${siteName}`) : siteName;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://estebantorr.es').toString();
+
+// Sitewide schema.org graph (WebSite + Person). Pages add their own entry-level
+// blocks (e.g. BlogPosting) through the "head" slot.
+const siteUrl = Astro.site ?? new URL('https://estebantorr.es');
+const structuredData = siteGraph(siteUrl, new URL(mePhoto.src, siteUrl).toString());
 
 // PostHog (EU). Production-only + no-ops when the public key isn't set, so
 // local dev never reports + a missing CF env var fails open instead of breaking
@@ -104,6 +112,8 @@ const posthogEnabled = import.meta.env.PROD && Boolean(posthogKey);
     <meta name="twitter:site" content="@esttorhe" />
     {image && <meta name="twitter:image" content={image} />}
     {image && imageAlt && <meta name="twitter:image:alt" content={imageAlt} />}
+
+    <JsonLd data={structuredData} />
 
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#1c1714" media="(prefers-color-scheme: dark)" />
