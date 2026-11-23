@@ -5,17 +5,16 @@
 import { Image } from 'astro:assets';
 import Sigil from '../marks/Sigil.astro';
 import mePhoto from '../../assets/me.jpg';
+import { PROFILES } from '../../data/profiles';
 
 const year = new Date().getFullYear();
 const siteUrl = (Astro.site ?? new URL('https://estebantorr.es')).toString();
 
+// Profiles come from src/data/profiles.ts, shared with the JSON-LD sameAs list.
 const socials = [
-  { label: 'github', href: 'https://github.com/esttorhe', rel: 'me' },
-  { label: 'mastodon', href: 'https://mastodon.social/@esttorhe', rel: 'me' },
-  { label: 'linkedin', href: 'https://linkedin.com/in/estebantorres', rel: 'me' },
-  { label: 'bluesky', href: 'https://bsky.app/profile/estebantorr.es', rel: 'me' },
+  ...PROFILES.map((profile) => ({ ...profile, rel: 'me' as const })),
   { label: 'rss', href: '/rss.xml', rel: undefined },
-] as const;
+];
 ---
 
 {
