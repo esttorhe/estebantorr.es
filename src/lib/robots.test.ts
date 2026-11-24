@@ -8,8 +8,19 @@ const body = buildRobotsTxt(new URL('https://estebantorr.es'));
 
 test('everyone is allowed, with content signals', () => {
   expect(body).toContain(
-    'User-agent: *\nContent-Signal: search=yes,ai-train=no,use=reference\nAllow: /\n',
+    'User-agent: *\nContent-Signal: search=yes,ai-train=no,ai-input=yes\nAllow: /\n',
   );
+});
+
+// contentsignals.org defines exactly three signals, each yes or no.
+test('content signals only use the spec vocabulary', () => {
+  const lines = body.split('\n').filter((line) => line.startsWith('Content-Signal:'));
+  expect(lines.length).toBeGreaterThan(0);
+  for (const line of lines) {
+    for (const pair of line.replace('Content-Signal:', '').trim().split(',')) {
+      expect(pair).toMatch(/^(search|ai-input|ai-train)=(yes|no)$/);
+    }
+  }
 });
 
 test('training crawlers share one group that disallows everything', () => {

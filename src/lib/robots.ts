@@ -38,9 +38,10 @@ const TRAINING_CRAWLERS = [
 
 export function buildRobotsTxt(site: URL): string {
   return [
-    '# Content signals: search allowed, AI training not allowed, reference use allowed.',
+    // Vocabulary per https://contentsignals.org: search, ai-input, ai-train — each yes or no.
+    '# Content signals: search allowed, AI training not allowed, AI input (answers, grounding) allowed.',
     'User-agent: *',
-    'Content-Signal: search=yes,ai-train=no,use=reference',
+    'Content-Signal: search=yes,ai-train=no,ai-input=yes',
     'Allow: /',
     '',
     '# Training crawlers',
