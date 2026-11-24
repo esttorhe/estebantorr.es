@@ -8,7 +8,7 @@ import mdx from '@astrojs/mdx';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import { readContentEntries, lastmodIndex } from './src/lib/contentPaths.ts';
-import { isIndexedPage } from './src/lib/agentMarkdown.ts';
+import { isIndexedPage } from './src/lib/indexedPages.ts';
 import { agentMarkdown } from './src/integrations/agentMarkdown.ts';
 
 // Page path -> date its content last changed, from post and TIL frontmatter.

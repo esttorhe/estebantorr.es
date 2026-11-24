@@ -3,7 +3,7 @@
 
 import { test, expect } from 'bun:test';
 import { load as loadYaml } from 'js-yaml';
-import { pageToMarkdown, isIndexedPage } from './agentMarkdown';
+import { pageToMarkdown } from './agentMarkdown';
 
 const site = new URL('https://estebantorr.es');
 
@@ -180,17 +180,4 @@ test('the JSON-LD is appended as one fenced json block', () => {
   expect(tail).toContain('"@type":"BlogPosting"');
   expect(tail).toContain('"@type":"WebSite"');
   expect(tail.trimEnd().endsWith('```')).toBe(true);
-});
-
-// ---------------------------------------------------------------------------
-// isIndexedPage
-// ---------------------------------------------------------------------------
-
-// Same rule as the sitemap: every page except the CV print source.
-test('every sitemap page gets Markdown, the CV print source does not', () => {
-  expect(isIndexedPage('/')).toBe(true);
-  expect(isIndexedPage('/2015/06/swift-2-throws-tip/')).toBe(true);
-  expect(isIndexedPage('/library/2019/')).toBe(true);
-  expect(isIndexedPage('/cv/print/')).toBe(false);
-  expect(isIndexedPage('/cv/print')).toBe(false);
 });

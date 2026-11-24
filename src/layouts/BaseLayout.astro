@@ -7,7 +7,8 @@ import Header from '../components/site/Header.astro';
 import Footer from '../components/site/Footer.astro';
 import JsonLd from '../components/seo/JsonLd.astro';
 import { siteGraph } from '../lib/jsonLd';
-import { SITE_NAME, isIndexedPage } from '../lib/agentMarkdown';
+import { SITE_NAME } from '../lib/agentMarkdown';
+import { isIndexedPage } from '../lib/indexedPages';
 import mePhoto from '../assets/me.jpg';
 
 interface Props {

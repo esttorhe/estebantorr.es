@@ -29,11 +29,6 @@ export const DROP_SELECTORS = [
   '.responses',
 ];
 
-/** Pages that are public and listed: every built page except the CV's PDF source. Shared with the sitemap. */
-export function isIndexedPage(pathname: string): boolean {
-  return !/^\/cv\/print\/?$/.test(pathname);
-}
-
 interface Posting {
   '@type'?: string;
   datePublished?: string;

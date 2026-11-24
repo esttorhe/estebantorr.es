@@ -4,7 +4,8 @@
 import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { load as loadYaml } from 'js-yaml';
-import { pageToMarkdown, isIndexedPage } from './agentMarkdown';
+import { pageToMarkdown } from './agentMarkdown';
+import { isIndexedPage } from './indexedPages';
 
 /** Strings that only appear in sections the converter drops. */
 const DROPPED_MARKERS = ['webmention.io/estebantorr.es/webmention', 'Wrote about this?'];
