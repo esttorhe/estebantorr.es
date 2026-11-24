@@ -1,14 +1,23 @@
 {
   "currentlyReading": [
     {
+      "title": "Waybound",
+      "author": "Will Wight",
+      "cover": "/assets/images/reading/202611241124-waybound.jpg",
+      "format": "book",
+      "started": "2026-11-24"
+    }
+  ],
+  "finished": [
+    {
       "title": "Dreadgod",
       "author": "Will Wight",
       "cover": "/assets/images/reading/202611172023-dreadgod.jpg",
       "format": "book",
-      "started": "2026-11-17"
-    }
-  ],
-  "finished": [
+      "finished": "2026-11-24",
+      "rating": 9,
+      "review": "I think this is the book of the entire saga I've loved the most so far. It is obviously the culmination of 10 other books building towards this. The character growth, the not so twisty but now transparent personalities of the other characters. Plus the Phoenix and the \"new\" Reaper interacting. Already sad about the fact that I only have 1 more book to go"
+    },
     {
       "title": "Reaper",
       "author": "Will Wight",
