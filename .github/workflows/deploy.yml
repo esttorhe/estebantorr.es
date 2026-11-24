@@ -56,6 +56,11 @@ jobs:
       - name: Build Astro site
         run: bun run build
 
+      # Every sitemap page must have a valid index.md for agents (written by
+      # src/integrations/agentMarkdown.ts). A failure here stops the deploy.
+      - name: Check agent Markdown
+        run: bun run markdown:check
+
       # Production deploy: push to astro-v2 only. Workers + static-assets target
       # (not Pages — CF deprecated the Pages create flow). `wrangler.jsonc` at
       # the repo root carries the project name + assets config.
