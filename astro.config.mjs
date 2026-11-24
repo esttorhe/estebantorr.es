@@ -1,5 +1,5 @@
 // ABOUTME: Astro configuration for estebantorr.es personal blog
-// ABOUTME: Configures MDX, Tailwind CSS v4, sitemap, and markdown settings
+// ABOUTME: Configures MDX, Tailwind CSS v4, sitemap (with content lastmod), agent Markdown output, and markdown settings
 
 // @ts-check
 import { defineConfig } from 'astro/config';
@@ -8,6 +8,8 @@ import mdx from '@astrojs/mdx';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import { readContentEntries, lastmodIndex } from './src/lib/contentPaths.ts';
+import { isIndexedPage } from './src/lib/agentMarkdown.ts';
+import { agentMarkdown } from './src/integrations/agentMarkdown.ts';
 
 // Page path -> date its content last changed, from post and TIL frontmatter.
 const lastmod = lastmodIndex(readContentEntries('./src/content'));
@@ -20,13 +22,16 @@ export default defineConfig({
     mdx(),
     sitemap({
       // /cv/print/ is the PDF source — keep it out of the sitemap (the public CV is /cv/).
-      filter: (page) => !/\/cv\/print\/?$/.test(page),
+      // Same rule decides which pages get an agent Markdown version.
+      filter: (page) => isIndexedPage(new URL(page).pathname),
       // Content dates, not build time; pages with no dated content get no lastmod.
       serialize: (item) => {
         const date = lastmod.get(new URL(item.url).pathname);
         return date ? { ...item, lastmod: date } : item;
       },
     }),
+    // Writes an index.md next to every page in the sitemap, for agents.
+    agentMarkdown(),
   ],
   markdown: {
     shikiConfig: {

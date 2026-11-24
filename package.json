@@ -14,7 +14,8 @@
     "library:sync": "node scripts/sync-reading.mjs",
     "webmentions:sync": "bun scripts/sync-webmentions.mjs",
     "webmentions:send": "bun scripts/send-webmentions.mjs",
-    "test": "bun test"
+    "test": "bun test",
+    "markdown:check": "bun scripts/check-agent-markdown.ts"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
@@ -25,7 +26,14 @@
     "@fontsource/geist-mono": "^5.2.7",
     "@tailwindcss/vite": "^4.1.18",
     "astro": "^5.17.1",
-    "tailwindcss": "^4.1.18"
+    "hast-util-from-html": "^2.1.0",
+    "hast-util-select": "^6.0.5",
+    "hast-util-to-mdast": "^10.1.4",
+    "hast-util-to-string": "^3.0.1",
+    "mdast-util-gfm": "^3.1.0",
+    "mdast-util-to-markdown": "^2.2.4",
+    "tailwindcss": "^4.1.18",
+    "unist-util-visit": "^5.2.0"
   },
   "devDependencies": {
     "@fontsource/vollkorn": "^5.2.10",
