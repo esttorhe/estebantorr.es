@@ -13,7 +13,9 @@ import {
   aliasMarkdownPath,
   markdownContentType,
   markdownHeaders,
+  markdownAlternateLink,
 } from './agentMarkdown';
+import { isIndexedPage } from '../lib/indexedPages';
 
 interface Env {
   ASSETS: { fetch(request: Request): Promise<Response> };
@@ -83,6 +85,12 @@ async function serve(request: Request, env: Env): Promise<Response> {
   // Pages have two representations, so caches must key on Accept.
   const varied = new Response(response.body, response);
   varied.headers.append('Vary', 'Accept');
+  // Only listed pages have an index.md, so only they advertise one.
+  const isHtml = response.headers.get('Content-Type')?.startsWith('text/html') ?? false;
+  if (response.ok && isHtml && isIndexedPage(pathname)) {
+    const markdownUrl = new URL(negotiated, request.url).toString();
+    varied.headers.append('Link', markdownAlternateLink(markdownUrl));
+  }
   return varied;
 }
 

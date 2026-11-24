@@ -68,3 +68,8 @@ export function markdownHeaders(pageUrl: string, contentType: string): Record<st
     Link: `<${pageUrl}>; rel="canonical"`,
   };
 }
+
+/** Link header pointing an HTML response at its Markdown version, mirroring the <link rel="alternate"> tag. */
+export function markdownAlternateLink(markdownUrl: string): string {
+  return `<${markdownUrl}>; rel="alternate"; type="text/markdown"`;
+}

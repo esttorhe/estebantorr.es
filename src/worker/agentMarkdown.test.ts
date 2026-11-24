@@ -8,6 +8,7 @@ import {
   aliasMarkdownPath,
   markdownContentType,
   markdownHeaders,
+  markdownAlternateLink,
 } from './agentMarkdown';
 import { CONTENT_SIGNALS } from '../lib/robots';
 
@@ -124,4 +125,15 @@ test('Markdown responses vary on Accept, carry the content signals and point at 
     'Content-Signal': CONTENT_SIGNALS,
     Link: '<https://estebantorr.es/about/>; rel="canonical"',
   });
+});
+
+// ---------------------------------------------------------------------------
+// markdownAlternateLink
+// ---------------------------------------------------------------------------
+
+// The HTTP twin of the <link rel="alternate"> tag, for agents that read headers before the body.
+test('HTML pages advertise their Markdown version in a Link header', () => {
+  expect(markdownAlternateLink('https://estebantorr.es/about/index.md')).toBe(
+    '<https://estebantorr.es/about/index.md>; rel="alternate"; type="text/markdown"',
+  );
 });
