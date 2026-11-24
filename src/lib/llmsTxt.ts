@@ -11,6 +11,10 @@ export interface LlmsEntry {
 const link = (site: URL, title: string, path: string, notes?: string) =>
   `- [${title}](${new URL(path, site)})${notes ? `: ${notes}` : ''}`;
 
+/** Pages link to the Markdown agents get, written next to each page at build time. */
+const pageLink = (site: URL, title: string, path: string, notes?: string) =>
+  link(site, title, `${path}index.md`, notes);
+
 const newestFirst = (entries: LlmsEntry[]) => [...entries].sort((a, b) => +b.date - +a.date);
 
 export function buildLlmsTxt(
@@ -22,26 +26,26 @@ export function buildLlmsTxt(
     '',
     '> Personal site of Esteban Torres, an Engineering Manager at Peec AI. Costa Rican, living in Berlin. Writes mostly about engineering, leadership and productivity.',
     '',
-    'The writing is the main content: long-form posts under Writing, and short notes under Today I Learned. Each link goes to the HTML page.',
+    'The writing is the main content: long-form posts under Writing, and short notes under Today I Learned. Each link goes to the Markdown version of the page; drop index.md from a URL for the HTML page.',
     '',
     '## About',
     '',
-    link(site, 'About', '/about/', 'Who Esteban is and what he works on'),
-    link(site, 'CV', '/cv/', 'Work history and skills'),
-    link(site, 'Talks', '/talks/', 'Conference and meetup talks'),
-    link(site, 'Portfolio', '/portfolio/', 'Selected projects'),
+    pageLink(site, 'About', '/about/', 'Who Esteban is and what he works on'),
+    pageLink(site, 'CV', '/cv/', 'Work history and skills'),
+    pageLink(site, 'Talks', '/talks/', 'Conference and meetup talks'),
+    pageLink(site, 'Portfolio', '/portfolio/', 'Selected projects'),
     '',
     '## Writing',
     '',
-    ...newestFirst(content.posts).map((p) => link(site, p.title, p.path, p.description)),
+    ...newestFirst(content.posts).map((p) => pageLink(site, p.title, p.path, p.description)),
     '',
     '## Today I Learned',
     '',
-    ...newestFirst(content.tils).map((t) => link(site, t.title, t.path, t.description)),
+    ...newestFirst(content.tils).map((t) => pageLink(site, t.title, t.path, t.description)),
     '',
     '## Optional',
     '',
-    link(site, 'Library', '/library/', 'Books read, with ratings and reviews'),
+    pageLink(site, 'Library', '/library/', 'Books read, with ratings and reviews'),
     link(site, 'RSS feed', '/rss.xml'),
     link(site, 'Sitemap', '/sitemap-index.xml'),
     '',

@@ -33,8 +33,8 @@ test('starts with the H1 and a blockquote summary, as the spec orders them', () 
   expect(lines[2].startsWith('> ')).toBe(true);
 });
 
-test('links use absolute URLs from the site', () => {
-  expect(body).toContain('- [About](https://estebantorr.es/about/)');
+test('page links point at the Markdown version, with absolute URLs', () => {
+  expect(body).toContain('- [About](https://estebantorr.es/about/index.md)');
   expect(body).not.toMatch(/\]\(\//);
 });
 
@@ -42,19 +42,23 @@ test('posts are listed newest first, with descriptions as notes when present', (
   const posts = body.slice(body.indexOf('## Writing'), body.indexOf('## Today I Learned'));
   expect(posts.indexOf('Career change')).toBeLessThan(posts.indexOf('New Year Resolutions'));
   expect(posts).toContain(
-    '- [New Year Resolutions](https://estebantorr.es/2014/12/new-year-resolutions/): Reflecting on 2014.',
+    '- [New Year Resolutions](https://estebantorr.es/2014/12/new-year-resolutions/index.md): Reflecting on 2014.',
   );
-  expect(posts).toContain('- [Career change](https://estebantorr.es/2020/05/career-change/)\n');
+  expect(posts).toContain(
+    '- [Career change](https://estebantorr.es/2020/05/career-change/index.md)\n',
+  );
 });
 
 test('TILs get their own section', () => {
   expect(body).toContain(
-    '## Today I Learned\n\n- [Superfile CLI](https://estebantorr.es/til/superfile-cli/): A terminal file manager.',
+    '## Today I Learned\n\n- [Superfile CLI](https://estebantorr.es/til/superfile-cli/index.md): A terminal file manager.',
   );
 });
 
 test('secondary links sit under Optional, the last section', () => {
   const optional = body.slice(body.indexOf('## Optional'));
-  expect(optional).toContain('https://estebantorr.es/rss.xml');
+  expect(optional).toContain('https://estebantorr.es/library/index.md');
+  // Feeds are not pages, so they keep their own URL.
+  expect(optional).toContain('(https://estebantorr.es/rss.xml)');
   expect(body.lastIndexOf('## ')).toBe(body.indexOf('## Optional'));
 });

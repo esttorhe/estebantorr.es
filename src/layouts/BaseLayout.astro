@@ -7,6 +7,7 @@ import Header from '../components/site/Header.astro';
 import Footer from '../components/site/Footer.astro';
 import JsonLd from '../components/seo/JsonLd.astro';
 import { siteGraph } from '../lib/jsonLd';
+import { SITE_NAME, isIndexedPage } from '../lib/agentMarkdown';
 import mePhoto from '../assets/me.jpg';
 
 interface Props {
@@ -34,9 +35,14 @@ const {
   ogType = 'website',
 } = Astro.props;
 
-const siteName = 'The mind of Esteban';
+const siteName = SITE_NAME;
 const fullTitle = title ? (bareTitle ? title : `${title} — ${siteName}`) : siteName;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://estebantorr.es').toString();
+
+// The Markdown agents get for this page, written next to index.html at build
+// time (src/integrations/agentMarkdown.ts). Only sitemap pages have one.
+const agentMarkdownUrl =
+  isIndexedPage(Astro.url.pathname) && canonical.endsWith('/') ? `${canonical}index.md` : undefined;
 
 // Sitewide schema.org graph (WebSite + Person). Pages add their own entry-level
 // blocks (e.g. BlogPosting) through the "head" slot.
@@ -92,6 +98,7 @@ const posthogEnabled = import.meta.env.PROD && Boolean(posthogKey);
     <link rel="manifest" href="/site.webmanifest" />
 
     <link rel="alternate" type="application/rss+xml" title={siteName} href="/rss.xml" />
+    {agentMarkdownUrl && <link rel="alternate" type="text/markdown" href={agentMarkdownUrl} />}
 
     {
       /*
