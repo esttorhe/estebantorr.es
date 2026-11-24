@@ -1,0 +1,215 @@
+---
+// ABOUTME: Human/machine view toggle beside the theme toggle: swaps <main> for the exact Markdown agents get.
+// ABOUTME: A real link to the page's index.md without JS; with JS it fetches it once, shows it in a <pre> and remembers the choice.
+
+interface Props {
+  /** Same-origin path of this page's index.md (written at build time). */
+  markdownUrl: string;
+}
+
+const { markdownUrl } = Astro.props;
+---
+
+<a
+  class="view-toggle"
+  href={markdownUrl}
+  data-view-toggle
+  aria-label="Show the Markdown agents read"
+  title="Show the Markdown agents read"
+>
+  <span class="view-toggle__inner" aria-hidden="true">
+    <svg
+      class="view-toggle__icon view-toggle__icon--machine"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.75"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M4.5 7 9.5 12l-5 5"></path>
+      <path d="M12.5 17.5h7"></path>
+    </svg>
+    <svg
+      class="view-toggle__icon view-toggle__icon--human"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.75"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path
+        d="M12 6.75C10.25 5.4 7.75 4.75 3.5 4.75v13c4.25 0 6.75.65 8.5 2 1.75-1.35 4.25-2 8.5-2v-13c-4.25 0-6.75.65-8.5 2Z"
+      ></path>
+      <path d="M12 6.75v13"></path>
+    </svg>
+  </span>
+</a>
+
+<style>
+  /* Same footprint and hover treatment as the theme toggle beside it. */
+  .view-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    color: var(--ink-muted);
+    transition:
+      color var(--duration-fast) var(--ease-out-quart),
+      border-color var(--duration-fast) var(--ease-out-quart),
+      background var(--duration-fast) var(--ease-out-quart);
+  }
+
+  .view-toggle:hover {
+    color: var(--ink);
+    border-color: var(--rule);
+    background: var(--surface);
+  }
+
+  .view-toggle:active {
+    transform: translateY(1px);
+  }
+
+  .view-toggle__inner {
+    display: grid;
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+
+  .view-toggle__icon {
+    grid-area: 1 / 1;
+    width: 100%;
+    height: 100%;
+    transition:
+      opacity var(--duration-base) var(--ease-out-quart),
+      transform var(--duration-base) var(--ease-out-quart);
+  }
+
+  /* Each icon names the view a click switches to: >_ from the page, the book from the Markdown. */
+  .view-toggle__icon--human {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.7);
+  }
+
+  :global(html[data-view='machine']) .view-toggle__icon--machine {
+    opacity: 0;
+    transform: rotate(90deg) scale(0.7);
+  }
+
+  :global(html[data-view='machine']) .view-toggle__icon--human {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+
+  /* Machine view: the <pre> the script adds is the only thing left in <main>. */
+  :global(html[data-view='machine'] .page-main > :not(.machine-view)) {
+    display: none;
+  }
+
+  :global(.machine-view) {
+    margin: 0;
+    padding: var(--space-md);
+    font-family: var(--font-mono);
+    font-size: var(--text-meta);
+    line-height: 1.65;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-md);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    tab-size: 2;
+  }
+
+  /* Matches .page-main's phone breakpoint; every column counts in monospace. */
+  @media (max-width: 640px) {
+    :global(.machine-view) {
+      padding: var(--space-sm);
+    }
+  }
+
+  :global(html:not([data-view='machine']) .machine-view) {
+    display: none;
+  }
+</style>
+
+<script>
+  type View = 'human' | 'machine';
+
+  const root = document.documentElement;
+  const toggle = document.querySelector<HTMLAnchorElement>('[data-view-toggle]');
+  const main = document.querySelector<HTMLElement>('.page-main');
+  let markdown: Promise<string> | undefined;
+
+  function currentView(): View {
+    return root.getAttribute('data-view') === 'machine' ? 'machine' : 'human';
+  }
+
+  function remember(view: View) {
+    try {
+      if (view === 'machine') localStorage.setItem('view', 'machine');
+      else localStorage.removeItem('view');
+    } catch {
+      /* localStorage blocked — the choice lasts for this page only */
+    }
+  }
+
+  function syncToggle(view: View) {
+    if (!toggle) return;
+    const label = view === 'machine' ? 'Show the page for humans' : 'Show the Markdown agents read';
+    toggle.setAttribute('aria-pressed', view === 'machine' ? 'true' : 'false');
+    toggle.setAttribute('aria-label', label);
+    toggle.title = label;
+  }
+
+  async function showMachineView() {
+    if (!toggle || !main || main.querySelector('.machine-view')) return;
+    markdown ??= fetch(toggle.href).then((response) => {
+      if (!response.ok) throw new Error(`${response.status} for ${toggle.href}`);
+      return response.text();
+    });
+    const pre = document.createElement('pre');
+    pre.className = 'machine-view';
+    pre.textContent = await markdown;
+    main.prepend(pre);
+  }
+
+  async function setView(view: View) {
+    if (view === 'machine') root.setAttribute('data-view', 'machine');
+    else root.removeAttribute('data-view');
+    syncToggle(view);
+    if (view !== 'machine') return;
+    try {
+      await showMachineView();
+    } catch (error) {
+      // Never leave <main> blank: fall back to the page.
+      console.error(`Machine view unavailable: ${String(error)}`);
+      remember('human');
+      root.removeAttribute('data-view');
+      syncToggle('human');
+    }
+  }
+
+  if (toggle) {
+    toggle.setAttribute('role', 'button');
+    const flip = () => {
+      const next: View = currentView() === 'machine' ? 'human' : 'machine';
+      remember(next);
+      void setView(next);
+    };
+    toggle.addEventListener('click', (event) => {
+      event.preventDefault();
+      flip();
+    });
+    // role="button" promises Space as well as Enter; links only get Enter for free.
+    toggle.addEventListener('keydown', (event) => {
+      if (event.key !== ' ') return;
+      event.preventDefault();
+      flip();
+    });
+    void setView(currentView());
+  }
+</script>

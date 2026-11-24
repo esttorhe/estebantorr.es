@@ -1,16 +1,19 @@
 ---
-// ABOUTME: Site header — wordmark + restrained nav + theme toggle.
+// ABOUTME: Site header — wordmark + restrained nav + view controls (human/machine, theme).
 // ABOUTME: Nav surfaces Writing / Talks / CV / About so all three audiences land in one click.
 
 import ThemeToggle from './ThemeToggle.astro';
+import ViewToggle from './ViewToggle.astro';
 import Sigil from '../marks/Sigil.astro';
 
 interface Props {
   /** When set, that nav item gets aria-current="page". */
   current?: 'home' | 'writing' | 'til' | 'talks' | 'portfolio' | 'library' | 'cv' | 'about';
+  /** This page's Markdown version; the human/machine toggle only shows when there is one. */
+  markdownUrl?: string;
 }
 
-const { current } = Astro.props;
+const { current, markdownUrl } = Astro.props;
 
 const nav = [
   { id: 'writing', label: 'Writing', href: '/blog/' },
@@ -55,7 +58,10 @@ const nav = [
       </ul>
     </nav>
 
-    <ThemeToggle />
+    <div class="site-controls">
+      {markdownUrl && <ViewToggle markdownUrl={markdownUrl} />}
+      <ThemeToggle />
+    </div>
   </header>
 </div>
 
@@ -174,11 +180,18 @@ const nav = [
     border-color: var(--accent);
   }
 
-  /* 720px is where the one-row header stops fitting: wordmark + the seven nav
-     items + toggle need ~658px of content box, and below this the flex row
+  /* Human/machine and theme toggles sit together as one view-settings cluster. */
+  .site-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+  }
+
+  /* 780px is where the one-row header stops fitting: wordmark + the seven nav
+     items + the two view toggles need ~710px of content box, and below this the flex row
      starts compressing the labels — at phone widths it squeezed the theme
      toggle clean off the screen. Under it, the nav drops to its own row. */
-  @media (max-width: 720px) {
+  @media (max-width: 780px) {
     .site-header {
       flex-wrap: wrap;
       gap: var(--space-sm);

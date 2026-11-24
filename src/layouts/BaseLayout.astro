@@ -64,7 +64,7 @@ const posthogEnabled = import.meta.env.PROD && Boolean(posthogKey);
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-has-markdown={agentMarkdownUrl ? '' : undefined}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -72,7 +72,10 @@ const posthogEnabled = import.meta.env.PROD && Boolean(posthogKey);
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
 
-    {/* Theme + reveal — inline so it lands BEFORE paint (no flash, no jank). */}
+    {
+      /* Theme, machine view + reveal — inline so they land BEFORE paint (no flash, no jank).
+         Machine view only applies on pages with a Markdown version (ViewToggle.astro). */
+    }
     <script is:inline>
       (() => {
         const root = document.documentElement;
@@ -80,6 +83,12 @@ const posthogEnabled = import.meta.env.PROD && Boolean(posthogKey);
           const stored = localStorage.getItem('theme');
           if (stored === 'light' || stored === 'dark') {
             root.setAttribute('data-theme', stored);
+          }
+          if (
+            localStorage.getItem('view') === 'machine' &&
+            root.hasAttribute('data-has-markdown')
+          ) {
+            root.setAttribute('data-view', 'machine');
           }
         } catch {
           /* localStorage blocked — fall back to system */
@@ -145,7 +154,11 @@ const posthogEnabled = import.meta.env.PROD && Boolean(posthogKey);
   <body class="page-shell">
     <a class="skip-link" href="#main">Skip to main content</a>
 
-    <Header current={current} />
+    {/* Same-origin path, so the toggle's fetch also works on local previews. */}
+    <Header
+      current={current}
+      markdownUrl={agentMarkdownUrl ? new URL(agentMarkdownUrl).pathname : undefined}
+    />
 
     <main id="main" class="page-main">
       <slot />
