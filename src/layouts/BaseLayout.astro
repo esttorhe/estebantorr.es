@@ -41,7 +41,13 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://estebantorr
 // Sitewide schema.org graph (WebSite + Person). Pages add their own entry-level
 // blocks (e.g. BlogPosting) through the "head" slot.
 const siteUrl = Astro.site ?? new URL('https://estebantorr.es');
-const structuredData = siteGraph(siteUrl, new URL(mePhoto.src, siteUrl).toString());
+const mePhotoUrl = new URL(mePhoto.src, siteUrl).toString();
+const structuredData = siteGraph(siteUrl, mePhotoUrl);
+
+// Pages without their own social image fall back to the author portrait, so
+// every page carries og:image.
+const socialImage = image ?? mePhotoUrl;
+const socialImageAlt = image ? imageAlt : 'Portrait of Esteban Torres';
 
 // PostHog (EU). Production-only + no-ops when the public key isn't set, so
 // local dev never reports + a missing CF env var fails open instead of breaking
@@ -106,12 +112,12 @@ const posthogEnabled = import.meta.env.PROD && Boolean(posthogKey);
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    {image && <meta property="og:image" content={image} />}
-    {image && imageAlt && <meta property="og:image:alt" content={imageAlt} />}
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:image" content={socialImage} />
+    {socialImageAlt && <meta property="og:image:alt" content={socialImageAlt} />}
+    <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
     <meta name="twitter:site" content="@esttorhe" />
-    {image && <meta name="twitter:image" content={image} />}
-    {image && imageAlt && <meta name="twitter:image:alt" content={imageAlt} />}
+    <meta name="twitter:image" content={socialImage} />
+    {socialImageAlt && <meta name="twitter:image:alt" content={socialImageAlt} />}
 
     <JsonLd data={structuredData} />
 
