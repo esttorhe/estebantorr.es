@@ -16,6 +16,7 @@ import {
   markdownAlternateLink,
 } from './agentMarkdown';
 import { isIndexedPage } from '../lib/indexedPages';
+import { legacyRedirect } from './redirects';
 
 interface Env {
   ASSETS: { fetch(request: Request): Promise<Response> };
@@ -66,6 +67,9 @@ async function serve(request: Request, env: Env): Promise<Response> {
 
   const { pathname } = new URL(request.url);
   const accept = request.headers.get('Accept');
+
+  const redirect = legacyRedirect(pathname);
+  if (redirect) return Response.redirect(new URL(redirect, request.url).toString(), 301);
 
   const alias = aliasMarkdownPath(pathname);
   if (alias) return serveMarkdown(request, env, alias, markdownContentType(accept));
