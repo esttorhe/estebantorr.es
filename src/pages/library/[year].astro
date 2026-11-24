@@ -38,7 +38,7 @@ const { year, books } = Astro.props;
     </header>
 
     <div class="year-page__grid reveal-stagger">
-      {books.map((book, i) => <BookCard book={book} index={i} />)}
+      {books.map((book, i) => <BookCard book={book} index={i} headingLevel={2} />)}
     </div>
   </section>
 </BaseLayout>

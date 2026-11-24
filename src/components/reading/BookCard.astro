@@ -10,9 +10,12 @@ interface Props {
   book: FinishedItem;
   /** Position in the list. Drives the stagger reveal. */
   index: number;
+  /** Title heading level: 3 under the year H2s on /library/, 2 straight under the H1 on a year page. */
+  headingLevel?: 2 | 3;
 }
 
-const { book, index } = Astro.props;
+const { book, index, headingLevel = 3 } = Astro.props;
+const Heading = `h${headingLevel}` as 'h2' | 'h3';
 
 const date = new Date(book.finished);
 const dateFormat = new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'short' });
@@ -34,7 +37,7 @@ const relatedHref = relatedPost
     <img src={book.cover} alt={`${book.title} cover`} loading="lazy" decoding="async" />
   </figure>
   <div class="book-card__text">
-    <h3 class="book-card__title">
+    <Heading class="book-card__title">
       {relatedHref ? <a href={relatedHref}>{book.title}</a> : book.title}
       {
         book.favorite && (
@@ -43,7 +46,7 @@ const relatedHref = relatedPost
           </span>
         )
       }
-    </h3>
+    </Heading>
     <p class="book-card__author">{book.author}</p>
     <p class="book-card__meta tabular">
       {book.rating != null && <StarRating rating={book.rating} />}
