@@ -1,11 +1,23 @@
-// ABOUTME: Cloudflare Worker (static assets only, no main script) for estebantorr.es.
-// ABOUTME: Astro emits to dist/; CF serves that bucket directly. No SPA fallback — this is an MPA.
+// ABOUTME: Cloudflare Worker for estebantorr.es: Astro's dist/ as static assets, fronted by src/worker/index.ts.
+// ABOUTME: The script only forwards AI-crawler hits to Peec Crawl Insights; every response still comes from the assets bucket. No SPA fallback — this is an MPA.
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "estebantorres-es",
+  "main": "src/worker/index.ts",
   "compatibility_date": "2026-06-18",
   "assets": {
     "directory": "./dist",
-    "not_found_handling": "404-page"
-  }
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    // The script has to see every request to log crawler hits. Each one now
+    // counts against the Workers free tier (100k/day); past that, Cloudflare
+    // answers 429 instead of falling back to the assets.
+    "run_worker_first": true,
+  },
+  "observability": {
+    // Console output is the only place a rejected Peec log shows up.
+    "enabled": true,
+  },
+  // PEEC_API_KEY and PEEC_ORG_ID are secrets, set with
+  // `bunx wrangler secret put <NAME>` from the repo root.
 }
