@@ -19,7 +19,6 @@ const TRAINING_CRAWLERS = [
   'meta-externalagent',
   'GoogleOther',
   'Baiduspider',
-  'PetalBot',
   'AwarioSmartBot',
   'AwarioRssBot',
   'QualifiedBot',

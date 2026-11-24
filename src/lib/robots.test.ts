@@ -29,6 +29,11 @@ test('training crawlers share one group that disallows everything', () => {
   expect(body).toContain('User-agent: CitibotSiteCrawler\nDisallow: /\n');
 });
 
+// PetalBot indexes for Petal Search (Huawei); search is allowed, so it stays unblocked.
+test('search crawlers are not in the blocked group', () => {
+  expect(body).not.toContain('User-agent: PetalBot');
+});
+
 test('sitemap points at the index @astrojs/sitemap emits, derived from the site URL', () => {
   expect(body).toContain('Sitemap: https://estebantorr.es/sitemap-index.xml\n');
   expect(buildRobotsTxt(new URL('https://example.com/'))).toContain(
