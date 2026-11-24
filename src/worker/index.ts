@@ -1,5 +1,5 @@
-// ABOUTME: Site Worker for estebantorr.es: serves the static build, and reports AI-crawler hits to Peec Crawl Insights.
-// ABOUTME: Logging fails open and runs after the response, so visitors never wait on or see it; logic lives in crawlLog.ts.
+// ABOUTME: Site Worker for estebantorr.es: serves the static build, hands agents the Markdown version, and reports AI-crawler hits to Peec.
+// ABOUTME: Routing logic lives in agentMarkdown.ts, logging in crawlLog.ts; logging fails open and runs after the response.
 
 import {
   isAiCrawler,
@@ -7,6 +7,13 @@ import {
   peecRequestInit,
   PEEC_GENERIC_ACCESS_LOG_URL,
 } from './crawlLog';
+import {
+  prefersMarkdown,
+  negotiatedMarkdownPath,
+  aliasMarkdownPath,
+  markdownContentType,
+  markdownHeaders,
+} from './agentMarkdown';
 
 interface Env {
   ASSETS: { fetch(request: Request): Promise<Response> };
@@ -38,9 +45,50 @@ function reportCrawl(request: Request, response: Response, env: Env, ctx: Execut
   );
 }
 
+/** Serves a build-time index.md with the Markdown headers; a missing file passes through as-is. */
+async function serveMarkdown(
+  request: Request,
+  env: Env,
+  markdownPath: string,
+  contentType: string,
+): Promise<Response> {
+  const url = new URL(request.url);
+  const asset = await env.ASSETS.fetch(new Request(new URL(markdownPath, url), request));
+  if (!asset.ok) return asset;
+  const pageUrl = new URL(markdownPath.slice(0, -'index.md'.length), url).toString();
+  return new Response(asset.body, { status: 200, headers: markdownHeaders(pageUrl, contentType) });
+}
+
+async function serve(request: Request, env: Env): Promise<Response> {
+  if (request.method !== 'GET' && request.method !== 'HEAD') return env.ASSETS.fetch(request);
+
+  const { pathname } = new URL(request.url);
+  const accept = request.headers.get('Accept');
+
+  const alias = aliasMarkdownPath(pathname);
+  if (alias) return serveMarkdown(request, env, alias, markdownContentType(accept));
+  if (pathname.endsWith('/index.md')) {
+    return serveMarkdown(request, env, pathname, markdownContentType(accept));
+  }
+
+  const negotiated = negotiatedMarkdownPath(pathname);
+  if (negotiated && prefersMarkdown(accept)) {
+    const markdown = await serveMarkdown(request, env, negotiated, 'text/markdown; charset=utf-8');
+    // A URL with no Markdown version (404 page, redirects) falls back to HTML.
+    if (markdown.ok) return markdown;
+  }
+
+  const response = await env.ASSETS.fetch(request);
+  if (!negotiated) return response;
+  // Pages have two representations, so caches must key on Accept.
+  const varied = new Response(response.body, response);
+  varied.headers.append('Vary', 'Accept');
+  return varied;
+}
+
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    const response = await env.ASSETS.fetch(request);
+    const response = await serve(request, env);
     try {
       reportCrawl(request, response, env, ctx);
     } catch (error) {

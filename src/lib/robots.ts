@@ -35,12 +35,15 @@ const TRAINING_CRAWLERS = [
   'CitibotSiteCrawler',
 ];
 
+/** Shared with the Worker, which sends the same policy as a header on Markdown responses. */
+export const CONTENT_SIGNALS = 'search=yes,ai-train=no,ai-input=yes';
+
 export function buildRobotsTxt(site: URL): string {
   return [
     // Vocabulary per https://contentsignals.org: search, ai-input, ai-train — each yes or no.
     '# Content signals: search allowed, AI training not allowed, AI input (answers, grounding) allowed.',
     'User-agent: *',
-    'Content-Signal: search=yes,ai-train=no,ai-input=yes',
+    `Content-Signal: ${CONTENT_SIGNALS}`,
     'Allow: /',
     '',
     '# Training crawlers',
