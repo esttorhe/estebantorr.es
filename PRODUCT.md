@@ -14,6 +14,10 @@ Three audiences, deliberately weighted equally:
 - **Engineers and engineering managers reading the writing.** Context: arrived from search, a link, or RSS. Job to be done: read something useful, then read another thing useful. They want long-form to actually read like long-form, and they want to find more once they finish one.
 - **Conference organizers and community.** Context: looking him up after a talk pitch or a recommendation. Job to be done: confirm credibility and find prior talks. They want a real Talks shelf and a believable bio, not a SaaS bio.
 
+Secondary audience, not weighted with the three above:
+
+- **Potential clients.** Context: a founder or engineering leader who heard Esteban takes on a few outside engagements (fractional CTO, software development, leadership coaching, SOC 2 / ISO 27001 groundwork) alongside his Peec AI role. Job to be done: understand what he offers and whether to email. Served by `/services/`, which is linked from About and the footer and deliberately kept out of the header nav, so it never competes with the three primary audiences.
+
 The site does not pick a hero audience. Hierarchy on every page has to work for all three in five seconds.
 
 ## Product Purpose

@@ -1,0 +1,201 @@
+---
+// ABOUTME: /services/ — the few outside engagements Esteban takes on alongside his Peec AI role: fractional CTO, software development, leadership coaching, SOC 2 / ISO 27001 groundwork.
+// ABOUTME: Deliberately not in the header nav; linked from About, the footer and llms.txt. Every claim here is sourced from the CV, About page, portfolio or public GitHub repos.
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Services"
+  description="Fractional CTO work, software development, engineering leadership coaching and SOC 2 / ISO 27001 groundwork, alongside my role at Peec AI, so availability is limited."
+>
+  <article class="services-page">
+    <header class="services-page__header reveal">
+      <h1 class="services-page__title">Services</h1>
+      <p class="services-page__lede">
+        I work full-time as an Engineering Manager at <a href="https://peec.ai">Peec AI</a>.
+        Alongside that I take on a small number of outside engagements, where 15+ years in tech and
+        7+ years of managing engineering teams can be useful to someone else. Availability is
+        limited, so the best first step is an email describing where you are.
+      </p>
+    </header>
+
+    <div class="prose services-page__prose reveal">
+      <section aria-labelledby="fractional-cto">
+        <h2 id="fractional-cto">Fractional CTO</h2>
+        <p class="services-page__problem">
+          Your company needs senior technical direction, but not a full-time hire.
+        </p>
+        <p>
+          I help with the decisions a CTO would own: how the platform is built, how the engineering
+          team is organised, how delivery is measured, and what to fix first. That's the work I've
+          done in-house: leading platform engineering for 60+ product engineers at Zenjob, running
+          the Supply vertical there (3 engineering managers, 30+ engineers), and introducing
+          DORA-aligned metrics across the organisation. Time commitment and format are agreed per
+          engagement.
+        </p>
+      </section>
+
+      <section aria-labelledby="software-development">
+        <h2 id="software-development">Software development</h2>
+        <p class="services-page__problem">
+          You need something built, whether a product, an internal tool or an AI feature, and your
+          team doesn't have room for it.
+        </p>
+        <p>
+          I haven't stopped coding. On the side I've built and run
+          <a href="https://quik.so">Quik</a>, an AI agent platform in Go (gRPC, NATS JetStream, an
+          embeddings pipeline, and agent loops with tool calling), and
+          <a href="https://bluetip.ai">BlueTip</a>, an AI writing platform in Next.js and TypeScript
+          with multi-provider LLM integration and Stripe. Smaller things live on
+          <a href="https://github.com/esttorhe">GitHub</a>: Obsidian plugins, a Raycast extension, a
+          native macOS menu bar app in Swift, and tools in Go like
+          <a href="https://github.com/esttorhe/blogwatcher-ui">blogwatcher-ui</a>. Before management
+          I spent a decade as an iOS engineer. With limited time, this works best for well-scoped
+          builds.
+        </p>
+      </section>
+
+      <section aria-labelledby="coaching">
+        <h2 id="coaching">Engineering leadership coaching</h2>
+        <p class="services-page__problem">
+          You've just become a head of engineering, an engineering manager or a tech lead, and the
+          job changed under you.
+        </p>
+        <p>
+          I made that move myself, from iOS engineer to engineering manager to head of engineering,
+          and I've coached engineers from mid-level to senior at SoundCloud and Zenjob. The
+          day-to-day goes from "I have no idea what I'm doing" to "I have no idea what I'm doing,
+          but I've seen this before". Coaching is about getting you to the second one faster,
+          working on the situations actually in front of you.
+        </p>
+      </section>
+
+      <section aria-labelledby="compliance">
+        <h2 id="compliance">SOC 2 and ISO 27001 groundwork</h2>
+        <p class="services-page__problem">
+          You need to get ready for an audit, and nobody on the team has done it before.
+        </p>
+        <p>
+          At Peec AI I help write the security policies, implement the commitments they make, and
+          set up the processes that keep them true. I can help you do the same groundwork. The audit
+          itself is done by an independent auditor or certification body; I don't certify anyone.
+        </p>
+      </section>
+
+      <section aria-labelledby="how-it-starts">
+        <h2 id="how-it-starts">How it starts</h2>
+        <ol>
+          <li>You email me what's going on and what you're hoping to change.</li>
+          <li>
+            We have a short call to see whether I'm the right fit, and whether I have the time.
+          </li>
+          <li>We agree the scope and format in writing before anything starts.</li>
+        </ol>
+      </section>
+
+      <section aria-labelledby="background">
+        <h2 id="background">Background</h2>
+        <ul>
+          <li>15+ years in tech, 7+ years managing engineering teams.</li>
+          <li>
+            Led platform engineering at Zenjob, supporting 60+ product engineers on infrastructure,
+            observability and developer tooling; improved CI/CD pipeline stability by over 50%.
+          </li>
+          <li>
+            Led the Supply vertical at Zenjob (3 engineering managers, 30+ engineers) through a
+            company-wide migration from native iOS and Android to React Native.
+          </li>
+          <li>
+            Led a distributed team at Spotify (8 engineers, grown to 12) building Backstage, and
+            defined its plugin marketplace architecture.
+          </li>
+          <li>
+            Led the teams at SoundCloud owning JVMKit, the shared platform behind 200+
+            microservices.
+          </li>
+        </ul>
+        <p>The full history is in the <a href="/cv/">CV</a>.</p>
+      </section>
+
+      <section aria-labelledby="questions">
+        <h2 id="questions">Questions</h2>
+        <h3>Is this alongside your job at Peec AI?</h3>
+        <p>
+          Yes. That's why availability is limited, and why I only take on a few engagements at a
+          time.
+        </p>
+        <h3>What does it cost?</h3>
+        <p>It depends on scope. I'll quote once we've talked through what you need.</p>
+        <h3>Fractional CTO or coaching?</h3>
+        <p>
+          Fractional CTO work means I help make and carry technical decisions with your team.
+          Coaching means you make them, and I help you get better at it.
+        </p>
+      </section>
+
+      <p class="services-page__contact">
+        <strong>Get in touch</strong>: email me at
+        <a href="mailto:me@estebantorr.es">me@estebantorr.es</a>.
+      </p>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .services-page {
+    max-width: var(--max-content);
+    margin: 0 auto;
+    padding-top: var(--space-md);
+  }
+
+  .services-page__header {
+    max-width: var(--measure);
+    margin-bottom: var(--space-lg);
+  }
+
+  .services-page__title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-h1);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin: 0 0 var(--space-md);
+    text-wrap: balance;
+  }
+
+  .services-page__lede {
+    font-family: var(--font-prose);
+    font-size: var(--text-lead);
+    line-height: 1.5;
+    color: var(--ink-muted);
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  .services-page__prose {
+    max-width: var(--measure);
+  }
+
+  .services-page__prose section + section {
+    margin-top: var(--space-xl);
+  }
+
+  /* The buyer's problem leads each offer, set apart from the explanation. */
+  .services-page__problem {
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  .services-page__contact {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--rule);
+  }
+
+  .services-page__contact :global(strong) {
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+</style>
