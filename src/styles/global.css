@@ -484,6 +484,14 @@
     padding-inline-start: var(--space-lg);
     max-width: none;
   }
+  /* Tailwind's preflight sets list-style: none on every list; prose lists need
+     their markers back for the ::marker styles below to have anything to style. */
+  .prose ul {
+    list-style: disc;
+  }
+  .prose ol {
+    list-style: decimal;
+  }
   .prose ul > li,
   .prose ol > li {
     margin: 0 0 var(--space-xs);
