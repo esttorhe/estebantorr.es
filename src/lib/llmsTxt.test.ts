@@ -35,6 +35,9 @@ test('starts with the H1 and a blockquote summary, as the spec orders them', () 
 
 test('page links point at the Markdown version, with absolute URLs', () => {
   expect(body).toContain('- [About](https://estebantorr.es/about/index.md)');
+  expect(body).toContain(
+    '- [Services](https://estebantorr.es/services/index.md): Fractional CTO, software development, engineering leadership coaching, SOC 2 / ISO 27001 groundwork; limited availability',
+  );
   expect(body).not.toMatch(/\]\(\//);
 });
 

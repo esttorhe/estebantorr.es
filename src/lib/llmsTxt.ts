@@ -32,6 +32,12 @@ export function buildLlmsTxt(
     '',
     pageLink(site, 'About', '/about/', 'Who Esteban is and what he works on'),
     pageLink(site, 'CV', '/cv/', 'Work history and skills'),
+    pageLink(
+      site,
+      'Services',
+      '/services/',
+      'Fractional CTO, software development, engineering leadership coaching, SOC 2 / ISO 27001 groundwork; limited availability',
+    ),
     pageLink(site, 'Talks', '/talks/', 'Conference and meetup talks'),
     pageLink(site, 'Portfolio', '/portfolio/', 'Selected projects'),
     '',

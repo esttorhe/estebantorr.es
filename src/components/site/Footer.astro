@@ -13,6 +13,8 @@ const siteUrl = (Astro.site ?? new URL('https://estebantorr.es')).toString();
 // Profiles come from src/data/profiles.ts, shared with the JSON-LD sameAs list.
 const socials = [
   ...PROFILES.map((profile) => ({ ...profile, rel: 'me' as const })),
+  // Services is linked here and from About rather than the header nav.
+  { label: 'services', href: '/services/', rel: undefined },
   { label: 'rss', href: '/rss.xml', rel: undefined },
 ];
 ---
